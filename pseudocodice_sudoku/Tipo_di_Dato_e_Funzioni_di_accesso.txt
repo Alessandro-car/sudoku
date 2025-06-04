@@ -1,0 +1,376 @@
+TIPO DI DATO
+
+partita:
+impostazioni_partita, contiene le scelte iniziali del giocatore, tipo impostazioni
+griglia_partita, contiene i valori inseriti inizialmente e quelli inseriti dall'utente, tipo griglia
+nome_partita, indica il nome del file dove e' salvata la partita, tipo stringa
+
+
+FUNZIONI DI ACCESSO
+
+partita_leggere_impostazioni
+
+INPUT
+partita, partita con al suo interno impostazioni_partita da leggere, partita
+
+OUTPUT
+impostazioni_lette, impostazioni della partita lette, impostazioni
+
+Pseudocodice
+impostazioni_lette = campo impostazioni_partita di partita 
+
+--
+
+partita_scrivere_impostazione
+
+INPUT
+partita, partita con al suo interno impostazioni_partita da dover scrivere, partita
+impostazioni_modificate, impostazioni che andranno scritte all'interno di partita, impostazioni
+
+OUTPUT
+partita, partita con le impostazioni modificate, partita
+
+Pseudocodice
+campo impostazioni_partita di partita = impostazioni_modificate
+
+--
+
+partita_leggere_griglia
+
+INPUT
+partita, partita con al suo interno griglia_partita da leggere, partita
+
+OUTPUT
+griglia_letta, griglia che verra' letta, griglia
+
+Pseudocodice
+griglia_letta = campo griglia_partita di partita
+
+--
+
+partita_scrivere_griglia
+
+INPUT
+partita, partita con al suo interno griglia_partita da modificare, partita
+griglia_modificata, griglia modificata, griglia_partita
+
+OUTPUT
+partita, partita con la griglia modificata al suo interno, partita
+
+Pseudocodice
+campo griglia_partita di partita = griglia_modificata
+
+--
+
+partita_leggere_nome
+
+INPUT
+partita, partita con al suo interno il nome_partita da leggere, partita
+
+OUTPUT
+nome_partita_letto, nome della partita letto, stringa
+
+Pseudocodice
+nome_partita_letta = campo nome_partita di partita
+
+--
+
+partita_scrivere_nome
+
+INPUT
+partita, partita con al suo interno nome_partita che verra' modificato, partita
+nome_partita_modificato, nuovo nome della partita che verra' inserito all'interno della partita, stringa
+
+OUTPUT
+partita, partita con nome_partita_modificato al suo interno, partita
+
+Pseudocodice
+campo nome_partita di partita = nome_partita_modificato
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+TIPO DI DATO
+
+file_binario:
+elemento, elementi presenti nel file, record
+posizione, posizione del file, numero naturale
+nome_file, nome del file, stringa
+
+FUNZIONI DI ACCESSO
+
+leggere_posizione
+
+INPUT
+file, file dove leggere la posizione, file_binario
+
+OUTPUT
+posizione, posizione del file, numero naturale
+
+Pseudocodice
+posizione = campo posizione di file
+
+--
+
+leggere_elemento
+
+INPUT
+file, le dal quale leggere un record, le_binario
+ 
+OUTPUT
+record: record letto dal file, record
+
+Pseudocodice
+record = campo elemento in posizione leggere_posizione(file) di file
+file = scrivere_posizione(file)
+
+--
+
+scrivere_elemento
+
+INPUT
+file, file dal quale leggere un record, file_binario
+record, record da scrivere nel file, record
+
+OUTPUT
+file, file con il record inserito, file_binario
+
+Pseudocodice
+campo elemento in posizione leggere_posizione(file) di file = record
+file = scrivere_posizione(file)
+
+--
+
+scrivere_posizione
+
+INPUT
+file, file nel quale scrivere la posizione, file_binario
+
+OUTPUT
+file, file di testo a cui e' stato cambiato il valore della posizione, file_binario
+
+Pseudocodice
+campo posizione di file = campo posizione di f + 1
+
+--
+
+leggere_nome_file
+
+INPUT
+file, file con al suo interno nome_file da leggere, file_binario
+
+OUTPUT
+nome_file_letto, nome del file letto, stringa
+
+Pseudocodice
+nome_file_letto = campo nome_file di file
+
+--
+
+scrivere_nome_file
+
+INPUT
+file, file con al suo interno nome_file da leggere, file_binario
+nome_file_modificato, nome che andra' a modificare nome_file presente in partita, stringa
+
+OUTPUT
+file, file con al suo interno nome_file_modificato, file_binario
+
+Pseudocodice
+campo nome_file di file = nome_file_modificato
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+TIPO DI DATO
+
+stringa:
+dimensione, dimensione della stringa, numero naturale > 0 AND <= DIMENSIONE_MAX_STRINGA
+caratteri, caratteri della stringa, array di caratteri 
+
+FUNZIONI DI ACCESSO
+
+stringa_leggere_dimensione
+
+INPUT
+stringa, stringa con al suo interno dimensione che verra' letta, stringa
+
+OUTPUT
+dimensione_letta, dimensione letta presente dentro stringa, numero naturale > 0 AND <= DIMENSIONE_MAX_STRINGA
+
+Pseudocodice
+dimensione_letta = campo dimensione di stringa
+
+--
+
+stringa_scrivere_dimensione
+
+INPUT
+stringa, stringa con al suo interno la dimensione da modificare, stringa
+dimensione_modificata, dimensione presente in stringa che verra' modificata,  numero naturale > 0 AND <= DIMENSIONE_MAX_STRINGA
+
+OUTPUT
+stringa, stringa con al suo interno dimensione_modificata, stringa
+
+Pseudocodice
+campo dimensione di stringa = dimensione_modificata
+
+--
+
+stringa_leggere_carattere
+
+INPUT
+stringa, stringa da cui andranno letti i caratteri, stringa
+indice, posizione del carattere da leggere, numero naturale
+
+OUTPUT
+carattere, carattere lette, carattere
+
+Pseudocodice
+carattere = campo carattere in posizione indice di stringa
+
+--
+
+stringa_scrivere_carattere
+	
+INPUT
+stringa, stringa in cui scrivere il carattere, stringa
+indice, posizione del carattere scritto, numero naturale > 0
+carattere, carattere da scrivere, carattere
+
+OUTPUT
+stringa, stringa con il carattere modificato, stringa
+
+Pseudocodice
+campo carattere in posizione indice di stringa = carattere
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+TIPO DI DATO
+
+griglia:
+dimensione_griglia, indica la lunghezza della griglia scelta dal giocatore, tipo numero naturale > 0 AND <= DIMENSIONE_GRIGLIA_GRANDE
+valori_griglia, contiene i valori della griglia, array di numeri naturali >= 1 AND <= dimensione_griglia
+
+FUNZIONI DI ACCESSO
+
+griglia_leggere_dimensione
+
+INPUT
+griglia, griglia della quale voglio sapere la dimensione del lato, griglia
+
+OUTPUT 
+dimensione, dimensione letta di 'griglia', numero naturale
+
+Pseudocodice
+dimensione = campo dimensione_griglia di griglia
+
+--
+
+griglia_scrivere_dimensione
+
+INPUT
+griglia, griglia della quale modificarne la dimensione del lato, griglia
+nuova_dimensione, nuova dimensione da assegnare alla griglia, numero naturale
+
+OUTPUT
+griglia, griglia con la dimensione modificata, griglia
+
+Pseudocodice
+campo dimensione_griglia di griglia = nuova_dimensione
+
+--
+
+griglia_leggere_valore
+
+INPUT
+griglia, griglia della quale voglio leggerne un valore, griglia
+riga, riga nella quale si trova il valore da leggere, numero naturale > 0 AND <= dimensione_griglia
+colonna, colonna nella quale si trova il valore da leggere, numero naturale > 0 AND <= dimensione_griglia
+
+OUTPUT
+valore, valore letto di 'griglia' nella posizione indicata, numero naturale > 0 AND <= dimensione_griglia
+
+Pseudocodice
+valore = campo valori_griglia in riga 'riga' e colonna 'colonna' di griglia
+
+--
+
+griglia_scrivere_valore
+
+INPUT
+griglia, griglia della quale voglio modificarne un valore, griglia
+valore, valore da inserire nella griglia, numero naturale > 0 AND <= dimensione_griglia
+riga, riga nella quale inserire il valore, numero naturale > 0 AND <= dimensione_griglia
+colonna, colonna nella quale inserire il valore, numero naturale > 0 AND <= dimensione_griglia
+
+OUTPUT
+griglia, griglia con il valore modifcato, griglia
+
+Pseudocodice
+campo valori_griglia in riga 'riga' e colonna 'colonna' di griglia = valore
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+TIPO DI DATO
+
+impostazioni:
+dimensione_griglia, indica la lunghezza della griglia scelta dall'utente, tipo naturale > 0 AND < DIMENSIONE_GRIGLIA_GRANDE
+difficolta, indica la difficolta' del gioco e ad ogni livello di difficolta' corrisponde un diverso numero inversamente proporzionale alla difficolta' di caselle gia' avvalorate, naturale ∈ [0,2]
+
+
+FUNZIONI DI ACCESSO
+
+impostazioni_leggere_dimensione
+
+INPUT
+impostazioni, impostazioni delle quali voglio saperne la dimensione del lato scelta della griglia, impostazioni
+
+OUTPUT
+dimensione, dimensione letta di 'impostazioni', numero naturale
+
+Pseudocodice
+dimensione = campo dimensione_griglia di impostazioni
+
+--
+
+impostazioni_scrivere_dimensione
+
+INPUT
+impostazioni, impostazioni delle quali modificarne la dimensione del lato della griglia, impostazioni
+nuova_dimensione, nuova dimensione da assegnare alla griglia, numero naturale
+
+OUTPUT
+impostazioni, impostazioni con la dimensione del lato della griglia modificata, impostazioni
+
+Pseudocodice
+campo dimensione_griglia di impostazioni = nuova_dimensione
+
+--
+
+impostazioni_leggere_difficolta
+
+INPUT
+impostazioni, impostazioni delle quali voglio saperne la difficoltà scelta, impostazioni
+
+OUTPUT
+difficolta, difficoltà letta di 'impostazioni', numero naturale ∈ [0,2]
+
+Pseudocodice
+difficolta = campo difficolta di impostazioni
+
+--
+
+impostazioni_scrivere_difficolta
+
+INPUT
+impostazioni, impostazioni delle quali modificarne la difficoltà, impostazioni
+nuova_difficolta, nuova difficoltà scelta, numero naturale ∈ [0,2]
+
+OUTPUT
+impostazioni, impostazioni con la difficoltà modificata, impostazioni
+
+Pseudocodice
+campo difficolta di impostazioni = nuova_difficolta
+
+
+
+

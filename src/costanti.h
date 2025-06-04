@@ -1,7 +1,7 @@
 #ifndef COSTANTI_H_
 #define COSTANTI_H_
 
-#define MAX_PARTITE_SALVATE 10
+#define MAX_PARTITE_SALVATE 5
 #define DIM_MAX_STRINGA 20
 #define DIM_MAX_GRIGLIA 16
 //TODO: Cambiare nomi alle percentuali in quanto poco comprensibili
