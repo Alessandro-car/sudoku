@@ -1,24 +1,34 @@
-#include "gestire_partita.h"
+#include "tipi_di_dato/griglia.h"
+#include "utils.h"
 
 
 int validare_valore_input(int valore, int dim_griglia) {
-//La seguente funzione permette di verificare se un valore inserito dall'utente può venir considerato valido
-int validato; //booleano che che varrà come output
-int dim_griglia_carattere;
+	//La seguente funzione permette di verificare se un valore inserito dall'utente può venir considerato valido
+	int validato; //booleano che che varrà come output
+	int dim_griglia_carattere;
 
-validato = 1; //Booleano inizializzato a VERO
-dim_griglia_carattere = convertire_numeri_in_lettere(dim_griglia);
+	validato = 1; //Booleano inizializzato a VERO
+	dim_griglia_carattere = convertire_numeri_in_lettere(dim_griglia);
 
-if(dim_griglia >= 16 && (valore < 48 || (valore > 57 && valore < 65) || valore > dim_griglia_carattere )) { /*verifica che non  si vada incontro
-ai vincoli sulla dim_griglia e sul valore*/
-*/
+	if(dim_griglia >= 16 && (valore < 48 || (valore > 57 && valore < 65) || valore > dim_griglia_carattere )) { /*verifica che non  si vada incontro ai vincoli sulla dim_griglia e sul valore*/
+
 	validato = 0; //Nel caso allora validato = FALSO
-} else {
-	if(dim_griglia < 16 && (valore < 48 || valore >57))  {/*verifica che non  si vada incontro
-ai vincoli sulla dim_griglia e sul valore*/
-		validato = 0;
+	} else {
+			if(dim_griglia < 16 && (valore < 48 || valore >57))  { /*verifica che non  si vada incontro ai vincoli sulla dim_griglia e sul valore*/
+				int validato;
+				int dim_griglia_carattere;
+				validato = 1;
+				dim_griglia_carattere = convertire_numeri_in_lettere(dim_griglia);
+
+				if(dim_griglia >= 16 && (valore < 48 || (valore > 57 && valore < 65) || valore > dim_griglia_carattere )) {
+					validato = 0;
+				} else {
+					if(dim_griglia < 16 && (valore < 48 || valore >57))  {
+						validato = 0;
+					}
+				}
+			}
 	}
-}
 	return validato;
 }
 
@@ -26,8 +36,6 @@ int verificare_numero_da_inserire(griglia griglia, int numero_da_inserire, int r
 //La seguente funzione permette di verificare se è stato inserito un numero in una "cella" non valida, effettuando controlli su riga, colonna e regione
 
 	int corretto; //Sarà l'output della funzione ed è un booleano, permette di capire se il numero è già presente in riga, colonna, regione o meno
-	int i; //Permette di scorrere la griglia
-	int j; //Permette di scorrere la griglia
 	int dimensione_griglia;//La seguente variabile verrà inizializzata con la dimensione della griglia
 	int dimensione_regione;//Viene inizializzata con la dimensione della regione della griglia
 
@@ -45,5 +53,3 @@ int verificare_numero_da_inserire(griglia griglia, int numero_da_inserire, int r
 	}
 	return corretto;
 }
-
-
