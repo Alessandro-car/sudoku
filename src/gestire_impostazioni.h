@@ -1,0 +1,4 @@
+#ifndef GESTIRE_IMPOSTAZIONI_H_
+#define GESTIRE_IMPOSTAZIONI_H_
+
+#endif
