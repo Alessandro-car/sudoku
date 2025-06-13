@@ -2,6 +2,7 @@
 
 #include "gestire_impostazioni.h"
 #include "costanti.h"
+#include "tipi_di_dato/impostazioni.h"
 #include "utils.h"
 
 int selezionare_dimensione_griglia() {
@@ -27,4 +28,9 @@ int selezionare_dimensione_griglia() {
 		dim_griglia_scelta = DIM_GRIGLIA_GRANDE;
 	}
 	return dim_griglia_scelta;
+}
+
+void impostare_parametri_di_gioco(impostazioni* impostazioni_gioco, int difficolta_scelta, int dim_griglia_scelta) {
+	impostazioni_scrivere_difficolta(impostazioni_gioco, difficolta_scelta);
+	impostazioni_scrivere_dimensione_griglia(impostazioni_gioco,dim_griglia_scelta);
 }
