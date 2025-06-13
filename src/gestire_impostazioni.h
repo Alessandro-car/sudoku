@@ -2,8 +2,13 @@
 #define GESTIRE_IMPOSTAZIONI_H_
 
 #include "tipi_di_dato/impostazioni.h"
+#include "tipi_di_dato/griglia.h"
+#include "tipi_di_dato/stringa.h"
+#include "tipi_di_dato/partita.h"
 
 int selezionare_dimensione_griglia();
 void impostare_parametri_di_gioco(impostazioni* impostazioni_gioco, int difficolta_scelta, int dim_griglia_scelta);
+void menu_scelta_difficolta();
+void inizializzare_partita(impostazioni impostazioni_utente, griglia griglia, stringa nome_partita, partita *partita);
 
 #endif

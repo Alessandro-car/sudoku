@@ -1,6 +1,30 @@
 #include "gestire_partita.h"
 #include "tipi_di_dato/griglia.h"
 
+int validare_colonna_input(int colonna, int dim_griglia) {
+	int validato;       //Indica se la colonna è valida o meno
+
+	validato = 1;       //validato = Vero
+  if(colonna < 0 || colonna > dim_griglia){
+  	validato = 0;   //validato = Falso
+  }
+  return validato;
+}
+
+int controllare_colonna(griglia griglia, int colonna, int numeri_da_inserire, int dimensione_griglia) {
+	int corretto;           //Indica se il numero può essere inserito o meno
+  int i;
+  corretto = 1;           //corretto = Vero
+  i = 1;
+  while(i < dimensione_griglia){
+      if(griglia_leggere_valore(griglia, i, colonna) == numeri_da_inserire){
+      	corretto = 0;   //corretto = Falso
+      }
+			i = i + 1;
+  }
+	return corretto;
+}
+
 int validare_valore_input(int valore, int dim_griglia) {
 	//La seguente funzione permette di verificare se un valore inserito dall'utente può venir considerato valido
 	int validato; //booleano che che varrà come output
@@ -77,4 +101,9 @@ bool_t validare_riga_input(int riga, int dim_griglia) {
 	return validato;
 }
 
+void salvare_partita(FILE* file_salvataggio, partita partita_da_salvare) {
+	fwrite(&partita_da_salvare, sizeof(partita), 1, file_salvataggio);
+  fclose(file_salvataggio);
+  return;
+}
 
