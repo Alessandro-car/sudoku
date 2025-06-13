@@ -1,6 +1,5 @@
+#include "gestire_partita.h"
 #include "tipi_di_dato/griglia.h"
-#include "utils.h"
-
 
 int validare_valore_input(int valore, int dim_griglia) {
 	//La seguente funzione permette di verificare se un valore inserito dall'utente può venir considerato valido
@@ -28,7 +27,7 @@ int validare_valore_input(int valore, int dim_griglia) {
 					}
 				}
 			}
-	}
+}
 	return validato;
 }
 
@@ -53,3 +52,29 @@ int verificare_numero_da_inserire(griglia griglia, int numero_da_inserire, int r
 	}
 	return corretto;
 }
+
+bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da_inserire, int dimensione_regione) {
+	bool_t corretto = TRUE;
+	int i = riga;
+	while (i < riga + dimensione_regione) {
+		int j = colonna;
+		while ( j < colonna + dimensione_regione ) {
+			if (griglia_leggere_valore(griglia, i, j) == numero_da_inserire) {
+				corretto = FALSE;
+			}
+			j = j + 1;
+		}
+		i = i + 1;
+	}
+	return corretto;
+}
+
+bool_t validare_riga_input(int riga, int dim_griglia) {
+	bool_t validato = TRUE;
+	if (riga < 0 || riga > dim_griglia) {
+		validato = FALSE;
+	}
+	return validato;
+}
+
+

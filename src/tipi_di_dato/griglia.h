@@ -1,11 +1,11 @@
 #ifndef GRIGLIA_H_
 #define GRIGLIA_H_
 
-#include "costanti.h"
+#include "../costanti.h"
 
 typedef struct {
 	int dimensione_griglia;
-	int valori_griglia[DIM_MAX_GRIGLIA][DIM_MAX_GRIGLIA];
+	int valori_griglia[DIM_GRIGLIA_GRANDE][DIM_GRIGLIA_GRANDE];
 } griglia;
 
 int griglia_leggere_dimensione(griglia griglia_partita);

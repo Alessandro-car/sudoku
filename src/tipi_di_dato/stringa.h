@@ -1,7 +1,7 @@
 #ifndef STRINGA_H_
 #define STRINGA_H_
 
-#include "costanti.h"
+#include "../costanti.h"
 
 typedef struct {
 	int dimensione_stringa;

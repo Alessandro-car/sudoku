@@ -4,8 +4,6 @@
 #include "tipi_di_dato/griglia.h"
 #include "costanti.h"
 
-bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da_inserire, int dimensione_regione);
-bool_t validare_riga_input(int riga, int dim_griglia);
 int selezionare_dimensione_griglia();
 
 int main() {
@@ -15,7 +13,7 @@ int main() {
 bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da_inserire, int dimensione_regione) {
 	bool_t corretto = TRUE;
 	int i = riga;
-	while (i <= riga + dimensione_regione) {
+	while (i < riga + dimensione_regione) {
 		int j = colonna;
 		while ( j < colonna + dimensione_regione) {
 			if (griglia_leggere_valore(griglia, i, j) == numero_da_inserire) {
@@ -37,16 +35,19 @@ bool_t validare_riga_input(int riga, int dim_griglia) {
 }
 
 int selezionare_dimensione_griglia() {
-	printf("\n%*c| DIMENSIONE | %*c\n", 33, ' ', 33, ' ');
-	printf("%*c+------------+%*c", 33, ' ', 33, ' ');
+	printf("%*s| DIMENSIONE | %*s\n", 33, "", 33, "");
+	printf("%*s+------------+%*s", 33, "", 33, "");
 	printf("\n\n\n\n\n\n\n");
-	printf("\n%*c1. Piccola:  4 \u00D7 4%*c", 31, ' ', 31, ' ');
-	printf("\n%*c2. Standard: 9 \u00D7 9%*c", 31, ' ', 31, ' ');
-	printf("\n%*c3. Grande:   16 \u00D7 16%*c", 31, ' ', 31, ' ');
-	printf("\n%*c4. Torna indietro%*c\n", 31, ' ', 31, ' ');
-	char comando_utente;
+	printf("%*s1. Piccola:  4 \u00D7 4%*s", 31, "", 31, "");
+	printf("\n%*s2. Standard: 9 \u00D7 9%*s", 31, "", 31, "");
+	printf("\n%*s3. Grande:   16 \u00D7 16%*s", 31, "", 31, "");
+	printf("\n%*s4. Torna indietro%*s", 31, "", 31, "");
+	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+	int comando_utente;
+	printf("\033[8m");
+	comando_utente = getchar();
+	printf("\033[0m");
 	int dim_griglia_scelta;
-	scanf("%c", &comando_utente);
 	dim_griglia_scelta = DIM_GRIGLIA_STANDARD;
 	if (comando_utente == '1') {
 		dim_griglia_scelta = DIM_GRIGLIA_PICCOLA;
