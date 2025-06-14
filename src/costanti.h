@@ -15,4 +15,19 @@
 #define DIFFICOLTA_MEDIA 1
 #define DIFFICOLTA_DIFFICILE 2
 
+typedef enum {
+	CHAR_0 = 48,
+	CHAR_1 = 49,
+	CHAR_2 = 50,
+	CHAR_3 = 51,
+	CHAR_4 = 52,
+	CHAR_5 = 53,
+	CHAR_6 = 54,
+	CHAR_7 = 55,
+	CHAR_8 = 56,
+	CHAR_9 = 57,
+	CHAR_A = 65,
+	CHAR_G = 71
+} ASCII_CODE;
+
 #endif

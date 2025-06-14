@@ -1,5 +1,7 @@
 #include "gestire_partita.h"
+#include "costanti.h"
 #include "tipi_di_dato/griglia.h"
+#include "tipi_di_dato/partita.h"
 
 int validare_colonna_input(int colonna, int dim_griglia) {
 	int validato;       //Indica se la colonna è valida o meno
@@ -33,25 +35,22 @@ int validare_valore_input(int valore, int dim_griglia) {
 	validato = 1; //Booleano inizializzato a VERO
 	dim_griglia_carattere = convertire_numeri_in_lettere(dim_griglia);
 
-	if(dim_griglia >= 16 && (valore < 48 || (valore > 57 && valore < 65) || valore > dim_griglia_carattere )) { /*verifica che non  si vada incontro ai vincoli sulla dim_griglia e sul valore*/
-
-	validato = 0; //Nel caso allora validato = FALSO
+	if(dim_griglia >= DIM_GRIGLIA_GRANDE && (valore < CHAR_0 || (valore > CHAR_9 && valore < CHAR_A) || valore > dim_griglia_carattere )) { /*verifica che non  si vada incontro ai vincoli sulla dim_griglia e sul valore*/
+		validato = 0; //Nel caso allora validato = FALSO
 	} else {
-			if(dim_griglia < 16 && (valore < 48 || valore >57))  { /*verifica che non  si vada incontro ai vincoli sulla dim_griglia e sul valore*/
-				int validato;
-				int dim_griglia_carattere;
+			if(dim_griglia <= DIM_GRIGLIA_GRANDE && (valore < CHAR_0 || valore > CHAR_9))  { /*verifica che non  si vada incontro ai vincoli sulla dim_griglia e sul valore*/
 				validato = 1;
 				dim_griglia_carattere = convertire_numeri_in_lettere(dim_griglia);
 
-				if(dim_griglia >= 16 && (valore < 48 || (valore > 57 && valore < 65) || valore > dim_griglia_carattere )) {
+				if(dim_griglia >= DIM_GRIGLIA_GRANDE && (valore < CHAR_0 || (valore > CHAR_9 && valore < CHAR_A) || valore > dim_griglia_carattere )) {
 					validato = 0;
 				} else {
-					if(dim_griglia < 16 && (valore < 48 || valore >57))  {
+					if(dim_griglia < DIM_GRIGLIA_GRANDE && (valore < CHAR_0 || valore > CHAR_9))  {
 						validato = 0;
 					}
 				}
 			}
-}
+	}
 	return validato;
 }
 
