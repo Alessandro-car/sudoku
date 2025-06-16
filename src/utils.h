@@ -4,8 +4,8 @@
 #include "tipi_di_dato/partita.h"
 
 typedef enum {
-	TRUE,
-	FALSE
+	VERO,
+	FALSO
 } bool_t;
 
 int convertire_lettera_in_numero(char lettera);

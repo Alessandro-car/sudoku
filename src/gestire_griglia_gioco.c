@@ -5,6 +5,7 @@
 #include "gestire_partita.h"
 #include "gestire_griglia_gioco.h"
 
+//Funzione che si occupa di riempire la griglia iniziale seguendo le impostazioni utente
 griglia riempire_griglia(impostazioni impostazioni_utente){
     griglia griglia;            //Griglia prodotta secondo le impostazioni
     int numeri_da_inserire;     //Rappresenta il numero di elementi che verrano inseriri in griglia
@@ -15,7 +16,7 @@ griglia riempire_griglia(impostazioni impostazioni_utente){
     int i;
 
     i = 0;
-    srand(time(NULL));          //Serve per la funzione rand, se non si mette rand utilizza sempre la stessa sequenza di numeri
+    srand(time(NULL));          //Serve per la funzione rand, se non si mette, rand utilizza sempre la stessa sequenza di numeri.
     numeri_da_inserire = n_numeri_di_griglia(impostazioni_utente);
 
     while(i < numeri_da_inserire){

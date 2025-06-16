@@ -4,8 +4,8 @@
 #include "costanti.h"
 #include "tipi_di_dato/partita.h"
 
+//La seguente funzione permette di convertire le lettere passate in input in numeri
 int convertire_lettera_in_numero(char lettera) {
-	//La seguente funzione permette di convertire le lettere passate in input in numeri
 		int numero;
 		numero = -1; //Inizializza numero con -1
 
@@ -17,8 +17,8 @@ int convertire_lettera_in_numero(char lettera) {
 		return numero;
 }
 
-char convertire_numeri_in_lettere(int numero) {
 // La seguente funzione permette di convertire i numeri passati da input in lettere
+char convertire_numeri_in_lettere(int numero) {
 	char lettera;
 
 	lettera = ' '; //Inizializza il carattere in un carattere vuoto

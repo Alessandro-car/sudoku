@@ -3,32 +3,34 @@
 #include "tipi_di_dato/griglia.h"
 #include "tipi_di_dato/partita.h"
 
-int validare_colonna_input(int colonna, int dim_griglia) {
-	int validato;       //Indica se la colonna è valida o meno
+//Funzione che esegue un controllo sulla colonna inserita in input dall'utente, essa verifica se è valida o meno.
+bool_t validare_colonna_input(int colonna, int dim_griglia) {
+	bool_t validato;       //Indica se la colonna è valida o meno
 
-	validato = 1;       //validato = Vero
+	validato = VERO;       //validato = Vero
   if(colonna < 0 || colonna > dim_griglia){
-  	validato = 0;   //validato = Falso
+  	validato = FALSO;      //validato = Falso
   }
   return validato;
 }
 
-int controllare_colonna(griglia griglia, int colonna, int numeri_da_inserire, int dimensione_griglia) {
-	int corretto;           //Indica se il numero può essere inserito o meno
+//Funzione che esegue un controllo sulla colonna inserita e verifica se il numero da inserire è gia presente o meno
+bool_t controllare_colonna(griglia griglia, int colonna, int numeri_da_inserire, int dimensione_griglia) {
+  bool_t corretto;           //Indica se il numero può essere inserito o meno
   int i;
-  corretto = 1;           //corretto = Vero
+  corretto = VERO;           //corretto = Vero
   i = 1;
   while(i < dimensione_griglia){
       if(griglia_leggere_valore(griglia, i, colonna) == numeri_da_inserire){
-      	corretto = 0;   //corretto = Falso
+      	corretto = FALSO;   //corretto = Falso
       }
 			i = i + 1;
   }
 	return corretto;
 }
 
+//La seguente funzione permette di verificare se un valore inserito dall'utente può venir considerato valido
 int validare_valore_input(int valore, int dim_griglia) {
-	//La seguente funzione permette di verificare se un valore inserito dall'utente può venir considerato valido
 	int validato; //booleano che che varrà come output
 	int dim_griglia_carattere;
 
@@ -54,8 +56,8 @@ int validare_valore_input(int valore, int dim_griglia) {
 	return validato;
 }
 
-int verificare_numero_da_inserire(griglia griglia, int numero_da_inserire, int riga, int colonna) {
 //La seguente funzione permette di verificare se è stato inserito un numero in una "cella" non valida, effettuando controlli su riga, colonna e regione
+int verificare_numero_da_inserire(griglia griglia, int numero_da_inserire, int riga, int colonna) {
 
 	int corretto; //Sarà l'output della funzione ed è un booleano, permette di capire se il numero è già presente in riga, colonna, regione o meno
 	int dimensione_griglia;//La seguente variabile verrà inizializzata con la dimensione della griglia
@@ -77,13 +79,13 @@ int verificare_numero_da_inserire(griglia griglia, int numero_da_inserire, int r
 }
 
 bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da_inserire, int dimensione_regione) {
-	bool_t corretto = TRUE;
+	bool_t corretto = VERO;
 	int i = riga;
 	while (i < riga + dimensione_regione) {
 		int j = colonna;
 		while ( j < colonna + dimensione_regione ) {
 			if (griglia_leggere_valore(griglia, i, j) == numero_da_inserire) {
-				corretto = FALSE;
+				corretto = FALSO;
 			}
 			j = j + 1;
 		}
@@ -93,16 +95,17 @@ bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da
 }
 
 bool_t validare_riga_input(int riga, int dim_griglia) {
-	bool_t validato = TRUE;
+	bool_t validato = VERO;
 	if (riga < 0 || riga > dim_griglia) {
-		validato = FALSE;
+		validato = FALSO;
 	}
 	return validato;
 }
 
+//Funzione che si occupa di salvare la partita su file.
 void salvare_partita(FILE* file_salvataggio, partita partita_da_salvare) {
 	fwrite(&partita_da_salvare, sizeof(partita), 1, file_salvataggio);
-  fclose(file_salvataggio);
-  return;
+	fclose(file_salvataggio);
+	return;
 }
 

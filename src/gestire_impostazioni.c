@@ -35,14 +35,11 @@ void impostare_parametri_di_gioco(impostazioni* impostazioni_gioco, int difficol
 	impostazioni_scrivere_dimensione_griglia(impostazioni_gioco,dim_griglia_scelta);
 }
 
+//Funzione che stampa a video il menù di scelta della difficoltà.
 void menu_scelta_difficolta() {
-	/*for (int i = 0; i < 80; i++) {
-	    putchar('-');
-	}
-	putchar('\n');*/
 	printf("%*s| DIFFICOLTA |\n", 		33, "");
 	printf("%*s+------------+\n", 		33, "");
-	printf("\n\n\n\n\n\n"); //9^ riga
+	printf("\n\n\n\n\n\n");
 	printf("%*s\t 1. Facile\n\n", 		27, "");
 	printf("%*s\t 2. Medio\n\n", 		27, "");
 	printf("%*s\t 3. Difficile\n\n", 	27, "");
@@ -50,11 +47,13 @@ void menu_scelta_difficolta() {
 	printf("%*s\t 5. Indietro\n\n", 	27, "");
 
 	printf("\n\n\n\n\n\n\n");
-
+	
+	return;
 }
 
+//Funzione che si occupa di inizializzare la struttura partita.
 void inizializzare_partita(impostazioni impostazioni_utente, griglia griglia, stringa nome_partita, partita *partita) {
-	  partita_scrivere_impostazioni(partita, impostazioni_utente);
+	partita_scrivere_impostazioni(partita, impostazioni_utente);
     partita_scrivere_griglia(partita, griglia);
     partita_scrivere_nome(partita, nome_partita);
 
