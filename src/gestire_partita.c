@@ -139,3 +139,86 @@ bool_t controllare_riga(griglia sudoku, int riga, int numero_da_inserire, int di
     // Restituiamo VERO se il numero può essere inserito, FALSO altrimenti
     return corretto;
 }
+
+void stampare_interfaccia_impostazioni(void) {
+
+    printf("Menu opzioni\n\n");
+     printf("%*s| IMPOSTAZIONI |\n", 34, "");
+     printf("%*s+--------------+\n", 34, "");
+     printf("\n\n\n\n\n\n\n\n"); // 8 righe vuote
+     printf("%*s\t 1. Scegli difficolta'\n", 31, "");
+     printf("%*s\t 2. Scegli dimensione\n", 31, "");
+     printf("%*s\t 3. Inserisci nome partita\n", 31, "");
+     printf("%*s\t 4. Prosegui\n", 31, "");
+     printf("%*s\t 5. Torna indietro\n", 31, "");
+     getchar();
+     return 0;
+}
+
+partita* giocare_partita(partita partita_corrente) {
+    FILE* file_salvataggio;
+    int comando_utente;
+    int riga, colonna, valore;
+    stringa nome_file;
+
+    // Ottiene il nome del file per il salvataggio dalla partita corrente
+    nome_file = partita_leggere_nome(partita_corrente);
+
+    // Loop principale del gioco - continua fino a quando l'utente non preme ESC (codice ASCII 27)
+    do {
+        // Visualizza l'interfaccia di gioco
+     stampare_interfaccia_impostazioni();
+        // Legge il comando dell'utente e lo converte da minuscolo a maiuscolo se necessario
+        comando_utente = getchar();
+        comando_utente = convertire_minuscolo_maiuscolo(comando_utente);
+
+        // Gestisce il comando di salvataggio della partita
+        if (comando_utente == 'S') {
+            // Apre il file in modalità scrittura binaria per salvare la partita
+            file_salvataggio = fopen(nome_file.caratteri, "wb");
+            if (file_salvataggio != NULL) {
+                // Scrive i dati della partita nel file
+                fwrite(&partita_corrente, sizeof(partita), 1, file_salvataggio);
+                fclose(file_salvataggio);
+
+                // Visualizza l'interfaccia per caricare/selezionare slot di salvataggio
+                /* MANCA INTERFACCIA DI CARICARE PARTITA
+                 CONTROLLARE ASSOLUTAMENTE QUESRA PARTE.
+
+
+				*/
+                // Legge la scelta dell'utente per lo slot di salvataggio (1-5)
+                comando_utente = getchar();
+                comando_utente = convertire_lettera_in_numero(comando_utente);
+
+                // Verifica che la scelta sia valida (tra 1 e 5) e salva nello slot corrispondente
+                if (comando_utente < NUM_6 && comando_utente > NUM_0) {
+                    partite_salvate[comando_utente - NUM_1] = partita_corrente;
+                }
+            }
+        }
+
+        // Gestisce il comando per inserire un valore nella griglia
+        if (comando_utente == 'I') {
+            // Legge le coordinate e il valore dall'utente
+            printf("Inserisci riga: ");
+            scanf("%d", &riga);
+            printf("Inserisci colonna: ");
+            scanf("%d", &colonna);
+            printf("Inserisci valore: ");
+            scanf("%d", &valore);
+
+            // Ottiene la griglia corrente dalla partita
+            griglia griglia_corrente = partita_leggere_griglia(partita_corrente);
+
+            // Aggiorna la griglia con il nuovo valore se l'input è valido
+            griglia_corrente = aggiornare_griglia(griglia_corrente, valore, riga, colonna);
+
+            // Scrive la griglia aggiornata nella partita
+            partita_corrente = partita_scrivere_griglia(partita_corrente, griglia_corrente);
+        }
+
+    } while (comando_utente != NUM_27); // Continua fino alla pressione del tasto ESC
+
+    return partite_salvate;
+}
