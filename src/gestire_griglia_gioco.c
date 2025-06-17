@@ -24,12 +24,12 @@ griglia riempire_griglia(impostazioni impostazioni_utente){
 	numeri_da_inserire = n_numeri_di_griglia(impostazioni_utente);
 
 	while(i < numeri_da_inserire){
-			coordinata_x = rand() % impostazioni_leggere_dimensione_griglia(impostazioni_utente) + 1;
-			coordinata_y = rand() % impostazioni_leggere_dimensione_griglia(impostazioni_utente) + 1;
-			if(verificare_coordinate_e_valore(coordinata_x, coordinata_y) == 1){
-					valore = rand() % impostazioni_leggere_dimensione_griglia(impostazioni_utente) + 1;
-					if(verificare_numero_da_inserire(griglia, valore, coordinata_x, coordinata_y) == 1){
-							if(valore < 9){
+			coordinata_x = rand() % impostazioni_leggere_dimensione_griglia(impostazioni_utente) + NUM_1;
+			coordinata_y = rand() % impostazioni_leggere_dimensione_griglia(impostazioni_utente) + NUM_1;
+			if(verificare_coordinate_e_valore(coordinata_x, coordinata_y) == NUM_1){
+					valore = rand() % impostazioni_leggere_dimensione_griglia(impostazioni_utente) + NUM_1;
+					if(verificare_numero_da_inserire(griglia, valore, coordinata_x, coordinata_y) == NUM_1){
+							if(valore < NUM_9){
 									griglia_scrivere_valore(&griglia, coordinata_x, coordinata_y, valore);
 							}else{
 									valore = convertire_numeri_in_lettere(valore);
