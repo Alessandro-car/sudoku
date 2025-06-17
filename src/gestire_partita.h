@@ -13,5 +13,7 @@ bool_t verificare_numero_da_inserire(griglia griglia, int numero_da_inserire, in
 bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da_inserire, int dimensione_regione);
 bool_t validare_riga_input(int riga, int dim_griglia);
 void salvare_partita(FILE* file_salvataggio, partita partita_da_salvare);
+bool_t controllare_riga(griglia sudoku, int riga, int numero_da_inserire, int dimensione_sudoku);
+
 
 #endif
