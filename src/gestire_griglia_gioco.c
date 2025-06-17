@@ -4,6 +4,10 @@
 #include "utils.h"
 #include "gestire_partita.h"
 #include "gestire_griglia_gioco.h"
+#include "tipi_di_dato/griglia.h"
+#include "tipi_di_dato/impostazioni.h"
+
+
 
 //Funzione che si occupa di riempire la griglia iniziale seguendo le impostazioni utente
 griglia riempire_griglia(impostazioni impostazioni_utente){
@@ -36,5 +40,14 @@ griglia riempire_griglia(impostazioni impostazioni_utente){
 			i = i + 1;
 	}
 	return griglia;
+}
+
+// Funzione che inizializza la griglia del Sudoku basandosi sulle impostazioni selezionate dall'utente
+griglia inizializzare_griglia(impostazioni impostazioni_selezionate) {
+    griglia griglia_sudoku;  // Griglia che verrà generata e restituita
+
+    griglia_sudoku = riempire_griglia(impostazioni_selezionate);
+
+    return griglia_sudoku;
 }
 
