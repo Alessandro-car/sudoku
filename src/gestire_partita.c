@@ -2,6 +2,8 @@
 #include "costanti.h"
 #include "tipi_di_dato/griglia.h"
 #include "tipi_di_dato/partita.h"
+#include "utils.h"
+
 
 //Funzione che esegue un controllo sulla colonna inserita in input dall'utente, essa verifica se è valida o meno.
 bool_t validare_colonna_input(int colonna, int dim_griglia) {
@@ -109,3 +111,31 @@ void salvare_partita(FILE* file_salvataggio, partita partita_da_salvare) {
 	return;
 }
 
+// Verifica che il numero non sia già presente nella riga specificata
+bool_t controllare_riga(griglia sudoku, int riga, int numero_da_inserire, int dimensione_sudoku) {
+    bool_t corretto;
+    int j;
+    int valore_cella;
+
+    // Inizializziamo il risultato come VERO (mettiamo inizialmente che il numero può essere inserito)
+    corretto = VERO;
+    j = 0;
+
+    // Scorriamo tutte le colonne della riga specificataa
+    while (j <= dimensione_sudoku) {
+        // Leggiamo il valore presente nella cella corrente (riga, colonna j)
+        valore_cella = griglia_leggere_valore(sudoku, riga, j);
+
+        // Se il valore nella cella corrente è uguale al numero che vogliamo inserire,
+        // allora il numero non può essere inserito in questa riga
+        if (valore_cella == numero_da_inserire) {
+            corretto = FALSO;
+        }
+
+        // Passiamo alla colonna successiva
+        j = j + 1;
+    }
+
+    // Restituiamo VERO se il numero può essere inserito, FALSO altrimenti
+    return corretto;
+}
