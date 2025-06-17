@@ -27,7 +27,21 @@ typedef enum {
 	CHAR_8 = 56,
 	CHAR_9 = 57,
 	CHAR_A = 65,
-	CHAR_G = 71
-} ASCII_CODE;
+	CHAR_G = 71,
+	CHAR_a = 97,
+	CHAR_z = 122
 
+} ASCII_CODE;
+/*
+typedef enum {
+
+	NUM_0 = 0,
+	NUM_1 = 1,
+	NUM_6 = 6,
+	NUM_9 = 9,
+
+	NUM_27 = 27
+
+} NUMERI;
+*/
 #endif
