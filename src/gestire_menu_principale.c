@@ -78,7 +78,7 @@ stringa* iniziare_partita() {
 			//TODO: Funzione giocare_partita
 			//nome_partite_salvate = giocare_partita(partita);
 		}
-	} while(comando_utente != '4' || comando_utente != '5');
+	} while(comando_utente != '4' && comando_utente != '5');
 	return nome_partite_salvate;
 }
 

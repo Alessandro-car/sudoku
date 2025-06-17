@@ -3,18 +3,19 @@
 #include "utils.h"
 #include "costanti.h"
 #include "tipi_di_dato/partita.h"
+#include "tipi_di_dato/stringa.h"
 
 //La seguente funzione permette di convertire le lettere passate in input in numeri
 int convertire_lettera_in_numero(char lettera) {
-		int numero;
-		numero = -1; //Inizializza numero con -1
+	int numero;
+	numero = -1; //Inizializza numero con -1
 
-		if (lettera >= 'A' && lettera <= 'G') { //Effettua il controllo sulla lettera, deve essere essere un carattere che permette di ottenere un numero sottraendo 55
-			numero = lettera - 55;
-		} else if (lettera >= '0' && lettera <= '9') { //Effettua il controllo sulla lettera, deve essere un carattere che permette di ottenere un numero sottraendo 48
-			numero = lettera - 48;
-		}
-		return numero;
+	if (lettera >= 'A' && lettera <= 'G') { //Effettua il controllo sulla lettera, deve essere essere un carattere che permette di ottenere un numero sottraendo 55
+		numero = lettera - 55;
+	} else if (lettera >= '0' && lettera <= '9') { //Effettua il controllo sulla lettera, deve essere un carattere che permette di ottenere un numero sottraendo 48
+		numero = lettera - 48;
+	}
+	return numero;
 }
 
 // La seguente funzione permette di convertire i numeri passati da input in lettere
@@ -34,7 +35,8 @@ char convertire_numeri_in_lettere(int numero) {
 partita caricare_partita_da_file(stringa nome_file_partita) {
 	FILE* file_partita;
 	partita partita_caricata;
-	file_partita = fopen(nome_file_partita.caratteri, "rb");
+
+	file_partita = fopen(stringa_leggere_array(nome_file_partita), "rb");
 	fread(&partita_caricata.nome_partita, sizeof(stringa), 1, file_partita);
 	fread(&partita_caricata.griglia_partita, sizeof(griglia), 1 , file_partita);
 	fread(&partita_caricata.impostazioni_partita, sizeof(impostazioni), 1, file_partita);

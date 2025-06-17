@@ -5,7 +5,7 @@
 #include "tipi_di_dato/impostazioni.h"
 #include "utils.h"
 
-int selezionare_dimensione_griglia() {
+void menu_scelta_dimensione_griglia() {
 	printf("%*s| DIMENSIONE | %*s\n", 33, "", 33, "");
 	printf("%*s+------------+%*s", 33, "", 33, "");
 	printf("\n\n\n\n\n\n\n");
@@ -14,6 +14,12 @@ int selezionare_dimensione_griglia() {
 	printf("\n%*s3. Grande:   16 \u00D7 16%*s", 31, "", 31, "");
 	printf("\n%*s4. Torna indietro%*s", 31, "", 31, "");
 	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n");
+
+	return;
+}
+
+int selezionare_dimensione_griglia() {
+	menu_scelta_dimensione_griglia();
 	int comando_utente;
 	comando_utente = nascondere_input_utente();
 	int dim_griglia_scelta;
@@ -47,15 +53,15 @@ void menu_scelta_difficolta() {
 	printf("%*s\t 5. Indietro\n\n", 	27, "");
 
 	printf("\n\n\n\n\n\n\n");
-	
+
 	return;
 }
 
 //Funzione che si occupa di inizializzare la struttura partita.
 void inizializzare_partita(impostazioni impostazioni_utente, griglia griglia, stringa nome_partita, partita *partita) {
 	partita_scrivere_impostazioni(partita, impostazioni_utente);
-    partita_scrivere_griglia(partita, griglia);
-    partita_scrivere_nome(partita, nome_partita);
+  partita_scrivere_griglia(partita, griglia);
+  partita_scrivere_nome(partita, nome_partita);
 
-    return;
+  return;
 }

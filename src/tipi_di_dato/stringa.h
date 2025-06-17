@@ -12,5 +12,6 @@ int stringa_leggere_dimensione(stringa str);
 void stringa_scrivere_dimensione(stringa* str, int nuova_dimensione);
 char stringa_leggere_carattere(stringa str, int pos);
 void stringa_scrivere_carattere(stringa* str, int pos, char carattere);
+char* stringa_leggere_array(stringa str);
 
 #endif

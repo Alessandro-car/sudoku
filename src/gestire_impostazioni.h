@@ -6,6 +6,7 @@
 #include "tipi_di_dato/stringa.h"
 #include "tipi_di_dato/partita.h"
 
+void menu_scelta_dimensione_griglia();
 int selezionare_dimensione_griglia();
 void impostare_parametri_di_gioco(impostazioni* impostazioni_gioco, int difficolta_scelta, int dim_griglia_scelta);
 void menu_scelta_difficolta();

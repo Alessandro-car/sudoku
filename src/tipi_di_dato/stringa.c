@@ -1,5 +1,7 @@
 #include "stringa.h"
 
+#include <stdlib.h>
+
 int stringa_leggere_dimensione(stringa str) {
 	int dimensione;
 	dimensione = str.dimensione_stringa;
@@ -22,3 +24,9 @@ void stringa_scrivere_carattere(stringa* str, int pos, char carattere) {
 	return;
 }
 
+char* stringa_leggere_array(stringa str) {
+	char* stringa_letta;
+	int dim_stringa = stringa_leggere_dimensione(str);
+	stringa_letta = malloc(dim_stringa * sizeof(char));
+	return stringa_letta;
+}

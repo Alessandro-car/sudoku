@@ -68,4 +68,47 @@ RIPETI
 					partite_salvate = giocare_partita(partita_caricata)
 			FINE
 	FINE
-FINCHE(comando_utente̸ = ’3’)
+FINCHE(comando_utente <> ’3’)
+
+-------
+
+FUNZIONE iniziare_partita
+
+INPUT
+
+impostazioni_di_gioco,  impostazioni del gioco,  impostazioni
+difficolta_scelta,  difficoltà scelta dall'utente,  numero naturale
+dim_griglia_scelta,  dimensione della griglia scelta dall'utente,  numero naturale
+nome_partita,  nome della partita,  stringa
+partita,  partita che verrà iniziata ed inserita all'interno di partite_salvate,  partita
+
+OUTPUT
+
+partite_salvate, array delle partite salvate,  array di file_binario
+
+DATI DI LAVORO
+
+griglia_sudoku, griglia della partita, griglia
+
+Pseudocodice:
+
+RIPETI
+	stampa_a_video(INTERFACCIA_MENU_OPZIONI)
+	comando_utente = leggere_da_tastiera()
+	SE (comando_utente = '1')
+		ALLORA difficolta_scelta = selezionare_difficolta(difficolta_scelta)
+	FINE
+	SE(comando_utente = '2')
+		ALLORA dim_griglia_scelta = selezionare_dimensione_griglia(dim_griglia_scelta)
+	FINE
+	SE (comando_utente = '3')
+		ALLORA nome_partita = leggere_da_tastiera()
+	FINE
+	SE (comando_utente = '4')
+		ALLORA
+			impostazioni_di_gioco = impostare_parametri_di_gioco(impostazioni_di_gioco, difficolta_scelta, dim_griglia_scelta)
+			griglia_sudoku = inizializzare_griglia(impostazioni_di_gioco)
+			partita = inizializzare_partita(impostazioni_di_gioco, griglia_sudoku, nome_partita, partita)
+			partite_salvate = giocare_partita(partita)
+	FINE
+FINCHE (comando_utente <> '4' AND comando_utente <> '5')
