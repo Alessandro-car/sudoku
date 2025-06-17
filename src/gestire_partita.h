@@ -14,6 +14,8 @@ bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da
 bool_t validare_riga_input(int riga, int dim_griglia);
 void salvare_partita(FILE* file_salvataggio, partita partita_da_salvare);
 bool_t controllare_riga(griglia sudoku, int riga, int numero_da_inserire, int dimensione_sudoku);
+partita* giocare_partita(partita partita_corrente);
+void stampare_interfaccia_impostazioni(void);
 
 
 #endif
