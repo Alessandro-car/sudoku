@@ -52,3 +52,19 @@ int nascondere_input_utente() {
 
 	return comando_utente;
 }
+
+// Funzione che converte una lettera minuscola in maiuscola utilizzando i codici ASCII
+char convertire_minuscolo_maiuscolo(char lettera) {
+    char lettera_convertita;  // Carattere risultante dalla conversione
+
+
+    lettera_convertita = lettera;
+
+    // Controlliamo se il carattere Ã¨ una lettera minuscola
+    if ((lettera_convertita >= CHAR_a) && (lettera_convertita <= CHAR_z)) {
+        lettera_convertita = lettera - 32; // viene sottratto 32 poichè bisogna portare da lettera minuscola a maiuscola basandoci sull'ascii
+    }
+
+    // Restituiamo il carattere convertito
+    return lettera_convertita;
+}
