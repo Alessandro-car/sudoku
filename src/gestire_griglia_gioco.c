@@ -8,6 +8,26 @@
 #include "tipi_di_dato/impostazioni.h"
 
 
+//Funzione per determinare quanti numeri inserire inizialmente nella griglia  
+int n_numeri_di_griglia (impostazioni impostazioni_gioco){
+    int difficolta				//Difficoltà scelta in precedenza dall'utente	
+    int dimensione_griglia;			//Dimensione della griglia del sudoku
+    int numeri_da_inserire_in_griglia		//Numeri da inserire ad inizio partita in base alla difficoltà e alla dimensione della griglia 
+
+    difficolta = impostazioni_leggere_difficolta(impostazioni_gioco);
+    dimensione_griglia = griglia_leggere_dimensione(impostazioni_gioco);
+
+    if (difficolta == 0){
+        numeri_da_inserire_in_griglia = (dimensione_griglia*dimensione_griglia) * PERCENTUALE_DIFFICOLTA_FACILE;
+    }
+    if (difficolta == 1){
+        numeri_da_inserire_in_griglia = (dimensione_griglia*dimensione_griglia) * PERCENTUALE_DIFFICOLTA_MEDIA;
+    }
+    if (difficolta == 2){
+        numeri_da_inserire_in_griglia = (dimensione_griglia*dimensione_griglia) * PERCENTUALE_DIFFICOLTA_DIFICILE;
+    }
+    return numeri_da_inserire_in_griglia;
+}
 
 //Funzione che si occupa di riempire la griglia iniziale seguendo le impostazioni utente
 griglia riempire_griglia(impostazioni impostazioni_utente){
