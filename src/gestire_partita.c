@@ -4,6 +4,16 @@
 #include "tipi_di_dato/partita.h"
 #include "utils.h"
 
+//Funzione che inserisce un valore nella griglia del sudoku dopo averne controllato la correttezza 
+griglia aggiornare_griglia (griglia griglia, int valore, int riga, int colonna){
+    bool_t validato; //Indica se il valore inserito è valido o meno
+	
+    validato = VERO;
+    if (validare_input_utente(riga, colonna, valore, griglia) == validato){
+        griglia = griglia_scrivere_valore(griglia, riga, colonna, valore);
+    }
+    return griglia;
+}
 
 //Funzione che esegue un controllo sulla colonna inserita in input dall'utente, essa verifica se è valida o meno.
 bool_t validare_colonna_input(int colonna, int dim_griglia) {
