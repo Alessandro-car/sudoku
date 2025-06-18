@@ -5,6 +5,45 @@
 #include "tipi_di_dato/partita.h"
 #include "tipi_di_dato/stringa.h"
 
+// La seguente funzione permette di calcolare il resto intero della divisione tra numeratore e denominatore
+int calcolare_resto_intero (int numeratore, int denominatore) {
+    int r;		//Resto intero della divisione 
+    int q;		//Quoziente della divisione utile a calcplare il resto 
+
+    q = 0;
+    // calcolo del quoziente
+    while (numeratore >= denominatore) 
+    {
+        q = q + 1;
+        numeratore = numeratore - denominatore;
+    }
+    //Calcolo del resto
+    r = numeratore - denominatore * q;
+    return r;
+}
+// La seguente funzione permette di calcolare la radice quadrata intera di un numero
+int calcolare_radice_quadrata (int radicando){
+    int radice;             //Possibile radice quadrata intera
+    int radice_quad;        //Quadrato di radice
+    bool_t trovato;         //Indica se è stata trovata una radice esatta
+
+    trovato = FALSO;
+    radice = 2;
+    radice_quad = radice * radice;
+    while (radicando >= radice_quad && trovato == FALSO) {
+        if (radice_quad == radicando) {
+            trovato = VERO;
+            radice = radice - 1; 
+        } 
+        radice = radice + 1;
+        radice_quad = radice * radice;
+        }
+    if (trovato == FALSO) {
+        radice = 0;
+    }
+    return radice;
+}
+
 //La seguente funzione permette di convertire le lettere passate in input in numeri
 int convertire_lettera_in_numero(char lettera) {
 	int numero;
