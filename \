@@ -244,7 +244,7 @@ void stampa_griglia(griglia griglia_gioco) {
 	while(i < griglia_leggere_dimensione(griglia_gioco)) {
 		int j;
 		j = 0;
-		impostare_coordinate_cursore(4, 3 + i);
+		impostare_coordinate_cursore(3 + i, 4);
 		printf("|");
 		while(j < griglia_leggere_dimensione(griglia_gioco)) {
 			char valore_griglia;
