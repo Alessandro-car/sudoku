@@ -5,6 +5,23 @@
 #include "tipi_di_dato/impostazioni.h"
 #include "utils.h"
 
+int selezionare_difficolta(int difficolta_scelta) {
+    menu_scelta_difficolta();
+    char comando_utente;
+    difficolta_scelta = DIFFICOLTA_STANDARD;
+    comando_utente = nascondere_input_utente();
+    if (comando_utente == '1'){
+        difficolta_scelta = DIFFICOLTA_STANDARD;
+    }
+    if (comando_utente == '2'){
+        difficolta_scelta = DIFFICOLTA_MEDIA;
+    }
+    if (comando_utente == '3'){
+        difficolta_scelta = DIFFICOLTA_DIFFICILE;
+    }
+	return difficolta_scelta;
+}
+
 void menu_scelta_dimensione_griglia() {
 	printf("%*s| DIMENSIONE | %*s\n", 33, "", 33, "");
 	printf("%*s+------------+%*s", 33, "", 33, "");
