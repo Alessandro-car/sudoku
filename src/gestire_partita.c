@@ -1,9 +1,7 @@
 #include "gestire_partita.h"
 #include "costanti.h"
-#include "tipi_di_dato/griglia.h"
 #include "tipi_di_dato/partita.h"
 #include "tipi_di_dato/stringa.h"
-#include "utils.h"
 
 #include <stdlib.h>
 
@@ -126,45 +124,45 @@ void salvare_partita(FILE* file_salvataggio, partita partita_da_salvare) {
 
 // Verifica che il numero non sia già presente nella riga specificata
 bool_t controllare_riga(griglia sudoku, int riga, int numero_da_inserire, int dimensione_sudoku) {
-    bool_t corretto;
-    int j;
-    int valore_cella;
+	bool_t corretto;
+	int j;
+	int valore_cella;
 
-    // Inizializziamo il risultato come VERO (mettiamo inizialmente che il numero può essere inserito)
-    corretto = VERO;
-    j = 0;
+	// Inizializziamo il risultato come VERO (mettiamo inizialmente che il numero può essere inserito)
+	corretto = VERO;
+	j = 0;
 
-    // Scorriamo tutte le colonne della riga specificataa
-    while (j <= dimensione_sudoku) {
-        // Leggiamo il valore presente nella cella corrente (riga, colonna j)
-        valore_cella = griglia_leggere_valore(sudoku, riga, j);
+	// Scorriamo tutte le colonne della riga specificataa
+	while (j <= dimensione_sudoku) {
+		// Leggiamo il valore presente nella cella corrente (riga, colonna j)
+		valore_cella = griglia_leggere_valore(sudoku, riga, j);
 
-        // Se il valore nella cella corrente è uguale al numero che vogliamo inserire,
-        // allora il numero non può essere inserito in questa riga
-        if (valore_cella == numero_da_inserire) {
-            corretto = FALSO;
-        }
+		// Se il valore nella cella corrente è uguale al numero che vogliamo inserire,
+		// allora il numero non può essere inserito in questa riga
+		if (valore_cella == numero_da_inserire) {
+				corretto = FALSO;
+		}
 
-        // Passiamo alla colonna successiva
-        j = j + 1;
-    }
+		// Passiamo alla colonna successiva
+		j = j + 1;
+	}
 
-    // Restituiamo VERO se il numero può essere inserito, FALSO altrimenti
-    return corretto;
+	// Restituiamo VERO se il numero può essere inserito, FALSO altrimenti
+	return corretto;
 }
 
 void stampare_interfaccia_impostazioni(void) {
-    printf("Menu opzioni\n\n");
-     printf("%*s| IMPOSTAZIONI |\n", 34, "");
-     printf("%*s+--------------+\n", 34, "");
-     printf("\n\n\n\n\n\n\n\n"); // 8 righe vuote
-     printf("%*s\t 1. Scegli difficolta'\n", 31, "");
-     printf("%*s\t 2. Scegli dimensione\n", 31, "");
-     printf("%*s\t 3. Inserisci nome partita\n", 31, "");
-     printf("%*s\t 4. Prosegui\n", 31, "");
-     printf("%*s\t 5. Torna indietro\n", 31, "");
-     getchar();
-     return;
+	printf("Menu opzioni\n\n");
+	printf("%*s| IMPOSTAZIONI |\n", 34, "");
+	printf("%*s+--------------+\n", 34, "");
+	printf("\n\n\n\n\n\n\n\n"); // 8 righe vuote
+ 	printf("%*s\t 1. Scegli difficolta'\n", 31, "");
+ 	printf("%*s\t 2. Scegli dimensione\n", 31, "");
+ 	printf("%*s\t 3. Inserisci nome partita\n", 31, "");
+ 	printf("%*s\t 4. Prosegui\n", 31, "");
+ 	printf("%*s\t 5. Torna indietro\n", 31, "");
+	getchar();
+	return;
 }
 
 stringa* giocare_partita(partita partita_corrente) {
@@ -180,54 +178,54 @@ stringa* giocare_partita(partita partita_corrente) {
 
 	// Loop principale del gioco - continua fino a quando l'utente non preme ESC (codice ASCII 27)
 	do {
-			// TODO: Visualizzare l'interfaccia di gioco
-			stampare_schermata_di_gioco(partita_leggere_griglia(partita_corrente));
-			// Legge il comando dell'utente e lo converte da minuscolo a maiuscolo se necessario
-			comando_utente = nascondere_input_utente();
-			comando_utente = convertire_minuscolo_maiuscolo(comando_utente);
+		// TODO: Visualizzare l'interfaccia di gioco
+		stampare_schermata_di_gioco(partita_leggere_griglia(partita_corrente));
+		// Legge il comando dell'utente e lo converte da minuscolo a maiuscolo se necessario
+		comando_utente = nascondere_input_utente();
+		comando_utente = convertire_minuscolo_maiuscolo(comando_utente);
 
-			// Gestisce il comando di salvataggio della partita
-			if (comando_utente == 'S') {
-					// Apre il file in modalità scrittura binaria per salvare la partita
-					file_salvataggio = fopen(stringa_leggere_array(nome_file), "wb");
-					if (file_salvataggio != NULL) {
-							// Scrive i dati della partita nel file
-							fwrite(&partita_corrente, sizeof(partita), 1, file_salvataggio);
-							fclose(file_salvataggio);
+		// Gestisce il comando di salvataggio della partita
+		if (comando_utente == 'S') {
+			// Apre il file in modalità scrittura binaria per salvare la partita
+			file_salvataggio = fopen(stringa_leggere_array(nome_file), "wb");
+			if (file_salvataggio != NULL) {
+				// Scrive i dati della partita nel file
+				fwrite(&partita_corrente, sizeof(partita), 1, file_salvataggio);
+				fclose(file_salvataggio);
 
-							// Visualizza l'interfaccia per caricare/selezionare slot di salvataggio
-							// TODO: MANCA INTERFACCIA DI CARICARE PARTITA CONTROLLARE ASSOLUTAMENTE QUESRA PARTE
+				// Visualizza l'interfaccia per caricare/selezionare slot di salvataggio
+				// TODO: MANCA INTERFACCIA DI CARICARE PARTITA CONTROLLARE ASSOLUTAMENTE QUESRA PARTE
 
-							// Legge la scelta dell'utente per lo slot di salvataggio (1-5)
-							comando_utente = nascondere_input_utente();
-							comando_utente = convertire_lettera_in_numero(comando_utente);
+				// Legge la scelta dell'utente per lo slot di salvataggio (1-5)
+				comando_utente = nascondere_input_utente();
+				comando_utente = convertire_lettera_in_numero(comando_utente);
 
-							// Verifica che la scelta sia valida (tra 1 e 5) e salva nello slot corrispondente
-							if (comando_utente < 6 && comando_utente > 0) {
-									partite_salvate[comando_utente - 1] = nome_file;
-							}
-					}
+				// Verifica che la scelta sia valida (tra 1 e 5) e salva nello slot corrispondente
+				if (comando_utente < 6 && comando_utente > 0) {
+						partite_salvate[comando_utente - 1] = nome_file;
+				}
 			}
+		}
 
-			// Gestisce il comando per inserire un valore nella griglia
-			if (comando_utente == 'I') {
-					// Legge le coordinate e il valore dall'utente
-					printf("Inserisci riga: ");
-					scanf("%d", &riga);
-					printf("Inserisci colonna: ");
-					scanf("%d", &colonna);
-					printf("Inserisci valore: ");
-					scanf("%d", &valore);
+		// Gestisce il comando per inserire un valore nella griglia
+		if (comando_utente == 'I') {
+				// Legge le coordinate e il valore dall'utente
+			printf("Inserisci riga: ");
+			scanf("%d", &riga);
+			printf("Inserisci colonna: ");
+			scanf("%d", &colonna);
+			printf("Inserisci valore: ");
+			scanf("%d", &valore);
 
-					// Ottiene la griglia corrente dalla partita
-					griglia griglia_corrente = partita_leggere_griglia(partita_corrente);
+			// Ottiene la griglia corrente dalla partita
+			griglia griglia_corrente = partita_leggere_griglia(partita_corrente);
 
-					// Aggiorna la griglia con il nuovo valore se l'input è valido
-					griglia_corrente = aggiornare_griglia(griglia_corrente, valore, riga, colonna);
+			// Aggiorna la griglia con il nuovo valore se l'input è valido
+			griglia_corrente = aggiornare_griglia(griglia_corrente, valore, riga, colonna);
 
-					// Scrive la griglia aggiornata nella partita
-					partita_scrivere_griglia(&partita_corrente, griglia_corrente);
-			}
+			// Scrive la griglia aggiornata nella partita
+			partita_scrivere_griglia(&partita_corrente, griglia_corrente);
+		}
 	} while (comando_utente != 27); // Continua fino alla pressione del tasto ESC
 
 	return partite_salvate;

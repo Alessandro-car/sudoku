@@ -2,7 +2,6 @@
 #define GESTIRE_PARTITA_H_
 
 #include <stdio.h>
-#include "tipi_di_dato/gestire_partita.h"
 #include "tipi_di_dato/griglia.h"
 #include "utils.h"
 

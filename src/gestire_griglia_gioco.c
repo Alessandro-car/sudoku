@@ -18,13 +18,13 @@ int n_numeri_di_griglia(impostazioni impostazioni_gioco) {
 	dimensione_griglia = impostazioni_leggere_dimensione_griglia(impostazioni_gioco);
 
 	if (difficolta == 0){
-			numeri_da_inserire_in_griglia = (dimensione_griglia * dimensione_griglia) * PERCENTUALE_DIFFICOLTA_FACILE;
+		numeri_da_inserire_in_griglia = (dimensione_griglia * dimensione_griglia) * PERCENTUALE_DIFFICOLTA_FACILE;
 	}
 	if (difficolta == 1){
-			numeri_da_inserire_in_griglia = (dimensione_griglia * dimensione_griglia) * PERCENTUALE_DIFFICOLTA_MEDIA;
-	}
+		numeri_da_inserire_in_griglia = (dimensione_griglia * dimensione_griglia) * PERCENTUALE_DIFFICOLTA_MEDIA;
+}
 	if (difficolta == 2){
-			numeri_da_inserire_in_griglia = (dimensione_griglia * dimensione_griglia) * PERCENTUALE_DIFFICOLTA_DIFFICILE;
+		numeri_da_inserire_in_griglia = (dimensione_griglia * dimensione_griglia) * PERCENTUALE_DIFFICOLTA_DIFFICILE;
 	}
 	return numeri_da_inserire_in_griglia;
 }
@@ -44,30 +44,30 @@ griglia riempire_griglia(impostazioni impostazioni_utente){
 	numeri_da_inserire = n_numeri_di_griglia(impostazioni_utente);
 
 	while(i < numeri_da_inserire){
-			coordinata_x = rand() % impostazioni_leggere_dimensione_griglia(impostazioni_utente) + 1;
-			coordinata_y = rand() % impostazioni_leggere_dimensione_griglia(impostazioni_utente) + 1;
-			if(verificare_coordinate_e_valore(coordinata_x, coordinata_y) == 1){
-					valore = rand() % impostazioni_leggere_dimensione_griglia(impostazioni_utente) + 1;
-					if(verificare_numero_da_inserire(griglia, valore, coordinata_x, coordinata_y) == 1){
-							if(valore < 9){
-									griglia_scrivere_valore(&griglia, coordinata_x, coordinata_y, valore);
-							}else{
-									valore = convertire_numeri_in_lettere(valore);
-									griglia_scrivere_valore(&griglia, coordinata_x, coordinata_y, valore);
-							}
-					}
-			}
-			i = i + 1;
+		coordinata_x = rand() % impostazioni_leggere_dimensione_griglia(impostazioni_utente) + 1;
+		coordinata_y = rand() % impostazioni_leggere_dimensione_griglia(impostazioni_utente) + 1;
+		if(verificare_coordinate_e_valore(coordinata_x, coordinata_y) == 1){
+				valore = rand() % impostazioni_leggere_dimensione_griglia(impostazioni_utente) + 1;
+				if(verificare_numero_da_inserire(griglia, valore, coordinata_x, coordinata_y) == 1){
+						if(valore < 9){
+								griglia_scrivere_valore(&griglia, coordinata_x, coordinata_y, valore);
+						}else{
+								valore = convertire_numeri_in_lettere(valore);
+								griglia_scrivere_valore(&griglia, coordinata_x, coordinata_y, valore);
+						}
+				}
+		}
+		i = i + 1;
 	}
 	return griglia;
 }
 
 // Funzione che inizializza la griglia del Sudoku basandosi sulle impostazioni selezionate dall'utente
 griglia inizializzare_griglia(impostazioni impostazioni_selezionate) {
-    griglia griglia_sudoku;  // Griglia che verrà generata e restituita
+	griglia griglia_sudoku;  // Griglia che verrà generata e restituita
 
-    griglia_sudoku = riempire_griglia(impostazioni_selezionate);
+	griglia_sudoku = riempire_griglia(impostazioni_selezionate);
 
-    return griglia_sudoku;
+	return griglia_sudoku;
 }
 
