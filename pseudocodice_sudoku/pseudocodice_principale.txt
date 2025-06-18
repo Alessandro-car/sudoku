@@ -1,22 +1,5 @@
 
-FUNZIONE inizializzare_griglia
-
-INPUT
-
-impostazioni_selezionate, impostazioni selezionate in precedenza dall'utente, impostazioni
-
-OUTPUT
-
-griglia_sudoku, griglia del sudoku generata con le impostazioni selezionate, griglia
-
-pseudocodice:
-
-griglia_sudoku = riempire_griglia(impostazioni_utente)
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-FUNZIONE giocare_partita
+FUNZIONE giocare_partita 
 
 INPUT
 
@@ -56,7 +39,7 @@ FINCHE (comando_utente <> 27)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-FUNZIONE  salvare_partita:
+FUNZIONE  salvare_partita: 
  
 INPUT
 
@@ -73,7 +56,7 @@ pseudocodice:
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-FUNZIONE caricare_partita :
+FUNZIONE caricare_partita 
  
 INPUT
 
@@ -323,7 +306,7 @@ dimensione_griglia = griglia_leggere_dimensione(impostazioni_gioco)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-FUNZIONE riempire_griglia
+FUNZIONE inizializzare_griglia
 
 INPUT
 
@@ -434,93 +417,70 @@ FINE
 FUNZIONE controllare_riga
 
 INPUT
-
-griglia, griglia del sudoku in cui verificare se il numero può essere inserito nella riga, griglia
-riga, riga in cui controllare, numero naturale 
-numero_da_inserire, numero da verificare che non sia presente nella riga, numero naturale
-dimensione_sudoku, dimensione di un lato del sudoku, numero naturale
+- riga,  riga in cui controllare, numero naturale
+- numero_da_inserire, numero da verificare che non sia presente nella riga, numero naturale
 
 OUTPUT
+- corretto, indica se il numero può essere inserito, booleano
 
-corretto, indica se il numero può essere inserito, booleano
-
-DATI DI LAVORO
-
-j, indice delle colonne della griglia del sudoku, numero naturale >0
-
-pseudocodice:
-
+PSEUDOCODICE
 corretto = VERO
-j = 1
-MENTRE(j<= dimensione_sudoku(griglia))
-	SE(griglia_leggere_valore(sudoku,riga,j) = numero_da_inserire)
-		corretto = FALSO
-	FINE
-	j = j + 1
-FINE
-
+i = 1
+MENTRE(i<= griglia_leggere_dimensione(griglia))
+  SE(griglia_leggere_valore(griglia, riga, i) = numero_da_inserire)
+   corretto = FALSO
+  FINE
+  i = i + 1
+ FINE
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 FUNZIONE controllare_colonna
 
 INPUT
-
-griglia, griglia del sudoku in cui verificare se il numero può essere inserito nella colonna, griglia
-colonna, colonna in cui controllare, numero naturale 
-numero_da_inserire, numero da verificare che non sia presente nella colonna, numero naturale
-dimensione_sudoku, dimensione di un lato del sudoku, numero naturale
+- colonna, colonna in cui controllare, numero naturale
+- numero_da_inserire, numero da verificare che non sia presente nella colonna, numero naturale
 
 OUTPUT
+- corretto, indica se il numero può essere inserito, booleano
 
-corretto, indica se il numero può essere inserito, booleano
-
-DATI DI LAVORO
-
-i, indice delle righe della griglia del sudoku, numero naturale >0
-
-pseudocodice:
-
+PSEUDOCODICE
 corretto = VERO
-j = 1
-MENTRE(i<= dimensione_sudoku(griglia))
-	SE(griglia_leggere_valore(sudoku,riga,i) = numero_da_inserire)
-		corretto = FALSO
-	FINE
-	i = i + 1
-FINE
+i = 1
+MENTRE(i<= griglia_leggere_dimensione(griglia))
+  SE(griglia_leggere_valore(griglia, i, colonna) = numero_da_inserire)
+   corretto = FALSO
+  FINE
+  i = i + 1
+ FINE
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 FUNZIONE controllare_regione
 
 INPUT
-
 griglia, griglia del sudoku in cui verificare se il numero può essere inserito, griglia
-riga, indica l'inizio dell'indice della regione, numero naturale
-colonna, indica l'inizio dell'indice della regione, numero naturale 
-numero_da_inserire, numero da verificare che non sia presente  nella regione, numero naturale
-dimensione_sudoku, dimensione di un lato del sudoku, numero naturale
+riga, indica l’inizio dell’indice della regione, numero naturale > 0 <= dimensione_griglia - sqrt(dimensione_griglia) + 1
+colonna, indica l’inizio dell’indice della regione, numero naturale > 0 <= dimensione_griglia - sqrt(dimensione_griglia) + 1
+numero_da_inserire, numero da verificare che non sia presente nella regione, numero naturale > 0 <= dimensione_griglia
 
 OUTPUT
-
 corretto, indica se il numero può essere inserito, booleano
 
-DATI DI LAVORO
-
-i, indice delle righe della regione del sudoku, numero naturale
-j, indice delle colonne della griglia del sudoku, numero naturale >0
+LAVORO
+dimensione_regione, dimensione della regione del sudoku, numero naturale > 0 <= sqrt(dimensione_griglia)
+i, indice della riga della griglia, numero naturale > 0 <= dimensione_griglia
+j, indice della colonna della griglia, numero naturale >0 <= dimensione_griglia
 
 pseudocodice:
-
+dimensione_regione = calcolare_radice_quadrata(griglia_leggere_dimensione(griglia))
 corretto = VERO
 i = riga
-MENTRE(i<= riga + dimensione_regione)
+MENTRE(i < riga + dimensione_regione AND corretto = VERO)
 	j = colonna
 	MENTRE(j < colonna + dimensione_regione)
-		SE(griglia_leggere_valore(sudoku, i, j) = numero_da_inserire)
+		SE(griglia_leggere_valore(griglia, i, j) = numero_da_inserire)
 			ALLORA corretto = FALSO
 		FINE
-		j = j + 1
+	j = j + 1
 	FINE
 	i = i + 1
 FINE
@@ -719,7 +679,7 @@ colonna, valore colonna di cui controllare la correttezza, naturale > 0
 dim_griglia, dimensione griglia a cui si riferisce colonna, naturale > 0
 
 OUTPUT
-validato, indica se la riga è valida o meno, booleano
+validato, indica se la colonna è valida o meno, booleano
 
 pseudocodice:
 
