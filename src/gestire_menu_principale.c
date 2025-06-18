@@ -1,14 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "gestire_menu_principale.h"
-#include "costanti.h"
-#include "tipi_di_dato/griglia.h"
-#include "gestire_impostazioni.h"
-#include "tipi_di_dato/impostazioni.h"
-#include "utils.h"
 
 void stampare_interfaccia_menu_principale() {
+	pulire_schermo();
 	printf("%*s| SUDOKU |\n", 		34, "");
 	printf("%*s+--------+\n", 		34, "");
 	printf("\n\n\n\n\n\n\n\n");
@@ -33,9 +26,9 @@ stringa* menu_principale() {
 		}
 		if (comando_utente == '2') {
 			partita partita_caricata;
+			//TODO: gestire errore se non ci sono file salvati
 			partita_caricata = caricare_partita(nome_partite_salvate);
-			//TODO: Funzione giocare_partita
-			//nome_partite_salvate = giocare_partita(partita_caricata);
+			nome_partite_salvate = giocare_partita(partita_caricata);
 		}
 	} while(comando_utente != '3');
 	return nome_partite_salvate;
@@ -48,35 +41,35 @@ stringa* iniziare_partita() {
 	stringa nome_partita;
 	griglia griglia_sudoku;
 	impostazioni impostazioni_gioco;
-	stringa *nome_partite_salvate;
+	partita partita_da_giocare;
+	stringa* nome_partite_salvate;
 
 	difficolta_scelta = DIFFICOLTA_STANDARD;
 	dim_griglia_scelta = DIM_GRIGLIA_STANDARD;
 	nome_partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
 
+
 	do {
-		//TODO: Interfaccia menu opzioni
-		//printf(interfaccia_menu_opzioni);
+		stampare_interfaccia_impostazioni();
 		comando_utente = nascondere_input_utente();
 		if(comando_utente == '1') {
-			 //TODO: Funzione per selezionare la difficolta
-			 //difficolta_scelta = selezionare_difficolta(difficolta_scelta);
+			difficolta_scelta = selezionare_difficolta(difficolta_scelta);
 		}
 		if(comando_utente == '2') {
 			dim_griglia_scelta = selezionare_dimensione_griglia();
 		}
 		if(comando_utente == '3') {
-			//TODO: Aggiusare l'input
-			//scanf("%s", &nome_partita.caratteri);
+			impostare_coordinate_cursore(59, 13);
+			mostrare_cursore();
+			printf(": ");
+			scanf("%s", nome_partita.caratteri);
 		}
+		//TODO: L'opzione '4' non fa nulla
 		if(comando_utente == '4') {
-			impostare_parametri_di_gioco(&impostazioni_gioco, difficolta_scelta, dim_griglia_scelta);
-			//TODO: Funzione di inizializzazione della griglia
-			//griglia_sudoku = inizializzare_griglia(impostazioni_gioco);
-			//TODO: Funzione di inizializzazione della partita
-			//partita = inizializzare_partita(impostazioni_di_gioco, griglia_sudoku, nome_partita, partita);
-			//TODO: Funzione giocare_partita
-			//nome_partite_salvate = giocare_partita(partita);
+			//impostare_parametri_di_gioco(&impostazioni_gioco, difficolta_scelta, dim_griglia_scelta);
+			//inizializzare_griglia(&griglia_sudoku, impostazioni_gioco);
+			//inizializzare_partita(impostazioni_gioco, griglia_sudoku, nome_partita, &partita_da_giocare);
+			nome_partite_salvate = giocare_partita(partita_da_giocare);
 		}
 	} while(comando_utente != '4' && comando_utente != '5');
 	return nome_partite_salvate;

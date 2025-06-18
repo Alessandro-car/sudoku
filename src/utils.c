@@ -1,9 +1,4 @@
-#include <stdio.h>
-
 #include "utils.h"
-#include "costanti.h"
-#include "tipi_di_dato/partita.h"
-#include "tipi_di_dato/stringa.h"
 
 // La seguente funzione permette di calcolare il resto intero della divisione tra numeratore e denominatore
 int calcolare_resto_intero (int numeratore, int denominatore) {
@@ -85,10 +80,10 @@ partita caricare_partita_da_file(stringa nome_file_partita) {
 
 int nascondere_input_utente() {
 	int comando_utente;
+	nascondere_cursore();
 	printf("\033[8m");
 	comando_utente = getchar();
 	printf("\033[0m");
-
 	return comando_utente;
 }
 
@@ -108,6 +103,18 @@ char convertire_minuscolo_maiuscolo(char lettera) {
     return lettera_convertita;
 }
 
-void impostare_coordinate_cursore(int y, int x) {
+void impostare_coordinate_cursore(int x, int y) {
 	printf("\033[%d;%dH", y, x);
+}
+
+void pulire_schermo() {
+	system("@cls||clear");
+}
+
+void nascondere_cursore() {
+	printf("\033[?25l");
+}
+
+void mostrare_cursore() {
+	printf("\033[?25h");
 }

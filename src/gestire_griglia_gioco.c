@@ -1,18 +1,10 @@
 #include "gestire_griglia_gioco.h"
-#include <stdlib.h>
-#include <time.h>
-#include "utils.h"
-#include "gestire_partita.h"
-#include "gestire_griglia_gioco.h"
-#include "tipi_di_dato/griglia.h"
-#include "tipi_di_dato/impostazioni.h"
-
 
 //Funzione per determinare quanti numeri inserire inizialmente nella griglia
 int n_numeri_di_griglia(impostazioni impostazioni_gioco) {
 	int difficolta;				//Difficoltà scelta in precedenza dall'utente
 	int dimensione_griglia;			//Dimensione della griglia del sudoku
-	int numeri_da_inserire_in_griglia		//Numeri da inserire ad inizio partita in base alla difficoltà e alla dimensione della griglia
+	int numeri_da_inserire_in_griglia;		//Numeri da inserire ad inizio partita in base alla difficoltà e alla dimensione della griglia
 
 	difficolta = impostazioni_leggere_difficolta(impostazioni_gioco);
 	dimensione_griglia = impostazioni_leggere_dimensione_griglia(impostazioni_gioco);
@@ -46,7 +38,7 @@ griglia riempire_griglia(impostazioni impostazioni_utente){
 	while(i < numeri_da_inserire){
 		coordinata_x = rand() % impostazioni_leggere_dimensione_griglia(impostazioni_utente) + 1;
 		coordinata_y = rand() % impostazioni_leggere_dimensione_griglia(impostazioni_utente) + 1;
-		if(verificare_coordinate_e_valore(coordinata_x, coordinata_y) == 1){
+		if(verificare_coordinate_e_valore(griglia, coordinata_x, coordinata_y, valore) == VERO){
 				valore = rand() % impostazioni_leggere_dimensione_griglia(impostazioni_utente) + 1;
 				if(verificare_numero_da_inserire(griglia, valore, coordinata_x, coordinata_y) == 1){
 						if(valore < 9){
@@ -62,12 +54,10 @@ griglia riempire_griglia(impostazioni impostazioni_utente){
 	return griglia;
 }
 
+//TODO: Eliminare questa funzione e rinominare riempire_griglia come inizializzare_griglia
 // Funzione che inizializza la griglia del Sudoku basandosi sulle impostazioni selezionate dall'utente
-griglia inizializzare_griglia(impostazioni impostazioni_selezionate) {
-	griglia griglia_sudoku;  // Griglia che verrà generata e restituita
-
-	griglia_sudoku = riempire_griglia(impostazioni_selezionate);
-
-	return griglia_sudoku;
+void inizializzare_griglia(griglia* griglia_gioco, impostazioni impostazioni_selezionate) {
+	*griglia_gioco = riempire_griglia(impostazioni_selezionate);
+	return;
 }
 

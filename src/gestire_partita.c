@@ -1,10 +1,4 @@
 #include "gestire_partita.h"
-#include "costanti.h"
-#include "tipi_di_dato/partita.h"
-#include "tipi_di_dato/stringa.h"
-
-#include <stdlib.h>
-
 //Funzione che inserisce un valore nella griglia del sudoku dopo averne controllato la correttezza
 griglia aggiornare_griglia (griglia griglia, int valore, int riga, int colonna){
 	bool_t validato; //Indica se il valore inserito è valido o meno
@@ -14,6 +8,29 @@ griglia aggiornare_griglia (griglia griglia, int valore, int riga, int colonna){
 			griglia_scrivere_valore(&griglia, riga, colonna, valore);
 	}
 	return griglia;
+}
+
+bool_t validare_input_utente(int riga, int colonna, char valore, griglia griglia_gioco) {
+	bool_t validato;
+	int dim_griglia;
+	validato = FALSO;
+	dim_griglia = griglia_leggere_dimensione(griglia_gioco);
+	valore = convertire_minuscolo_maiuscolo(valore);
+
+	if (validare_riga_input(riga, dim_griglia) == VERO && validare_colonna_input(colonna, dim_griglia) == VERO && validare_valore_input(valore, dim_griglia) == VERO) {
+		validato = VERO;
+	}
+	return validato;
+}
+
+bool_t verificare_coordinate_e_valore(griglia griglia_gioco, int coordinata_x, int coordinata_y, int valore) {
+	bool_t valido;
+	valido = VERO;
+
+	if (griglia_leggere_valore(griglia_gioco, coordinata_x, coordinata_y) != 0) {
+		valido = FALSO;
+	}
+	return valido;
 }
 
 //Funzione che esegue un controllo sulla colonna inserita in input dall'utente, essa verifica se è valida o meno.
@@ -152,7 +169,7 @@ bool_t controllare_riga(griglia sudoku, int riga, int numero_da_inserire, int di
 }
 
 void stampare_interfaccia_impostazioni(void) {
-	printf("Menu opzioni\n\n");
+	pulire_schermo();
 	printf("%*s| IMPOSTAZIONI |\n", 34, "");
 	printf("%*s+--------------+\n", 34, "");
 	printf("\n\n\n\n\n\n\n\n"); // 8 righe vuote
@@ -161,7 +178,6 @@ void stampare_interfaccia_impostazioni(void) {
  	printf("%*s\t 3. Inserisci nome partita\n", 31, "");
  	printf("%*s\t 4. Prosegui\n", 31, "");
  	printf("%*s\t 5. Torna indietro\n", 31, "");
-	getchar();
 	return;
 }
 
@@ -175,10 +191,10 @@ stringa* giocare_partita(partita partita_corrente) {
 	partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
 	// Ottiene il nome del file per il salvataggio dalla partita corrente
 	nome_file = partita_leggere_nome(partita_corrente);
-
+	nascondere_input_utente();
 	// Loop principale del gioco - continua fino a quando l'utente non preme ESC (codice ASCII 27)
+	system("pause");
 	do {
-		// TODO: Visualizzare l'interfaccia di gioco
 		stampare_schermata_di_gioco(partita_leggere_griglia(partita_corrente));
 		// Legge il comando dell'utente e lo converte da minuscolo a maiuscolo se necessario
 		comando_utente = nascondere_input_utente();
@@ -231,12 +247,13 @@ stringa* giocare_partita(partita partita_corrente) {
 	return partite_salvate;
 }
 
-void stampa_schermata_di_gioco(griglia griglia_gioco) {
-	stampa_griglia(griglia_gioco);
+void stampare_schermata_di_gioco(griglia griglia_gioco) {
+	pulire_schermo();
+	stampare_griglia(griglia_gioco);
 	stampare_informazioni_utente();
 }
 
-void stampa_griglia(griglia griglia_gioco) {
+void stampare_griglia(griglia griglia_gioco) {
 	int i;
 	i = 0;
 	while(i < griglia_leggere_dimensione(griglia_gioco)) {

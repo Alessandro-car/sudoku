@@ -1,10 +1,14 @@
 #ifndef GESTIRE_IMPOSTAZIONI_H_
 #define GESTIRE_IMPOSTAZIONI_H_
 
+#include <stdio.h>
+#include <conio.h>
 #include "tipi_di_dato/impostazioni.h"
 #include "tipi_di_dato/griglia.h"
 #include "tipi_di_dato/stringa.h"
 #include "tipi_di_dato/partita.h"
+#include "costanti.h"
+#include "utils.h"
 
 void menu_scelta_dimensione_griglia();
 int selezionare_dimensione_griglia();
