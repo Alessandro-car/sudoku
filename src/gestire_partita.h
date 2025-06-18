@@ -5,6 +5,7 @@
 #include "tipi_di_dato/griglia.h"
 #include "utils.h"
 
+griglia aggiornare_griglia (griglia griglia, int valore, int riga, int colonna);
 bool_t validare_colonna_input(int colonna, int dim_griglia);
 bool_t controllare_colonna(griglia griglia, int colonna, int numeri_da_inserire, int dimensione_griglia);
 bool_t validare_valore_input(int valore, int dim_griglia);
