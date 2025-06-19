@@ -3,7 +3,7 @@
 //Funzione che inserisce un valore nella griglia del sudoku dopo averne controllato la correttezza
 void aggiornare_griglia (griglia* griglia, int valore, int riga, int colonna){
 	if (validare_input_utente(riga, colonna, convertire_numeri_in_lettere(valore), *griglia) == VERO){
-		griglia_scrivere_valore(griglia, riga, colonna, valore);
+		griglia_scrivere_valore(griglia, riga - 1, colonna - 1, valore);
 	}
 	return;
 }
@@ -230,7 +230,7 @@ stringa* giocare_partita(partita partita_corrente) {
 
 			griglia griglia_gioco;
 			griglia_gioco = partita_leggere_griglia(partita_corrente);
-			aggiornare_griglia(&griglia_gioco, valore, riga - 1, colonna - 1);
+			aggiornare_griglia(&griglia_gioco, valore, riga, colonna);
 			partita_scrivere_griglia(&partita_corrente, griglia_gioco);
 		}
 	} while (comando_utente != 27); // Continua fino alla pressione del tasto ESC
@@ -291,6 +291,7 @@ void stampare_informazioni_utente() {
 	while (i < 18) {
 		impostare_coordinate_cursore(61 + i, 13);
 		printf("-");
+		i = i + 1;
 	}
 	impostare_coordinate_cursore(62, 14);
 	printf("Comandi:");

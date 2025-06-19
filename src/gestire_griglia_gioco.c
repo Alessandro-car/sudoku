@@ -37,8 +37,8 @@ void riempire_griglia(griglia* griglia_gioco, impostazioni impostazioni_utente){
 	numeri_da_inserire = n_numeri_di_griglia(impostazioni_utente);
 
 	while(i < numeri_da_inserire){
-		coordinata_x = (rand() % griglia_leggere_dimensione(*griglia_gioco)) + 1;
-		coordinata_y = (rand() % griglia_leggere_dimensione(*griglia_gioco)) + 1;
+		coordinata_x = (rand() % griglia_leggere_dimensione(*griglia_gioco));
+		coordinata_y = (rand() % griglia_leggere_dimensione(*griglia_gioco));
 		if(verificare_coordinate_e_valore(*griglia_gioco, coordinata_x, coordinata_y, valore) == VERO){
 				valore = (rand() % griglia_leggere_dimensione(*griglia_gioco)) + 1;
 				if(verificare_numero_da_inserire(*griglia_gioco, valore, coordinata_x, coordinata_y) == VERO){
@@ -63,7 +63,9 @@ void azzerare_griglia(griglia *griglia_gioco) {
 		j = 0;
 		while (j < griglia_leggere_dimensione(*griglia_gioco)) {
 			griglia_scrivere_valore(griglia_gioco, i, j, 0);
+			j = j + 1;
 		}
+		i = i + 1;
 	}
 
 }
