@@ -2,7 +2,6 @@
 #define GESTIRE_IMPOSTAZIONI_H_
 
 #include <stdio.h>
-#include <conio.h>
 #include "tipi_di_dato/impostazioni.h"
 #include "tipi_di_dato/griglia.h"
 #include "tipi_di_dato/stringa.h"

@@ -64,11 +64,13 @@ stringa* iniziare_partita() {
 			printf(": ");
 			scanf("%s", nome_partita.caratteri);
 		}
-		//TODO: L'opzione '4' non fa nulla
+		//TODO: L'opzione '4' da roba strana
 		if(comando_utente == '4') {
-			//impostare_parametri_di_gioco(&impostazioni_gioco, difficolta_scelta, dim_griglia_scelta);
-			//inizializzare_griglia(&griglia_sudoku, impostazioni_gioco);
-			//inizializzare_partita(impostazioni_gioco, griglia_sudoku, nome_partita, &partita_da_giocare);
+			pulire_schermo();
+
+			impostare_parametri_di_gioco(&impostazioni_gioco, difficolta_scelta, dim_griglia_scelta);
+			inizializzare_griglia(&griglia_sudoku, impostazioni_gioco);
+			inizializzare_partita(impostazioni_gioco, griglia_sudoku, nome_partita, &partita_da_giocare);
 			nome_partite_salvate = giocare_partita(partita_da_giocare);
 		}
 	} while(comando_utente != '4' && comando_utente != '5');

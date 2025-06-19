@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include "gestire_menu_principale.h"
 
-int main(void) {
+int main() {
 	stringa* partite_salvate;
 	partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
 	partite_salvate = menu_principale();

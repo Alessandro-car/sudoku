@@ -13,7 +13,7 @@
 
 
 int n_numeri_di_griglia (impostazioni impostazioni_gioco);
-griglia riempire_griglia(impostazioni impostazioni_utente);
+void riempire_griglia(griglia* griglia_gioco, impostazioni impostazioni_utente);
 void inizializzare_griglia(griglia* griglia_gioco, impostazioni impostazioni_selezionate);
 
 

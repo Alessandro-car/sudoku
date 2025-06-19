@@ -88,8 +88,7 @@ bool_t validare_valore_input(int valore, int dim_griglia) {
 
 //La seguente funzione permette di verificare se è stato inserito un numero in una "cella" non valida, effettuando controlli su riga, colonna e regione
 bool_t verificare_numero_da_inserire(griglia griglia, int numero_da_inserire, int riga, int colonna) {
-
-	int corretto; //Sarà l'output della funzione ed è un booleano, permette di capire se il numero è già presente in riga, colonna, regione o meno
+	bool_t corretto; //Sarà l'output della funzione ed è un booleano, permette di capire se il numero è già presente in riga, colonna, regione o meno
 	int dimensione_griglia;//La seguente variabile verrà inizializzata con la dimensione della griglia
 	int dimensione_regione;//Viene inizializzata con la dimensione della regione della griglia
 
@@ -109,10 +108,14 @@ bool_t verificare_numero_da_inserire(griglia griglia, int numero_da_inserire, in
 }
 
 bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da_inserire, int dimensione_regione) {
-	bool_t corretto = VERO;
-	int i = riga;
+	bool_t corretto;
+	int i;
+	int j;
+
+	corretto = VERO;
+	i = riga;
 	while (i < riga + dimensione_regione) {
-		int j = colonna;
+		j = colonna;
 		while ( j < colonna + dimensione_regione ) {
 			if (griglia_leggere_valore(griglia, i, j) == numero_da_inserire) {
 				corretto = FALSO;
@@ -139,32 +142,23 @@ void salvare_partita(FILE* file_salvataggio, partita partita_da_salvare) {
 	return;
 }
 
+//TODO: Cambiare j con i anche in pseudo
 // Verifica che il numero non sia già presente nella riga specificata
 bool_t controllare_riga(griglia sudoku, int riga, int numero_da_inserire, int dimensione_sudoku) {
 	bool_t corretto;
 	int j;
 	int valore_cella;
 
-	// Inizializziamo il risultato come VERO (mettiamo inizialmente che il numero può essere inserito)
 	corretto = VERO;
 	j = 0;
-
-	// Scorriamo tutte le colonne della riga specificataa
+	
 	while (j <= dimensione_sudoku) {
-		// Leggiamo il valore presente nella cella corrente (riga, colonna j)
 		valore_cella = griglia_leggere_valore(sudoku, riga, j);
-
-		// Se il valore nella cella corrente è uguale al numero che vogliamo inserire,
-		// allora il numero non può essere inserito in questa riga
 		if (valore_cella == numero_da_inserire) {
 				corretto = FALSO;
 		}
-
-		// Passiamo alla colonna successiva
 		j = j + 1;
 	}
-
-	// Restituiamo VERO se il numero può essere inserito, FALSO altrimenti
 	return corretto;
 }
 
@@ -185,7 +179,9 @@ stringa* giocare_partita(partita partita_corrente) {
 	stringa* partite_salvate;
 	FILE* file_salvataggio;
 	int comando_utente;
-	int riga, colonna, valore;
+	int riga; 
+	int colonna; 
+	int valore;
 	stringa nome_file;
 
 	partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
@@ -263,7 +259,7 @@ void stampare_griglia(griglia griglia_gioco) {
 		printf("|");
 		while(j < griglia_leggere_dimensione(griglia_gioco)) {
 			char valore_griglia;
-			valore_griglia = convertire_numeri_in_lettere(griglia_leggere_valore(griglia_gioco, i, j));
+			valore_griglia = convertire_numx\eri_in_lettere(griglia_leggere_valore(griglia_gioco, i, j));
 			printf("%c|", valore_griglia);
 			j = j + 1;
 		}

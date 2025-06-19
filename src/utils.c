@@ -1,5 +1,6 @@
 #include "utils.h"
 
+//TODO: ERRORE NELLO PSEDO ATTENZIONE
 // La seguente funzione permette di calcolare il resto intero della divisione tra numeratore e denominatore
 int calcolare_resto_intero (int numeratore, int denominatore) {
 	int r;		//Resto intero della divisione
@@ -17,7 +18,7 @@ int calcolare_resto_intero (int numeratore, int denominatore) {
 	return r;
 }
 // La seguente funzione permette di calcolare la radice quadrata intera di un numero
-int calcolare_radice_quadrata (int radicando){
+int calcolare_radice_quadrata(int radicando){
 	int radice;             //Possibile radice quadrata intera
 	int radice_quad;        //Quadrato di radice
 	bool_t trovato;         //Indica se è stata trovata una radice esatta
