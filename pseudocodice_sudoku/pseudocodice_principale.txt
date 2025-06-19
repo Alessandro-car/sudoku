@@ -1,3 +1,18 @@
+FUNZIONE inizializzare_partita
+ 
+INPUT
+
+impostazioni_selezionate, impostazioni selezionate in precedenza dall'utente, impostazioni
+
+OUTPUT
+
+griglia_sudoku, griglia del sudoku generata con le impostazioni selezionate, griglia
+
+pseudocodice:
+
+griglia_sudoku = riempire_griglia(impostazioni_utente)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 FUNZIONE giocare_partita 
 
@@ -12,7 +27,7 @@ partite_salvate,  insieme delle partite salvate dall'utente, array di file_binar
 DATI DI LAVORO
 
 file_salvataggio,  file che verrà utilizzato per salvare la partita, file_binario
-comando_utente,  variabile che prenderà il valore letto da tastiera, carattere
+comando_utente,  variabile che assumerà il valore letto da tastiera, carattere
 
 pseudocodice:
 
@@ -30,7 +45,7 @@ RIPETI
 		FINE
 	FINE
 	SE(comando_utente = 'I')	
-		riga = leggere_da_tastiera()
+		ALLORA riga = leggere_da_tastiera()
 		colonna = leggere_da_tastiera()
 		valore = leggere_da_tastiera()
 		partita = partita_scrivere_griglia(aggiornare_griglia(griglia_sudoku, valore, riga, colonna), partita)
@@ -39,16 +54,16 @@ FINCHE (comando_utente <> 27)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-FUNZIONE  salvare_partita: 
+FUNZIONE  salvare_partita
  
 INPUT
 
- file_salvataggio, le scelto dall'utente dove verrà salvata la partita in corso, file_binario
+ file_salvataggio, file scelto dall'utente dove verrà salvata la partita in corso, file_binario
  partita_da_salvare, partita attualmente in corso da salvare, partita
  
 OUTPUT
 
- file_salvataggio file con al suo interno la partita salvata dall'utente, file_binario
+ file_salvataggio file con al suo interno la partita salvata, file_binario
 
 pseudocodice:
 
@@ -56,20 +71,20 @@ pseudocodice:
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-FUNZIONE caricare_partita 
+FUNZIONE caricare_partita FUNZIONE DA VERIFICARE SU C
  
 INPUT
 
-partite_salvate,  elenco delle partite salvate dall'utente, array di file_binario
+partite_salvate, elenco delle partite salvate dall'utente, array di file_binario
  
 OUTPUT
 
- partita_caricata, partita da caricare scelta dall'utente,  partita
+partita_caricata, partita scelta dall'utente che verrà modificata,  partita
  
 DATI DI LAVORO 
 
 file_scelto, file scelto dall'utente, file_binario
-comando_utente, comando scelto dall'utente, carattere
+comando_utente, variabile che assumerà il valore letto da tastiera, carattere
 
 pseudocodice:
 
@@ -87,20 +102,17 @@ FUNZIONE  selezionare_difficolta
 
 INPUT
 
-difficolta_scelta,  difficoltà che verrà scelta, numero naturale >0
+comando_utente, variabile che assumerà il valore letto da tastiera, carattere ∈ [1, 2, 3] 
 
 OUTPUT
 
-difficolta_scelta, difficoltà scelta dall'utente, numero naturale >0 
-
-DATI DI LAVORO
-
-comando_utente, assumerà il valore dei comandi da tastiera, carattere 
+difficolta_scelta, difficoltà scelta dall'utente, numero naturale >= DIFFICOLTA_STANDARD         <= DIFFICOLTA_DIFFICILE
 
 Pseudocodice:
 
 difficolta_scelta = DIFFICOLTA_STANDARD
 stampa_a_video(INTERFACCIA_MENU_DIFFICOLTA)
+
 comando_utente = leggere_da_tastiera()
 
 SE (comando_utente = '1')
@@ -119,17 +131,14 @@ FUNZIONE selezionare_dimensione_griglia
 
 INPUT
 
-dim_griglia_scelta,  dimensione che verrà scelta dall'utente, numero naturale >0
+comando_utente, variabile che assumerà il valore letto da tastiera, carattere ∈ [1, 2, 3] 
 
 OUTPUT
 
-dim_griglia_scelta,  dimensione scelta dall'utente, numero naturale >0
+dim_griglia_scelta,  dimensione scelta dall'utente, numero naturale 
+>= DIMENSIONE_GRIGLIA_PICCOLA <= DIMENSIONE_GRIGLIA_GRANDE
 
 Pseudocodice:
-
-DATI DI LAVORO
-
-comando_utente, dato che prenderà il valore dei valori da tastiera, carattere
 
 stampa_a_video(INTERFACCIA_DIMENSIONE_GRIGLIA)
 comando_utente = leggere_da_tastiera()
@@ -172,10 +181,10 @@ FUNZIONE aggiornare_griglia
 
 INPUT
 
-griglia, griglia che andrà aggiornata, griglia
-valore, valore che verrà inserito all'interno della griglia, numero naturale 
-riga, riga della griglia dove verrà inserito il valore, numero naturale >0
-colonna, colonna della griglia dove verrà inserito il valore, numero naturale >0
+griglia, griglia che verrà aggiornata, griglia
+valore, valore che verrà inserito all'interno della griglia, numero naturale >0 <= dimensione_griglia
+riga, riga della griglia selezionata dall'utente dove verrà inserito il valore, numero naturale >0 <= dimensione_griglia
+colonna, colonna della griglia selezionata dall'utente dove verrà inserito il valore, numero naturale >0 <= dimensione_griglia
 
 OUTPUT
 
@@ -190,23 +199,19 @@ FINE
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-FUNZIONE iniziare_partita
+FUNZIONE iniziare_partita INIZIARE PARTITA NON MODIFICATA Poiché SI ATTENDE CHE VENGA AGGIORNATA DA C
 
 INPUT
 
-impostazioni_di_gioco,  impostazioni del gioco,  impostazioni
-difficolta_scelta,  difficoltà scelta dall'utente,  numero naturale
-dim_griglia_scelta,  dimensione della griglia scelta dall'utente,  numero naturale
-nome_partita,  nome della partita,  stringa
-partita,  partita che verrà iniziata ed inserita all'interno di partite_salvate,  partita
+impostazioni_di_gioco, impostazioni del gioco, impostazioni
+difficolta_scelta, difficoltà scelta dall'utente, numero naturale ∈ [DIFFICOLTA_STANDARD, DIFFICOLTA_MEDIA, DIFFICOLTA_DIFFICILE]
+dim_griglia_scelta, dimensione della griglia scelta dall'utente, numero naturale ∈ [DIMENSIONE_GRIGLIA_PICCOLA, DIM_GRIGLIA_STAMDARD, DIMENSIONE_GRIGLIA_GRANDE]
+nome_partita, nome della partita, stringa 
+partita, partita che verrà iniziata ed inserita all'interno di partite_salvate, partita
 
 OUTPUT
 
-partite_salvate, array delle partite salvate,  array di file_binario
-
-DATI DI LAVORO
-
-griglia_sudoku, griglia della partita, griglia
+partite_salvate, array delle partite salvate, array di file_binario
 
 Pseudocodice:
 
@@ -234,11 +239,11 @@ FINCHE (comando_utente <> '4' OR comando_utente <> '5')
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
  
 
-FUNZIONE menu_principale
+FUNZIONE menu_principale ASPETTARE DI VEDERE IL C PER TOCCARE LA FUNZIONE
 
 INPUT
 
-comando_utente, comando selezionato dall'utente, carattere
+comando_utente, variabile che assumerà il valore letto da tastiera, carattere
 
 OUTPUT
 
@@ -286,8 +291,8 @@ numeri_da_inserire_in_griglia, numero di valori da inserire nella griglia, numer
 
 DATI DI LAVORO
 
-difficolta, difficoltà scelta dall'utente, numero naturale ∈ [0,2] (0 facile, 1 media, 2 difficile)
-dimensione_griglia, dimensione della griglia scelta in base alle impostazioni
+difficolta, difficoltà scelta dall'utente, numero naturale >0 
+dimensione_griglia, dimensione della griglia scelta in base alle impostazioni, numero naturale >0 <= DIMENSIONE_GRIGLIA_GRANDE
 
 pseudocodice:
 
@@ -298,15 +303,15 @@ dimensione_griglia = griglia_leggere_dimensione(impostazioni_gioco)
 		ALL0RA numeri_da_inserire_in_griglia = ((dimensione_griglia)^2 *PERCENTUALE_DIFFICOLTA_FACILE)
 	FINE
 	SE(difficolta = 1) 
-		numeri_da_inserire_in_griglia = ((dimensione_griglia)^2 * PERCENTUALE_DIFFICOLTA_MEDIA)
+		ALLORA numeri_da_inserire_in_griglia = ((dimensione_griglia)^2 * PERCENTUALE_DIFFICOLTA_MEDIA)
 
 	SE(difficolta = 2) 
-		numeri_da_inserire_in_griglia = ((dimensione_griglia)^2 *PERCENTUALE_DIFFICOLTA_DIFFICILE)
+		ALLORA numeri_da_inserire_in_griglia = ((dimensione_griglia)^2 *PERCENTUALE_DIFFICOLTA_DIFFICILE)
 	FINE
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-FUNZIONE inizializzare_griglia
+FUNZIONE riempire_griglia
 
 INPUT
 
@@ -318,16 +323,15 @@ griglia, griglia con al suo interno dei numeri posizionati in  maniera casuale, 
 
 DATI DI LAVORO
 
-numeri_da_inserire, rappresenta il numero di numeri che verranno inseriti all'interno della griglia, selezionati in base alla difficoltà e alla dimensione della griglia, numero naturale >0
-coordinata_x, seleziona casualmente la posizione del valore all'interno delle righe, numero naturale >0
-coordinate_y = seleziona casualmente la posizione del valore all'interno delle colonne, numero naturale >0
-valore, valore che verrà inserito all'interno della griglia, numero naturale >0
+numeri_da_inserire, rappresenta il numero di numeri che verranno inseriti all'interno della griglia, selezionati in base alla difficoltà e alla dimensione della griglia, numero naturale >0 
+coordinata_x, seleziona casualmente la posizione del valore all'interno delle righe, numero naturale >0 <= DIMENSIONE_GRIGLIA_GRANDE
+coordinate_y = seleziona casualmente la posizione del valore all'interno delle colonne, numero naturale >0 <= DIMENSIONE_GRIGLIA_GRANDE
+valore, valore che verrà inserito all'interno della griglia, numero naturale >0 <= DIMENSIONE_GRIGLIA_GRANDE
 
 pseudocodice:
 
 i = 1
 numeri_da_inserire = n_numeri_di_griglia(impostazioni_utente)
-
 
 MENTRE(i <= numeri_da_inserire)
 
@@ -353,11 +357,11 @@ FUNZIONE convertire_numeri_in_lettere
 
 INPUT
 
-numero, numero che  verrà convertito in lettera, numero naturale
+numero, numero che  verrà convertito in lettera, numero naturale >0 
 
 OUTPUT
 
-lettera, lettera che rappresenta il numero riscritto, carattere
+lettera, lettera che rappresenta il numero convertito, carattere
 
 pseudocodice:
 
@@ -373,7 +377,7 @@ lettere, lettera che  verrà convertita in numero, carattere
 
 OUTPUT
 
-numero, numero che sarà trasformato dal carattere, numero naturale >o
+numero, numero che rappresenta la lettera convertita, numero naturale >0
 
 pseudocodice:
 
@@ -388,9 +392,9 @@ FUNZIONE verificare_coordinate_e_valore
 INPUT
 
 griglia, griglia corrente con i valori già inseriti, griglia
-coordinata_x, posizione riga che si vuole controllare, numero naturale >0
-coordinata_y, posizione colonna che si vuole controllare, numero naturale >0
-valore, valore che si vuole controllare, numero naturale 
+coordinata_x, posizione della riga che si vuole controllare, numero naturale >0 <= DIMENSIONE_GRIGLIA_GRANDE
+coordinata_y, posizione della colonna che si vuole controllare, numero naturale >0 <= DIMENSIONE_GRIGLIA_GRANDE
+valore, valore che si vuole controllare all'interno della griglia, numero naturale >0 <= DIMENSIONE_GRIGLIA_GRANDE
 
 OUTPUT
 
@@ -398,10 +402,7 @@ validità, indica con falso se la cella è libera, booleano
 
 DATI DI LAVORO
 
-dimensione_griglia, rappresenta la dimensione della griglia, numero naturale >0
-i, contatore per scorrere le celle della griglia, numero naturale >0
-j, contatore per scorrere le celle della griglia, numero naturale >0
-valore_cella, valore presente in una cella della griglia, numero naturale
+dimensione_griglia, rappresenta la dimensione della griglia, numero naturale >0 <= DIMENSIONE_GRIGLIA_GRANDE
 
 pseudocodice:
 
@@ -417,39 +418,48 @@ FINE
 FUNZIONE controllare_riga
 
 INPUT
-- riga,  riga in cui controllare, numero naturale
-- numero_da_inserire, numero da verificare che non sia presente nella riga, numero naturale
+
+riga,  riga in cui controllare se il valore e' gia' presente,  numero naturale >0 <= DIMENSIONE_GRIGLIA
+numero_da_inserire, numero da verificare che non sia presente nella riga,  numero naturale >0 <= DIMENSIONE_GRIGLIA_GRANDE
 
 OUTPUT
-- corretto, indica se il numero può essere inserito, booleano
+ 
+corretto, indica se la cella e' libera con vero,  booleano
 
 PSEUDOCODICE
+
 corretto = VERO
 i = 1
+
 MENTRE(i<= griglia_leggere_dimensione(griglia))
-  SE(griglia_leggere_valore(griglia, riga, i) = numero_da_inserire)
-   corretto = FALSO
-  FINE
-  i = i + 1
+	SE(griglia_leggere_valore(griglia, riga, i) = numero_da_inserire)
+   		ALLORA corretto = FALSO
+  	FINE
+	  i = i + 1
  FINE
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 FUNZIONE controllare_colonna
 
 INPUT
-- colonna, colonna in cui controllare, numero naturale
-- numero_da_inserire, numero da verificare che non sia presente nella colonna, numero naturale
+
+colonna, colonna in cui controllare se il valore e' gia' stato inserito , numero naturale >0 <= DIMENSIONE_GRIGLIA_GRANDE
+numero_da_inserire,  numero da verificare che non sia presente nella colonna,  numero naturale >0 <= DIMENSIONE_GRIGLIA_GRANDE
 
 OUTPUT
-- corretto, indica se il numero può essere inserito, booleano
+
+corretto, indica se la cella e' libera con vero,  booleano
 
 PSEUDOCODICE
+
 corretto = VERO
 i = 1
+
 MENTRE(i<= griglia_leggere_dimensione(griglia))
-  SE(griglia_leggere_valore(griglia, i, colonna) = numero_da_inserire)
-   corretto = FALSO
-  FINE
-  i = i + 1
+	SE(griglia_leggere_valore(griglia, i, colonna) = numero_da_inserire)
+   		ALLORA corretto = FALSO
+  	FINE
+  	i = i + 1
  FINE
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -463,14 +473,16 @@ colonna, indica l’inizio dell’indice della regione, numero naturale > 0 <= d
 numero_da_inserire, numero da verificare che non sia presente nella regione, numero naturale > 0 <= dimensione_griglia
 
 OUTPUT
-corretto, indica se il numero può essere inserito, booleano
+corretto, indica se il numero può essere inserito,  booleano
 
-LAVORO
+DATI DI LAVORO
+
 dimensione_regione, dimensione della regione del sudoku, numero naturale > 0 <= sqrt(dimensione_griglia)
-i, indice della riga della griglia, numero naturale > 0 <= dimensione_griglia
-j, indice della colonna della griglia, numero naturale >0 <= dimensione_griglia
+i, indice della riga della griglia,  numero naturale > 0
+j, indice della colonna della griglia,  numero naturale >0 
 
-pseudocodice:
+PSEUDOCODICE
+
 dimensione_regione = calcolare_radice_quadrata(griglia_leggere_dimensione(griglia))
 corretto = VERO
 i = riga
@@ -480,7 +492,7 @@ MENTRE(i < riga + dimensione_regione AND corretto = VERO)
 		SE(griglia_leggere_valore(griglia, i, j) = numero_da_inserire)
 			ALLORA corretto = FALSO
 		FINE
-	j = j + 1
+		j = j + 1
 	FINE
 	i = i + 1
 FINE
@@ -492,9 +504,9 @@ FUNZIONE verificare_numero_da_inserire
 INPUT
 
 griglia, griglia in cui verificare se il numero inserito è coretto, griglia
-numero_da_inserire, numero che si vuole inserire, numero intero
-riga, indice delle righe in cui si vuole inserire il numero, numero intero
-colonna, indice delle colonne in cui si vuole inserire il numero, numero intero
+numero_da_inserire, numero che si vuole inserire, numero naturale >0 <= DIMENSIONE_GRIGLIA_GRANDE
+riga, indice delle righe in cui si vuole inserire il numero, numero naturale >0 <= DIMENSIONE_GRIGLIA_GRANDE
+colonna, indice delle colonne in cui si vuole inserire il numero, numero naturale >0 <= DIMENSIONE_GRIGLIA_GRANDE
 
 OUTPUT
 
@@ -502,14 +514,14 @@ corretto, indica se è possibile inserire il numero, booleano
 
 DATI DI LAVORO
 
-i, indice delle righe del sudoku, numero naturale >0
-j, indice delle colonne del sudoku, numero naturale >0
-dimensione_griglia, dimensione del lato del sudoku, numero intero
+i, indice delle righe della griglia, numero naturale >0
+j, indice delle colonne della griglia, numero naturale >0
+dimensione_griglia, valore che indica la dimensione del sudoku, numero naturale >0 <= DIMENSIONE_GRIGLIA_GRANDE
 
 pseudocodice: 
 
 corretto = VERO
-dimensione_sudoku = griglia_leggere_dimensione(griglia) 
+dimensione_griglia = griglia_leggere_dimensione(griglia) 
 
 corretto = controllare_riga(sudoku, riga, numero_da_inserire, dimensione_griglia)
 
@@ -531,22 +543,21 @@ INPUT
 numeratore, numeratore dell'operazione, numero intero
 denominatore, denominatore dell'operazione, numero intero
 
-
 OUTPUT
-r, resto della divisione, numero intero
+risultato, resto della divisione, numero intero
 
 DATI DI LAVORO
 
-q, quoziente della divisione, numero intero
+quoziente, quoziente della divisione, numero intero
 
 pseudocodice:
 
-q = 0
-MENTRE(a >= b)
-	q = q + 1
-	a = a - b
+quoziente = 0
+MENTRE(numeratore >= denominatore)
+	quoziente = quoziente + 1
+	numeratore = numeratore - denominatore
 FINE
-r = a - b * q
+risultato = numeratore - denominatore * quoziente
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -554,12 +565,16 @@ FUNZIONE calcolare_radice_quadrata
 
 INPUT
 
-radicando, numero di da operare con la radice, numero naturale 
+radicando, numero da operare con la radice, numero naturale 
 
 OUTPUT
 
 radice, risultato della radice del radicando, numero naturale 
 	
+DATI DI LAVORO
+
+trovato, valore booleano, booleano
+
 pseudocodice:
 	
 trovato = FALSO
@@ -574,7 +589,7 @@ MENTRE(radicando >= radice_quad  AND  trovato = FALSO)
 	radice_quad = radice * radice 
 FINE
 SE(trovato = FALSO)
-	allora radice = 0
+	ALLORA radice = 0
 FINE
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -601,8 +616,8 @@ FINE
 FUNZIONE validare_input_utente
 
 INPUT
-riga, valore riga di cui controllare la correttezza, naturale > 0
-colonna, valore colonna di cui controllare la correttezza, naturale > 0
+riga, valore riga di cui controllare la correttezza, naturale > 0 <= DIMENSIONE_GRIGLIA_GRANDE
+colonna, valore colonna di cui controllare la correttezza, naturale > 0 <= DIMENSIONE_GRIGLIA_GRANDE
 valore, valore inserito di cui controllare  la correttezza, carattere
 griglia_gioco, griglia a cui si riferiscono riga colonna e valore, griglia
 
@@ -630,7 +645,7 @@ FUNZIONE validare_valore_input
 INPUT
 
 valore, valore inserito di cui controllare  la correttezza, carattere
-dim_griglia, dimensione griglia in cui verrebbe inserito il valore, naturale > 0
+dim_griglia, dimensione griglia in cui verrebbe inserito il valore, naturale > 0 <= DIMENSIONE_GRIGLIA_GRANDE
 
 OUTPUT
 
@@ -638,7 +653,7 @@ validato, indica se la riga è valida o meno, booleano
 
 DATI DI LAVORO
 
-dim_griglia_carattere, indica la dimensione della griglia convertita in lettera
+dim_griglia_carattere, indica la dimensione della griglia convertita in lettera, carattere
 
 pseudocodice:
 
@@ -658,8 +673,8 @@ FINE
 FUNZIONE validare_riga_input
 
 INPUT
-riga, valore riga di cui controllare la correttezza, naturale > 0
-dim_griglia, dimensione griglia a cui si riferisce riga, naturale > 0
+riga, valore riga di cui controllare la correttezza, naturale > 0 <=DIMENSIONE_GRIGLIA_GRANDE
+dim_griglia, dimensione griglia a cui si riferisce riga, naturale > 0 <= DIMENSIONE_GRIGLIA_GRANDE
 
 OUTPUT
 validato, indica se la riga è valida o meno, booleano
@@ -675,8 +690,8 @@ FINE
 
 FUNZIONE validare_colonna_input
 INPUT
-colonna, valore colonna di cui controllare la correttezza, naturale > 0
-dim_griglia, dimensione griglia a cui si riferisce colonna, naturale > 0
+colonna, valore colonna di cui controllare la correttezza, naturale > 0 <= DIMENSIONE_GRIGLIA_GRANDE
+dim_griglia, dimensione griglia a cui si riferisce colonna, naturale > 0 <= DIMENSIONE_GRIGLIA_GRANDE
 
 OUTPUT
 validato, indica se la colonna è valida o meno, booleano
@@ -684,18 +699,19 @@ validato, indica se la colonna è valida o meno, booleano
 pseudocodice:
 
 validato = VERO
-SE(colonna < 0 OR colonna > dim_griglia) allora:
-	validato = FALSO
+SE(colonna < 0 OR colonna > dim_griglia) 
+	ALLORA validato = FALSO
 FINE
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
- FUNZIONE impostare_parametri_di_gioco
+FUNZIONE impostare_parametri_di_gioco
  
 INPUT
 
  impostazioni_gioco,impostazioni del gioco,  impostazioni
  difficolta_scelta, difficoltà selezionata dall'utente,  numero naturale ∈ [0,2]
- dim_griglia_scelta, dimensione selezionata dall'utente,  numero naturale ∈ [1, DIMENSIONE_GRIGLIA_GRANDE].
+ dim_griglia_scelta, dimensione selezionata dall'utente,  numero naturale ∈ [DIMENSIONE_GRIGLIA_PICCOLA, DIMENSIONE_GRIGLIA_GRANDE]
  
  OUTPUT
 
