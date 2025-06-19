@@ -69,7 +69,6 @@ stringa* iniziare_partita() {
 			printf(": ");
 			scanf("%s", nome_partita.caratteri);
 		}
-		//TODO: L'opzione '4' non fa nulla
 		if(comando_utente == '4') {
 			impostare_parametri_di_gioco(&impostazioni_gioco, difficolta_scelta, dim_griglia_scelta);
 			inizializzare_griglia(&griglia_sudoku, impostazioni_gioco);
@@ -83,8 +82,8 @@ stringa* iniziare_partita() {
 
 partita caricare_partita(stringa* partite_salvate) {
 	stringa nome_file_scelto;
-	int comando_utente;
 	partita partita_caricata;
+	int comando_utente;
 
 	//printf(interfaccia_caricare_partita);
 	comando_utente = nascondere_input_utente();

@@ -22,7 +22,6 @@ int n_numeri_di_griglia(impostazioni impostazioni_gioco) {
 }
 
 //TODO: Modificare lo pseudocodice di questa funzione
-
 //Funzione che si occupa di riempire la griglia iniziale seguendo le impostazioni utente
 void riempire_griglia(griglia* griglia_gioco, impostazioni impostazioni_utente){
 	int numeri_da_inserire;     //Rappresenta il numero di elementi che verrano inseriri in griglia
@@ -55,6 +54,7 @@ void riempire_griglia(griglia* griglia_gioco, impostazioni impostazioni_utente){
 	return;
 }
 
+//TODO: Creare funzione in pseudo
 void azzerare_griglia(griglia *griglia_gioco) {
 	int i;
 	int j;
@@ -67,7 +67,7 @@ void azzerare_griglia(griglia *griglia_gioco) {
 		}
 		i = i + 1;
 	}
-
+	return;
 }
 //TODO: Eliminare questa funzione e rinominare riempire_griglia come inizializzare_griglia
 // Funzione che inizializza la griglia del Sudoku basandosi sulle impostazioni selezionate dall'utente

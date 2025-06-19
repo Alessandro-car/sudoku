@@ -176,14 +176,16 @@ void stampare_interfaccia_impostazioni(void) {
 	return;
 }
 
+//TODO: FINIRE FUNZIONE E POI RISCRIVERLA IN PSEUDO
 stringa* giocare_partita(partita partita_corrente) {
 	stringa* partite_salvate;
 	FILE* file_salvataggio;
+	griglia griglia_gioco;
+	stringa nome_file;
 	int comando_utente;
 	int riga;
 	int colonna;
 	int valore;
-	stringa nome_file;
 
 	partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
 	nome_file = partita_leggere_nome(partita_corrente); // Ottiene il nome del file per il salvataggio dalla partita corrente
@@ -228,7 +230,6 @@ stringa* giocare_partita(partita partita_corrente) {
 			impostare_coordinate_cursore(70, 5);
 			scanf("%d", &valore);
 
-			griglia griglia_gioco;
 			griglia_gioco = partita_leggere_griglia(partita_corrente);
 			aggiornare_griglia(&griglia_gioco, valore, riga, colonna);
 			partita_scrivere_griglia(&partita_corrente, griglia_gioco);
@@ -248,13 +249,13 @@ void stampare_schermata_di_gioco(griglia griglia_gioco) {
 void stampare_griglia(griglia griglia_gioco) {
 	int i;
 	int j;
+	char valore_griglia;
 	i = 0;
 	while(i < griglia_leggere_dimensione(griglia_gioco)) {
 		j = 0;
 		impostare_coordinate_cursore(4, 3 + i);
 		printf("|");
 		while(j < griglia_leggere_dimensione(griglia_gioco)) {
-			char valore_griglia;
 			valore_griglia = convertire_numeri_in_lettere(griglia_leggere_valore(griglia_gioco, i, j));
 			if (valore_griglia == '0') {
 				printf(" |");

@@ -3,7 +3,7 @@
 int selezionare_difficolta(int difficolta_scelta) {
 	menu_scelta_difficolta();
 	char comando_utente;
-	nascondere_input_utente(); //TODO: Aggiustare questa parte perchè ambigua
+	nascondere_input_utente(); 					//TODO: Aggiustare questa parte perchè ambigua
 	comando_utente = nascondere_input_utente();
 	difficolta_scelta = DIFFICOLTA_STANDARD;
 	if (comando_utente == '1'){

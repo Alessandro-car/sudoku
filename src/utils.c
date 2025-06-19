@@ -16,6 +16,7 @@ int calcolare_resto_intero (int numeratore, int denominatore) {
 	r = numeratore - denominatore * q;
 	return r;
 }
+
 // La seguente funzione permette di calcolare la radice quadrata intera di un numero
 int calcolare_radice_quadrata (int radicando){
 	int radice;             //Possibile radice quadrata intera
@@ -94,12 +95,12 @@ char convertire_minuscolo_maiuscolo(char lettera) {
 
     lettera_convertita = lettera;
 
-    // Controlliamo se il carattere Ã¨ una lettera minuscola
-    if ((lettera_convertita >= CHAR_a) && (lettera_convertita <= CHAR_z)) {
+    
+    if ((lettera_convertita >= CHAR_a) && (lettera_convertita <= CHAR_z)) { // Controlliamo se il carattere é una lettera minuscola
         lettera_convertita = lettera - 32; // viene sottratto 32 poichè bisogna portare da lettera minuscola a maiuscola basandoci sull'ascii
     }
 
-    // Restituiamo il carattere convertito
+
     return lettera_convertita;
 }
 
