@@ -1,6 +1,5 @@
 #include "utils.h"
 
-//TODO: ERRORE NELLO PSEDO ATTENZIONE
 // La seguente funzione permette di calcolare il resto intero della divisione tra numeratore e denominatore
 int calcolare_resto_intero (int numeratore, int denominatore) {
 	int r;		//Resto intero della divisione
@@ -18,7 +17,7 @@ int calcolare_resto_intero (int numeratore, int denominatore) {
 	return r;
 }
 // La seguente funzione permette di calcolare la radice quadrata intera di un numero
-int calcolare_radice_quadrata(int radicando){
+int calcolare_radice_quadrata (int radicando){
 	int radice;             //Possibile radice quadrata intera
 	int radice_quad;        //Quadrato di radice
 	bool_t trovato;         //Indica se è stata trovata una radice esatta
@@ -118,4 +117,44 @@ void nascondere_cursore() {
 
 void mostrare_cursore() {
 	printf("\033[?25h");
+}
+
+
+void disegnare_riquadro_interfaccia() {
+	int i;
+	i = 0;
+	while (i < LARGHEZZA_FINESTRA) {
+		int j;
+		j = 0;
+		while (j <= LUNGHEZZA_FINESTRA) {
+			if ((j == 0 || j == LUNGHEZZA_FINESTRA)) {
+				impostare_coordinate_cursore(i, j);
+				printf("-");
+			} else {
+				if ((i == 0 || i == LARGHEZZA_FINESTRA - 1)) {
+					impostare_coordinate_cursore(i, j);
+					printf("|");
+				}
+			}
+			j = j + 1;
+		}
+		i = i + 1;
+	}
+	impostare_coordinate_cursore(0, 0);
+	printf("+");
+	impostare_coordinate_cursore(0, LUNGHEZZA_FINESTRA);
+	printf("+");
+	impostare_coordinate_cursore(LARGHEZZA_FINESTRA - 1, 0);
+	printf("+");
+	impostare_coordinate_cursore(LARGHEZZA_FINESTRA - 1, LUNGHEZZA_FINESTRA);
+	printf("+");
+}
+
+void abilitare_ANSI() {
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    DWORD dwMode = 0;
+    if (hOut == INVALID_HANDLE_VALUE) return;
+    if (!GetConsoleMode(hOut, &dwMode)) return;
+    dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+    SetConsoleMode(hOut, dwMode);
 }

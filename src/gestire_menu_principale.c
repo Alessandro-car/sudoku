@@ -2,12 +2,17 @@
 
 void stampare_interfaccia_menu_principale() {
 	pulire_schermo();
-	printf("%*s| SUDOKU |\n", 		34, "");
-	printf("%*s+--------+\n", 		34, "");
-	printf("\n\n\n\n\n\n\n\n");
-	printf("%*s\t 1. Inizia partita\n", 		31, "");
-	printf("%*s\t 2. Carica partita\n", 		31, "");
-	printf("%*s\t 3. Esci", 	31, "");
+	disegnare_riquadro_interfaccia();
+	impostare_coordinate_cursore(34, 1);
+	printf("| SUDOKU |");
+	impostare_coordinate_cursore(34, 2);
+	printf("+--------+");
+	impostare_coordinate_cursore(31, 12);
+	printf("1. Inizia partita");
+	impostare_coordinate_cursore(31, 13);
+ 	printf("2. Carica partita");
+ 	impostare_coordinate_cursore(31, 14);
+	printf("3. Esci");
 }
 
 
@@ -59,15 +64,13 @@ stringa* iniziare_partita() {
 			dim_griglia_scelta = selezionare_dimensione_griglia();
 		}
 		if(comando_utente == '3') {
-			impostare_coordinate_cursore(59, 13);
+			impostare_coordinate_cursore(56, 12);
 			mostrare_cursore();
 			printf(": ");
 			scanf("%s", nome_partita.caratteri);
 		}
-		//TODO: L'opzione '4' da roba strana
+		//TODO: L'opzione '4' non fa nulla
 		if(comando_utente == '4') {
-			pulire_schermo();
-
 			impostare_parametri_di_gioco(&impostazioni_gioco, difficolta_scelta, dim_griglia_scelta);
 			inizializzare_griglia(&griglia_sudoku, impostazioni_gioco);
 			inizializzare_partita(impostazioni_gioco, griglia_sudoku, nome_partita, &partita_da_giocare);

@@ -21,10 +21,10 @@ int n_numeri_di_griglia(impostazioni impostazioni_gioco) {
 	return numeri_da_inserire_in_griglia;
 }
 
+//TODO: Modificare lo pseudocodice di questa funzione
 
-//TODO: MODIFICARE LO PSEUDOCODICE DI QUESTA FUNZIONE
 //Funzione che si occupa di riempire la griglia iniziale seguendo le impostazioni utente
-void riempire_griglia(griglia *griglia_gioco, impostazioni impostazioni_utente){
+void riempire_griglia(griglia* griglia_gioco, impostazioni impostazioni_utente){
 	int numeri_da_inserire;     //Rappresenta il numero di elementi che verrano inseriri in griglia
 	int coordinata_x;           //Rappresenta una posizione casuale tra le righe
 	int coordinata_y;           //Rappresenta una posizione casuale tra le colonne
@@ -44,25 +44,34 @@ void riempire_griglia(griglia *griglia_gioco, impostazioni impostazioni_utente){
 				if(verificare_numero_da_inserire(*griglia_gioco, valore, coordinata_x, coordinata_y) == VERO){
 						if(valore <= 9){
 								griglia_scrivere_valore(griglia_gioco, coordinata_x, coordinata_y, valore);
-								printf("VALOREEE: %d", valore);
 						}else{
 								valore = convertire_numeri_in_lettere(valore);
-								printf("VALOREEE: %c", valore);
 								griglia_scrivere_valore(griglia_gioco, coordinata_x, coordinata_y, valore);
 						}
-
+					i = i + 1;
 				}
 		}
-		i = i + 1;
 	}
-	system("pause");
 	return;
 }
 
-//TODO: IN PSEUDO PASSARGLI GRIGLIA
+void azzerare_griglia(griglia *griglia_gioco) {
+	int i;
+	int j;
+	i = 0;
+	while (i < griglia_leggere_dimensione(*griglia_gioco)) {
+		j = 0;
+		while (j < griglia_leggere_dimensione(*griglia_gioco)) {
+			griglia_scrivere_valore(griglia_gioco, i, j, 0);
+		}
+	}
+
+}
+//TODO: Eliminare questa funzione e rinominare riempire_griglia come inizializzare_griglia
 // Funzione che inizializza la griglia del Sudoku basandosi sulle impostazioni selezionate dall'utente
 void inizializzare_griglia(griglia* griglia_gioco, impostazioni impostazioni_selezionate) {
 	griglia_scrivere_dimensione(griglia_gioco, impostazioni_leggere_dimensione_griglia(impostazioni_selezionate));
+	azzerare_griglia(griglia_gioco);
 	riempire_griglia(griglia_gioco, impostazioni_selezionate);
 	return;
 }

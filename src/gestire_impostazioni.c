@@ -20,15 +20,19 @@ int selezionare_difficolta(int difficolta_scelta) {
 
 void menu_scelta_dimensione_griglia() {
 	pulire_schermo();
-	printf("%*s| DIMENSIONE | %*s\n", 33, "", 33, "");
-	printf("%*s+------------+%*s", 33, "", 33, "");
-	printf("\n\n\n\n\n\n\n");
-	printf("%*s1. Piccola:  4 x 4%*s", 31, "", 31, "");
-	printf("\n%*s2. Standard: 9 x 9%*s", 31, "", 31, "");
-	printf("\n%*s3. Grande:   16 x 16%*s", 31, "", 31, "");
-	printf("\n%*s4. Torna indietro%*s", 31, "", 31, "");
-	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n");
-
+	disegnare_riquadro_interfaccia();
+	impostare_coordinate_cursore(32, 1);
+	printf("| DIMENSIONE |");
+	impostare_coordinate_cursore(32, 2);
+	printf("+------------+");
+	impostare_coordinate_cursore(31, 11);
+	printf("1. Piccola:  4 x 4");
+	impostare_coordinate_cursore(31, 12);
+	printf("2. Standard: 9 x 9");
+	impostare_coordinate_cursore(31, 13);
+	printf("3. Grande:   16 x 16");
+	impostare_coordinate_cursore(31, 14);
+	printf("4. Torna indietro");
 	return;
 }
 
@@ -59,14 +63,19 @@ void impostare_parametri_di_gioco(impostazioni* impostazioni_gioco, int difficol
 //Funzione che stampa a video il menù di scelta della difficoltà.
 void menu_scelta_difficolta() {
 	pulire_schermo();
-	printf("%*s| DIFFICOLTA |\n", 		33, "");
-	printf("%*s+------------+\n", 		33, "");
-	printf("\n\n\n\n\n\n");
-	printf("%*s\t 1. Facile\n", 		27, "");
-	printf("%*s\t 2. Medio\n", 		27, "");
-	printf("%*s\t 3. Difficile\n", 	27, "");
-	printf("%*s\t 4. Indietro\n", 	27, "");
-	printf("\n\n\n\n\n\n\n");
+	disegnare_riquadro_interfaccia();
+	impostare_coordinate_cursore(33, 1);
+	printf("| DIFFICOLTA |");
+	impostare_coordinate_cursore(33, 2);
+	printf("+------------+");
+	impostare_coordinate_cursore(33, 11);
+	printf("1. Facile");
+	impostare_coordinate_cursore(33, 12);
+	printf("2. Medio");
+	impostare_coordinate_cursore(33, 13);
+	printf("3. Difficile");
+	impostare_coordinate_cursore(33, 14);
+	printf("4. Indietro");
 
 	return;
 }
