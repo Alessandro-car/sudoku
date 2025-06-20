@@ -158,5 +158,10 @@ void abilitare_ANSI() {
     if (!GetConsoleMode(hOut, &dwMode)) return;
     dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
     SetConsoleMode(hOut, dwMode);
+    return;
 }
 
+void stampare_colorato(char colore[], char stringa[]) {
+	printf("%s%s%s", colore, stringa, ANSI_COLOR_RESET);
+	return;
+}

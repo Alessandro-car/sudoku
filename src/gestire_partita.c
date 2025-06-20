@@ -232,7 +232,7 @@ stringa* giocare_partita(partita partita_corrente) {
 			aggiornare_griglia(&griglia_gioco, valore, riga, colonna);
 			partita_scrivere_griglia(&partita_corrente, griglia_gioco);
 		}
-	} while (comando_utente != 27); // Continua fino alla pressione del tasto ESC
+	} while (comando_utente != TASTO_ESC); // Continua fino alla pressione del tasto ESC
 
 	return partite_salvate;
 }

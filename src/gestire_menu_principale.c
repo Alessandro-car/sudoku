@@ -19,13 +19,10 @@ void stampare_interfaccia_menu_principale() {
 stringa* menu_principale() {
 	int comando_utente;
 	stringa* nome_partite_salvate;
-
-	stampare_interfaccia_menu_principale();
-	comando_utente = nascondere_input_utente();
 	nome_partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
-
 	do {
-
+		stampare_interfaccia_menu_principale();
+		comando_utente = nascondere_input_utente();
 		if (comando_utente == '1') {
 			nome_partite_salvate = iniziare_partita();
 		}
@@ -40,7 +37,8 @@ stringa* menu_principale() {
 }
 
 stringa* iniziare_partita() {
-	int comando_utente;
+	bool_t uscito;
+	char comando_utente;
 	int difficolta_scelta;
 	int dim_griglia_scelta;
 	stringa nome_partita;
@@ -49,6 +47,7 @@ stringa* iniziare_partita() {
 	partita partita_da_giocare;
 	stringa* nome_partite_salvate;
 
+	uscito = FALSO;
 	difficolta_scelta = DIFFICOLTA_STANDARD;
 	dim_griglia_scelta = DIM_GRIGLIA_STANDARD;
 	nome_partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
@@ -74,8 +73,9 @@ stringa* iniziare_partita() {
 			inizializzare_griglia(&griglia_sudoku, impostazioni_gioco);
 			inizializzare_partita(impostazioni_gioco, griglia_sudoku, nome_partita, &partita_da_giocare);
 			nome_partite_salvate = giocare_partita(partita_da_giocare);
+			uscito = VERO; //Se l'utente ha premuto ESC, deve uscire da questa funzione in modo da tornare al menu principale
 		}
-	} while(comando_utente != '4' && comando_utente != '5');
+	} while(comando_utente != '5' && !uscito);
 	return nome_partite_salvate;
 }
 

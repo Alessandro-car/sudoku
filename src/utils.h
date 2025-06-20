@@ -29,4 +29,5 @@ void nascondere_cursore();
 void mostrare_cursore();
 void disegnare_riquadro_interfaccia();
 void abilitare_ANSI();
+void stampare_colorato(char colore[], char stringa[]);
 #endif
