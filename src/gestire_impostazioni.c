@@ -3,7 +3,6 @@
 int selezionare_difficolta(int difficolta_scelta) {
 	menu_scelta_difficolta();
 	char comando_utente;
-	nascondere_input_utente(); 					//TODO: Aggiustare questa parte perchè ambigua
 	comando_utente = nascondere_input_utente();
 	difficolta_scelta = DIFFICOLTA_STANDARD;
 	if (comando_utente == '1'){
@@ -38,8 +37,7 @@ void menu_scelta_dimensione_griglia() {
 
 int selezionare_dimensione_griglia() {
 	menu_scelta_dimensione_griglia();
-	int comando_utente;
-	nascondere_input_utente();						// TODO: aggiusare questa parte perche' ambigua
+	char comando_utente;
 	comando_utente = nascondere_input_utente();
 	int dim_griglia_scelta;
 	dim_griglia_scelta = DIM_GRIGLIA_STANDARD;

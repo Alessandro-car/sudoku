@@ -82,8 +82,8 @@ stringa* iniziare_partita() {
 
 partita caricare_partita(stringa* partite_salvate) {
 	stringa nome_file_scelto;
-	partita partita_caricata;
 	int comando_utente;
+	partita partita_caricata;
 
 	//printf(interfaccia_caricare_partita);
 	comando_utente = nascondere_input_utente();

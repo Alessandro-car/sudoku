@@ -16,7 +16,6 @@ int calcolare_resto_intero (int numeratore, int denominatore) {
 	r = numeratore - denominatore * q;
 	return r;
 }
-
 // La seguente funzione permette di calcolare la radice quadrata intera di un numero
 int calcolare_radice_quadrata (int radicando){
 	int radice;             //Possibile radice quadrata intera
@@ -79,12 +78,13 @@ partita caricare_partita_da_file(stringa nome_file_partita) {
 	return partita_caricata;
 }
 
-int nascondere_input_utente() {
-	int comando_utente;
+char nascondere_input_utente() {
+	char comando_utente;
 	nascondere_cursore();
 	printf("\033[8m");
-	comando_utente = getchar();
+	comando_utente = getch();
 	printf("\033[0m");
+	fflush(stdout);
 	return comando_utente;
 }
 
@@ -95,12 +95,12 @@ char convertire_minuscolo_maiuscolo(char lettera) {
 
     lettera_convertita = lettera;
 
-    
-    if ((lettera_convertita >= CHAR_a) && (lettera_convertita <= CHAR_z)) { // Controlliamo se il carattere é una lettera minuscola
+    // Controlliamo se il carattere Ã¨ una lettera minuscola
+    if ((lettera_convertita >= CHAR_a) && (lettera_convertita <= CHAR_z)) {
         lettera_convertita = lettera - 32; // viene sottratto 32 poichè bisogna portare da lettera minuscola a maiuscola basandoci sull'ascii
     }
 
-
+    // Restituiamo il carattere convertito
     return lettera_convertita;
 }
 
@@ -159,3 +159,4 @@ void abilitare_ANSI() {
     dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
     SetConsoleMode(hOut, dwMode);
 }
+

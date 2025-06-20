@@ -54,7 +54,7 @@ void riempire_griglia(griglia* griglia_gioco, impostazioni impostazioni_utente){
 	return;
 }
 
-//TODO: Creare funzione in pseudo
+//TODO: Creare la funzione in pseudo
 void azzerare_griglia(griglia *griglia_gioco) {
 	int i;
 	int j;

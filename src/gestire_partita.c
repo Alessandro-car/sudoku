@@ -176,20 +176,18 @@ void stampare_interfaccia_impostazioni(void) {
 	return;
 }
 
-//TODO: FINIRE FUNZIONE E POI RISCRIVERLA IN PSEUDO
 stringa* giocare_partita(partita partita_corrente) {
 	stringa* partite_salvate;
 	FILE* file_salvataggio;
 	griglia griglia_gioco;
 	stringa nome_file;
-	int comando_utente;
+	char comando_utente;
 	int riga;
 	int colonna;
 	int valore;
 
 	partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
 	nome_file = partita_leggere_nome(partita_corrente); // Ottiene il nome del file per il salvataggio dalla partita corrente
-	nascondere_input_utente();
 	do {
 		stampare_schermata_di_gioco(partita_leggere_griglia(partita_corrente));
 		// Legge il comando dell'utente e lo converte da minuscolo a maiuscolo se necessario
