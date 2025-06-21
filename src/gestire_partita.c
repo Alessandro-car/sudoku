@@ -8,7 +8,7 @@ void aggiornare_griglia (griglia* griglia, int valore, int riga, int colonna){
 	return;
 }
 
-bool_t validare_input_utente(int riga, int colonna, char valore, griglia griglia_gioco) {
+bool_t validare_input_utente(int riga, int colonna, char valore, griglia griglia_gioco){
 	bool_t validato;
 	int dim_griglia;
 	validato = FALSO;
@@ -232,7 +232,7 @@ stringa* giocare_partita(partita partita_corrente) {
 			aggiornare_griglia(&griglia_gioco, valore, riga, colonna);
 			partita_scrivere_griglia(&partita_corrente, griglia_gioco);
 		}
-	} while (comando_utente != TASTO_ESC); // Continua fino alla pressione del tasto ESC
+	} while (comando_utente != TASTO_ESC);
 
 	return partite_salvate;
 }
@@ -244,7 +244,7 @@ void stampare_schermata_di_gioco(griglia griglia_gioco) {
 	stampare_informazioni_utente();
 }
 
-void stampare_griglia(griglia griglia_gioco) {
+void stampare_griglia(griglia griglia_gioco, coordinata* valori_non_mod) {
 	int i;
 	int j;
 	char valore_griglia;

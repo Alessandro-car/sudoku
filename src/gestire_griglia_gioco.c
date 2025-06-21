@@ -28,7 +28,6 @@ void riempire_griglia(griglia* griglia_gioco, impostazioni impostazioni_utente){
 	int coordinata_x;           //Rappresenta una posizione casuale tra le righe
 	int coordinata_y;           //Rappresenta una posizione casuale tra le colonne
 	int valore;                 //Rappresenta il valore che verrà inserito nella griglia
-
 	int i;
 
 	i = 0;
@@ -47,7 +46,7 @@ void riempire_griglia(griglia* griglia_gioco, impostazioni impostazioni_utente){
 								valore = convertire_numeri_in_lettere(valore);
 								griglia_scrivere_valore(griglia_gioco, coordinata_x, coordinata_y, valore);
 						}
-					i = i + 1;
+						i = i + 1;
 				}
 		}
 	}
@@ -76,5 +75,30 @@ void inizializzare_griglia(griglia* griglia_gioco, impostazioni impostazioni_sel
 	azzerare_griglia(griglia_gioco);
 	riempire_griglia(griglia_gioco, impostazioni_selezionate);
 	return;
+}
+
+coordinata* prendere_coordinate_valori(griglia griglia_gioco, impostazioni impostazioni_utente) {
+	coordinata* valori_non_modificabili;
+	int i;
+	int j;
+	int pos;
+	int n_valori_non_mod;
+	n_valori_non_mod = n_numeri_di_griglia(impostazioni_utente);
+	valori_non_modificabili = malloc(n_valori_non_mod * sizeof(coordinata));
+	pos = 0;
+	i = 0;
+	while (i < griglia_leggere_dimensione(griglia_gioco)) {
+		j = 0;
+		while (j < griglia_leggere_dimensione(griglia_gioco)) {
+			if (griglia_leggere_valore(griglia_gioco, i, j) != 0) {
+				coordinata_scrivere_riga(&valori_non_modificabili[pos], i);
+				coordinata_scrivere_colonna(&valori_non_modificabili[pos], j);
+				pos = pos + 1;
+			}
+			j = j + 1;
+		}
+		i = i + 1;
+	}
+	return valori_non_modificabili;
 }
 
