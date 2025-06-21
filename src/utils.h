@@ -5,14 +5,9 @@
 #include <windows.h>
 #include <conio.h>
 #include "tipi_di_dato/partita.h"
-#include "costanti.h"
-#include "tipi_di_dato/partita.h"
 #include "tipi_di_dato/stringa.h"
+#include "costanti.h"
 
-typedef enum {
-	FALSO,
-	VERO
-} bool_t;
 
 #define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
 
@@ -30,4 +25,5 @@ void mostrare_cursore();
 void disegnare_riquadro_interfaccia();
 void abilitare_ANSI();
 void stampare_colorato(char colore[], char stringa[]);
+void stampare_carattere_colorato(char colore[], char c);
 #endif

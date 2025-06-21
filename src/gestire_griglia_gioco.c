@@ -28,6 +28,7 @@ void riempire_griglia(griglia* griglia_gioco, impostazioni impostazioni_utente){
 	int coordinata_x;           //Rappresenta una posizione casuale tra le righe
 	int coordinata_y;           //Rappresenta una posizione casuale tra le colonne
 	int valore;                 //Rappresenta il valore che verrà inserito nella griglia
+	valore_griglia val;
 	int i;
 
 	i = 0;
@@ -40,11 +41,15 @@ void riempire_griglia(griglia* griglia_gioco, impostazioni impostazioni_utente){
 		if(verificare_coordinate_e_valore(*griglia_gioco, coordinata_x, coordinata_y, valore) == VERO){
 				valore = (rand() % griglia_leggere_dimensione(*griglia_gioco)) + 1;
 				if(verificare_numero_da_inserire(*griglia_gioco, valore, coordinata_x, coordinata_y) == VERO){
+						valore_griglia_scrivere_modificabile(&val, FALSO);
 						if(valore <= 9){
-								griglia_scrivere_valore(griglia_gioco, coordinata_x, coordinata_y, valore);
+							valore_griglia_scrivere_valore(&val, valore);
+							griglia_scrivere_valore(griglia_gioco, coordinata_x, coordinata_y, val);
 						}else{
-								valore = convertire_numeri_in_lettere(valore);
-								griglia_scrivere_valore(griglia_gioco, coordinata_x, coordinata_y, valore);
+
+							valore = convertire_numeri_in_lettere(valore);
+							valore_griglia_scrivere_valore(&val, valore);
+							griglia_scrivere_valore(griglia_gioco, coordinata_x, coordinata_y, val);
 						}
 						i = i + 1;
 				}
@@ -55,13 +60,16 @@ void riempire_griglia(griglia* griglia_gioco, impostazioni impostazioni_utente){
 
 //TODO: Creare la funzione in pseudo
 void azzerare_griglia(griglia *griglia_gioco) {
+	valore_griglia val;
 	int i;
 	int j;
 	i = 0;
+	valore_griglia_scrivere_modificabile(&val, VERO);
 	while (i < griglia_leggere_dimensione(*griglia_gioco)) {
 		j = 0;
 		while (j < griglia_leggere_dimensione(*griglia_gioco)) {
-			griglia_scrivere_valore(griglia_gioco, i, j, 0);
+			valore_griglia_scrivere_valore(&val, 0);
+			griglia_scrivere_valore(griglia_gioco, i, j, val);
 			j = j + 1;
 		}
 		i = i + 1;

@@ -72,7 +72,7 @@ partita caricare_partita_da_file(stringa nome_file_partita) {
 
 	file_partita = fopen(stringa_leggere_array(nome_file_partita), "rb");
 	fread(&partita_caricata.nome_partita, sizeof(stringa), 1, file_partita);
-	fread(&partita_caricata.griglia_partita, sizeof(griglia), 1 , file_partita);
+	//fread(&partita_caricata.griglia_partita, sizeof(griglia), 1 , file_partita);
 	fread(&partita_caricata.impostazioni_partita, sizeof(impostazioni), 1, file_partita);
 	fclose(file_partita);
 	return partita_caricata;
@@ -162,6 +162,10 @@ void abilitare_ANSI() {
 }
 
 void stampare_colorato(char colore[], char stringa[]) {
-	printf("%s%s%s", colore, stringa, ANSI_COLOR_RESET);
+	printf("%s%s%s", colore, stringa, COLORE_ANSI_RESET);
 	return;
+}
+
+void stampare_carattere_colorato(char colore[], char c) {
+	printf("%s%c%s", colore, c, COLORE_ANSI_RESET);
 }

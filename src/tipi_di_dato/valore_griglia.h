@@ -1,7 +1,7 @@
-#ifndef TIPI_DI_DATO_VALORE_GRIGLIA_H_
-#define TIPI_DI_DATO_VALORE_GRIGLIA_H_
+#ifndef VALORE_GRIGLIA_H_
+#define VALORE_GRIGLIA_H_
 
-#include "../utils.h"
+#include "../costanti.h"
 
 typedef struct {
 	int valore;

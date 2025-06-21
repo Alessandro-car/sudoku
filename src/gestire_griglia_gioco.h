@@ -5,11 +5,10 @@
 #include <time.h>
 #include "tipi_di_dato/griglia.h"
 #include "tipi_di_dato/impostazioni.h"
-#include "tipi_di_dato/griglia.h"
-#include "tipi_di_dato/impostazioni.h"
 #include "gestire_partita.h"
 #include "gestire_griglia_gioco.h"
 #include "utils.h"
+#include "costanti.h"
 
 
 int n_numeri_di_griglia (impostazioni impostazioni_gioco);

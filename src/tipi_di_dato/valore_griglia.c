@@ -1,5 +1,6 @@
 #include "valore_griglia.h"
 
+
 int valore_griglia_leggere_valore(valore_griglia val) {
 	int valore;
 	valore = val.valore;

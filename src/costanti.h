@@ -14,15 +14,15 @@
 #define DIFFICOLTA_STANDARD 0
 #define DIFFICOLTA_MEDIA 1
 #define DIFFICOLTA_DIFFICILE 2
-#define ANSI_COLOR_BLACK "\x1b[30m"
-#define ANSI_COLOR_RED "\x1b[31m"
-#define ANSI_COLOR_GREEN "\x1b[32m"
-#define ANSI_COLOR_YELLOW "\x1b[33m"
-#define ANSI_COLOR_BLUE "\x1b[34m"
-#define ANSI_COLOR_MAGENTA "\x1b[35m"
-#define ANSI_COLOR_CYAN "\x1b[36m"
-#define ANSI_COLOR_WHITE "\x1b[37m"
-#define ANSI_COLOR_RESET "\x1b[m"
+#define COLORE_ANSI_NERO "\x1b[30m"
+#define COLORE_ANSI_ROSSO "\x1b[31m"
+#define COLORE_ANSI_VERDE "\x1b[32m"
+#define COLORE_ANSI_GIALLO "\x1b[33m"
+#define COLORE_ANSI_BLU "\x1b[34m"
+#define COLORE_ANSI_MAGENTA "\x1b[35m"
+#define COLORE_ANSI_CIANO "\x1b[36m"
+#define COLORE_ANSI_BIANCO "\x1b[37m"
+#define COLORE_ANSI_RESET "\x1b[m"
 
 typedef enum {
 	CHAR_0 = 48,
@@ -41,5 +41,11 @@ typedef enum {
 	CHAR_z = 122,
 	TASTO_ESC = 27
 } ASCII_CODE;
+
+typedef enum {
+	FALSO,
+	VERO
+} bool_t;
+
 
 #endif

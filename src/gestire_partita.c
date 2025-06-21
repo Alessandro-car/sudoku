@@ -1,9 +1,12 @@
 #include "gestire_partita.h"
 //TODO: Lo pseudo va modificato
 //Funzione che inserisce un valore nella griglia del sudoku dopo averne controllato la correttezza
-void aggiornare_griglia (griglia* griglia, int valore, int riga, int colonna){
+void aggiornare_griglia(griglia* griglia, int valore, int riga, int colonna){
+	valore_griglia val;
 	if (validare_input_utente(riga, colonna, convertire_numeri_in_lettere(valore), *griglia) == VERO){
-		griglia_scrivere_valore(griglia, riga - 1, colonna - 1, valore);
+		valore_griglia_scrivere_valore(&val, valore);
+		valore_griglia_scrivere_modificabile(&val, VERO);
+		griglia_scrivere_valore(griglia, riga - 1, colonna - 1, val);
 	}
 	return;
 }
@@ -15,7 +18,10 @@ bool_t validare_input_utente(int riga, int colonna, char valore, griglia griglia
 	dim_griglia = griglia_leggere_dimensione(griglia_gioco);
 	valore = convertire_minuscolo_maiuscolo(valore);
 
-	if (validare_riga_input(riga, dim_griglia) == VERO && validare_colonna_input(colonna, dim_griglia) == VERO && validare_valore_input(valore, dim_griglia) == VERO) {
+	if (validare_riga_input(riga, dim_griglia) == VERO &&
+		validare_colonna_input(colonna, dim_griglia) == VERO &&
+		validare_valore_input(valore, dim_griglia) == VERO &&
+		valore_griglia_leggere_modificabile(griglia_leggere_valore(griglia_gioco, riga - 1, colonna - 1)) == VERO) {
 		validato = VERO;
 	}
 
@@ -26,7 +32,7 @@ bool_t verificare_coordinate_e_valore(griglia griglia_gioco, int coordinata_x, i
 	bool_t valido;
 	valido = VERO;
 
-	if (griglia_leggere_valore(griglia_gioco, coordinata_x, coordinata_y) != 0) {
+	if (valore_griglia_leggere_valore(griglia_leggere_valore(griglia_gioco, coordinata_x, coordinata_y)) != 0) {
 		valido = FALSO;
 	}
 	return valido;
@@ -51,7 +57,7 @@ bool_t controllare_colonna(griglia griglia, int colonna, int numeri_da_inserire,
   corretto = VERO;
   i = 1;
   while(i < dimensione_griglia){
-      if(griglia_leggere_valore(griglia, i, colonna) == numeri_da_inserire){
+      if(valore_griglia_leggere_valore(griglia_leggere_valore(griglia, i, colonna)) == numeri_da_inserire){
       	corretto = FALSO;
       }
       i = i + 1;
@@ -103,14 +109,14 @@ bool_t verificare_numero_da_inserire(griglia griglia, int numero_da_inserire, in
 bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da_inserire, int dimensione_regione) {
 	bool_t corretto;
 	int i;
+	int j;
 
 	corretto = VERO;
 	i = riga;
-	while (i < riga + dimensione_regione) {
-		int j;
+	while (i <= riga + dimensione_regione) {
 		j = colonna;
-		while ( j < colonna + dimensione_regione ) {
-			if (griglia_leggere_valore(griglia, i, j) == numero_da_inserire) {
+		while (j <= colonna + dimensione_regione) {
+			if (valore_griglia_leggere_valore(griglia_leggere_valore(griglia, i, j)) == numero_da_inserire) {
 				corretto = FALSO;
 			}
 			j = j + 1;
@@ -146,7 +152,7 @@ bool_t controllare_riga(griglia sudoku, int riga, int numero_da_inserire, int di
 	corretto = VERO;
 	j = 0;
 	while (j < dimensione_sudoku && corretto == VERO) {
-		valore_cella = griglia_leggere_valore(sudoku, riga, j);
+		valore_cella = valore_griglia_leggere_valore(griglia_leggere_valore(sudoku, riga, j));
 		// Se il valore nella cella corrente è uguale al numero che vogliamo inserire,
 		// allora il numero non può essere inserito in questa riga
 		if (valore_cella == numero_da_inserire) {
@@ -248,18 +254,25 @@ void stampare_schermata_di_gioco(griglia griglia_gioco) {
 void stampare_griglia(griglia griglia_gioco) {
 	int i;
 	int j;
-	char valore_griglia;
+	valore_griglia val;
+	char val_carattere;
 	i = 0;
 	while(i < griglia_leggere_dimensione(griglia_gioco)) {
 		j = 0;
 		impostare_coordinate_cursore(4, 3 + i);
 		printf("|");
 		while(j < griglia_leggere_dimensione(griglia_gioco)) {
-			valore_griglia = convertire_numeri_in_lettere(griglia_leggere_valore(griglia_gioco, i, j));
-			if (valore_griglia == '0') {
+			val = griglia_leggere_valore(griglia_gioco, i, j);
+			val_carattere = convertire_numeri_in_lettere(valore_griglia_leggere_valore(val));
+			if (val_carattere == '0') {
 				printf(" |");
 			} else {
-				printf("%c|", valore_griglia);
+				if (valore_griglia_leggere_modificabile(val) == FALSO) {
+					stampare_carattere_colorato(COLORE_ANSI_CIANO, val_carattere);
+					printf("|");
+				} else {
+					printf("%c|", val_carattere);
+				}
 			}
 			j = j + 1;
 		}

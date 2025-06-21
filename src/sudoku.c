@@ -27,8 +27,8 @@ int main(void) {
 	abilitare_ANSI();
 	stringa* partite_salvate;
 	partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
-	//partite_salvate = menu_principale();
-	griglia griglia_gioco;
+	partite_salvate = menu_principale();
+	/*griglia griglia_gioco;
 	griglia_gioco.dimensione_griglia = 4;
 	griglia_gioco.valori_griglia[0][0] = 0;
 	griglia_gioco.valori_griglia[0][1] = 0;
@@ -64,6 +64,6 @@ int main(void) {
 		printf("[%d;%d]\n", coordinata_leggere_riga(valori_non_mod[i]), coordinata_leggere_colonna(valori_non_mod[i]));
 	}
 
-	system("pause");
+	system("pause");*/
 	return 0;
 }
