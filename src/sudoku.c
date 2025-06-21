@@ -28,6 +28,8 @@ int main(void) {
 	stringa* partite_salvate;
 	partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
 	partite_salvate = menu_principale();
+	//printf("%d\n", (4 - calcolare_resto_intero(4, 3)));
+	//system("pause");
 	/*griglia griglia_gioco;
 	griglia_gioco.dimensione_griglia = 4;
 	griglia_gioco.valori_griglia[0][0] = 0;

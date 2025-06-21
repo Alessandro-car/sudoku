@@ -113,9 +113,9 @@ bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da
 
 	corretto = VERO;
 	i = riga;
-	while (i <= riga + dimensione_regione) {
+	while (i < riga + dimensione_regione) {
 		j = colonna;
-		while (j <= colonna + dimensione_regione) {
+		while (j < colonna + dimensione_regione) {
 			if (valore_griglia_leggere_valore(griglia_leggere_valore(griglia, i, j)) == numero_da_inserire) {
 				corretto = FALSO;
 			}
