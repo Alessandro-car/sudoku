@@ -77,28 +77,4 @@ void inizializzare_griglia(griglia* griglia_gioco, impostazioni impostazioni_sel
 	return;
 }
 
-coordinata* prendere_coordinate_valori(griglia griglia_gioco, impostazioni impostazioni_utente) {
-	coordinata* valori_non_modificabili;
-	int i;
-	int j;
-	int pos;
-	int n_valori_non_mod;
-	n_valori_non_mod = n_numeri_di_griglia(impostazioni_utente);
-	valori_non_modificabili = malloc(n_valori_non_mod * sizeof(coordinata));
-	pos = 0;
-	i = 0;
-	while (i < griglia_leggere_dimensione(griglia_gioco)) {
-		j = 0;
-		while (j < griglia_leggere_dimensione(griglia_gioco)) {
-			if (griglia_leggere_valore(griglia_gioco, i, j) != 0) {
-				coordinata_scrivere_riga(&valori_non_modificabili[pos], i);
-				coordinata_scrivere_colonna(&valori_non_modificabili[pos], j);
-				pos = pos + 1;
-			}
-			j = j + 1;
-		}
-		i = i + 1;
-	}
-	return valori_non_modificabili;
-}
 

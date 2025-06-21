@@ -12,7 +12,6 @@
 #include <stdlib.h>
 #include <conio.h>
 #include "gestire_partita.h"
-#include "tipi_di_dato/coordinata.h"
 #include "tipi_di_dato/griglia.h"
 #include "tipi_di_dato/impostazioni.h"
 #include "gestire_griglia_gioco.h"

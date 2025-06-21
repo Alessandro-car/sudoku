@@ -11,13 +11,13 @@ void griglia_scrivere_dimensione(griglia* griglia_partita, int nuova_dimensione)
 	return;
 }
 
-int griglia_leggere_valore(griglia griglia_partita, int riga, int colonna) {
-	int valore_letto;
-	valore_letto = griglia_partita.valori_griglia[riga][colonna];
+valore_griglia griglia_leggere_valore(griglia griglia_partita, int riga, int colonna) {
+	valore_griglia valore_letto;
+	valore_letto = griglia_partita.valori[riga][colonna];
 	return valore_letto;
 }
 
-void griglia_scrivere_valore(griglia* griglia_partita, int riga, int colonna, int valore) {
-	griglia_partita->valori_griglia[riga][colonna] = valore;
+void griglia_scrivere_valore(griglia* griglia_partita, int riga, int colonna, valore_griglia val) {
+	griglia_partita->valori[riga][colonna] = val;
 	return;
 }

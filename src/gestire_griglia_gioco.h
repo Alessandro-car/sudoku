@@ -3,7 +3,6 @@
 
 #include <stdlib.h>
 #include <time.h>
-#include "tipi_di_dato/coordinata.h"
 #include "tipi_di_dato/griglia.h"
 #include "tipi_di_dato/impostazioni.h"
 #include "tipi_di_dato/griglia.h"
@@ -17,7 +16,5 @@ int n_numeri_di_griglia (impostazioni impostazioni_gioco);
 void riempire_griglia(griglia* griglia_gioco, impostazioni impostazioni_utente);
 void azzerare_griglia(griglia* griglia_gioco);
 void inizializzare_griglia(griglia* griglia_gioco, impostazioni impostazioni_selezionate);
-coordinata* prendere_coordinate_valori(griglia griglia_gioco, impostazioni impostazioni_utente);
-
 
 #endif

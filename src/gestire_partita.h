@@ -23,7 +23,7 @@ bool_t controllare_riga(griglia sudoku, int riga, int numero_da_inserire, int di
 stringa* giocare_partita(partita partita_corrente);
 void stampare_interfaccia_impostazioni(void);
 void stampare_schermata_di_gioco(griglia griglia_gioco);
-void stampare_griglia(griglia griglia_gioco, coordinata* valori_non_mod);
+void stampare_griglia(griglia griglia_gioco);
 void stampare_informazioni_utente();
 
 #endif

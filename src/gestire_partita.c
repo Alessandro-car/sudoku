@@ -18,6 +18,7 @@ bool_t validare_input_utente(int riga, int colonna, char valore, griglia griglia
 	if (validare_riga_input(riga, dim_griglia) == VERO && validare_colonna_input(colonna, dim_griglia) == VERO && validare_valore_input(valore, dim_griglia) == VERO) {
 		validato = VERO;
 	}
+
 	return validato;
 }
 
@@ -244,7 +245,7 @@ void stampare_schermata_di_gioco(griglia griglia_gioco) {
 	stampare_informazioni_utente();
 }
 
-void stampare_griglia(griglia griglia_gioco, coordinata* valori_non_mod) {
+void stampare_griglia(griglia griglia_gioco) {
 	int i;
 	int j;
 	char valore_griglia;

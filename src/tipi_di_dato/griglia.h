@@ -2,15 +2,17 @@
 #define GRIGLIA_H_
 
 #include "../costanti.h"
+#include "valore_griglia.h"
 
 typedef struct {
 	int dimensione_griglia;
-	int valori_griglia[DIM_GRIGLIA_GRANDE][DIM_GRIGLIA_GRANDE];
+	valore_griglia valori[DIM_GRIGLIA_GRANDE][DIM_GRIGLIA_GRANDE];
 } griglia;
+
 
 int griglia_leggere_dimensione(griglia griglia_partita);
 void griglia_scrivere_dimensione(griglia* griglia_partita, int nuova_dimensione);
-int griglia_leggere_valore(griglia griglia_partita, int riga, int colonna);
-void griglia_scrivere_valore(griglia* griglia_partita, int riga, int colonna, int valore);
+valore_griglia griglia_leggere_valore(griglia griglia_partita, int riga, int colonna);
+void griglia_scrivere_valore(griglia* griglia_partita, valore_griglia val);
 
 #endif
