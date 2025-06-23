@@ -27,6 +27,9 @@
 #define DIM_MAX_NOME_FILE 10
 
 typedef enum {
+	TASTO_BACKSPACE = 8,
+	TASTO_INVIO = 13,
+	TASTO_ESC = 27,
 	CHAR_0 = 48,
 	CHAR_1 = 49,
 	CHAR_2 = 50,
@@ -40,8 +43,7 @@ typedef enum {
 	CHAR_A = 65,
 	CHAR_G = 71,
 	CHAR_a = 97,
-	CHAR_z = 122,
-	TASTO_ESC = 27
+	CHAR_z = 122
 } ASCII_CODE;
 
 typedef enum {

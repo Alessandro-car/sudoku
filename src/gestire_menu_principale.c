@@ -66,7 +66,7 @@ stringa* iniziare_partita() {
 			impostare_coordinate_cursore(56, 12);
 			mostrare_cursore();
 			printf(": ");
-			scanf("%s", nome_partita.caratteri);
+			prendere_input_stringa_limitato(&nome_partita, DIM_MAX_STRINGA, 58, 12);
 		}
 		if(comando_utente == '4') {
 			impostare_parametri_di_gioco(&impostazioni_gioco, difficolta_scelta, dim_griglia_scelta);

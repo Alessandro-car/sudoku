@@ -89,7 +89,7 @@ char convertire_minuscolo_maiuscolo(char lettera) {
 
     lettera_convertita = lettera;
 
-    // Controlliamo se il carattere Ã¨ una lettera minuscola
+    // Controlliamo se il carattere é una lettera minuscola
     if ((lettera_convertita >= CHAR_a) && (lettera_convertita <= CHAR_z)) {
         lettera_convertita = lettera - 32; // viene sottratto 32 poichè bisogna portare da lettera minuscola a maiuscola basandoci sull'ascii
     }
@@ -162,4 +162,35 @@ void stampare_colorato(char colore[], char stringa[]) {
 
 void stampare_carattere_colorato(char colore[], char c) {
 	printf("%s%c%s", colore, c, COLORE_ANSI_RESET);
+	return;
+}
+
+void prendere_input_stringa_limitato(stringa* str, int dim_input, int x, int y){
+	int i;
+	char c;
+
+	i = 0;
+	c = '\0';
+	stringa_scrivere_dimensione(str, 0);
+	while (c != TASTO_INVIO) {
+			c = getch();
+			if (c == TASTO_BACKSPACE && i > 0) {
+				i = i - 1;
+				stringa_scrivere_dimensione(str, i);
+				stringa_scrivere_carattere(str, i, '\0');
+			}
+			else{
+				if(i < dim_input && c != TASTO_BACKSPACE) {
+					stringa_scrivere_dimensione(str, i + 1);
+					stringa_scrivere_carattere(str, i, c);
+					i = i + 1;
+				}
+			}
+			impostare_coordinate_cursore(x, y);
+			printf("%*s", dim_input, " ");
+			impostare_coordinate_cursore(x, y);
+
+			printf("%s", stringa_leggere_array(*str));
+		}
+	return;
 }
