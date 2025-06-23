@@ -4,7 +4,7 @@
 // La seguente funzione permette di calcolare il resto intero della divisione tra numeratore e denominatore
 int calcolare_resto_intero(int numeratore, int denominatore) {
 	// calcolo del quoziente
-	while (numeratore > denominatore)
+	while (numeratore >= denominatore)
 	{
 		numeratore = numeratore - denominatore;
 	}
@@ -66,7 +66,7 @@ partita caricare_partita_da_file(stringa nome_file_partita) {
 
 	file_partita = fopen(stringa_leggere_array(nome_file_partita), "rb");
 	fread(&partita_caricata.nome_partita, sizeof(stringa), 1, file_partita);
-	//fread(&partita_caricata.griglia_partita, sizeof(griglia), 1 , file_partita);
+	fread(&partita_caricata.griglia_partita, sizeof(griglia), 1 , file_partita);
 	fread(&partita_caricata.impostazioni_partita, sizeof(impostazioni), 1, file_partita);
 	fclose(file_partita);
 	return partita_caricata;

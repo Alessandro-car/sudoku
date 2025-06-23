@@ -1,4 +1,5 @@
 #include "gestire_partita.h"
+#include "math.h"
 //TODO: Lo pseudo va modificato
 //Funzione che inserisce un valore nella griglia del sudoku dopo averne controllato la correttezza
 void aggiornare_griglia(griglia* griglia, int valore, int riga, int colonna){
@@ -54,10 +55,12 @@ bool_t validare_colonna_input(int colonna, int dim_griglia) {
 bool_t controllare_colonna(griglia griglia, int colonna, int numeri_da_inserire, int dimensione_griglia) {
   bool_t corretto;           //Indica se il numero può essere inserito o meno
   int i;
+  int valore_cella;
   corretto = VERO;
-  i = 1;
+  i = 0;
   while(i < dimensione_griglia){
-      if(valore_griglia_leggere_valore(griglia_leggere_valore(griglia, i, colonna)) == numeri_da_inserire){
+	  valore_cella = valore_griglia_leggere_valore(griglia_leggere_valore(griglia, i, colonna));
+      if(valore_cella == numeri_da_inserire){
       	corretto = FALSO;
       }
       i = i + 1;
@@ -88,21 +91,31 @@ bool_t validare_valore_input(char valore, int dim_griglia) {
 //La seguente funzione permette di verificare se è stato inserito un numero in una "cella" non valida, effettuando controlli su riga, colonna e regione
 bool_t verificare_numero_da_inserire(griglia griglia, int numero_da_inserire, int riga, int colonna) {
 
-	int corretto; //Sarà l'output della funzione ed è un booleano, permette di capire se il numero è già presente in riga, colonna, regione o meno
+	bool_t corretto; //Sarà l'output della funzione ed è un booleano, permette di capire se il numero è già presente in riga, colonna, regione o meno
 	int dimensione_griglia;//La seguente variabile verrà inizializzata con la dimensione della griglia
 	int dimensione_regione;//Viene inizializzata con la dimensione della regione della griglia
 
 	dimensione_griglia = griglia_leggere_dimensione(griglia);
 	dimensione_regione = calcolare_radice_quadrata(dimensione_griglia);//La funzione calcolare_radice_quadrata permette di ottenere la dimensione esatta della regione
-	corretto = controllare_riga(griglia, riga, numero_da_inserire, dimensione_griglia); //Inizializza corretto con la funzione controllare_riga che ha come output booleano, che sarà VERO se non ci sono valori uguali nella stessa riga
-	if(corretto == VERO) {//Se il primo controllo è andato a buon fine allora passa al controllo della colonna
+	//corretto = controllare_riga(griglia, riga, numero_da_inserire, dimensione_griglia); //Inizializza corretto con la funzione controllare_riga che ha come output booleano, che sarà VERO se non ci sono valori uguali nella stessa riga
+	corretto = FALSO;
+	int inizio_regione_R = riga - calcolare_resto_intero(riga, dimensione_regione);
+	int inizio_regione_C = colonna - calcolare_resto_intero(colonna, dimensione_regione);
+	if (
+		controllare_riga(griglia, riga, numero_da_inserire, dimensione_griglia ) == VERO   &&
+		controllare_colonna(griglia, colonna, numero_da_inserire, dimensione_griglia) == VERO &&
+		controllare_regione(griglia, inizio_regione_R, inizio_regione_C, numero_da_inserire, dimensione_regione) == VERO
+		) {
+		corretto = VERO;
+	}
+	/*if(corretto == VERO) {//Se il primo controllo è andato a buon fine allora passa al controllo della colonna
 		corretto = controllare_colonna(griglia, colonna, numero_da_inserire, dimensione_griglia); //Imposta corretto con la funzione controllare_colonna che ha come output booleano, che sarà VERO se non ci sono valori uguali nella stessa colonna
 	}
 	if(corretto == VERO) {//Se il secondo controllo è andato a buon fine passa al controllo sulla regione
 		riga = riga - calcolare_resto_intero(riga, dimensione_regione);//Permette di ottenere la dimensione della riga della regione
 		colonna =  colonna - calcolare_resto_intero(colonna, dimensione_regione); //Permette di ottenere la dimensione della colonna della regione
 		corretto = controllare_regione(griglia, riga, colonna, numero_da_inserire, dimensione_regione);//Imposta corretto con la funzione controllare_regione che ha come output booleano, che sarà VERO se non ci sono valori uguali nella stessa regione
-	}
+	}*/
 	return corretto;
 }
 
@@ -110,13 +123,15 @@ bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da
 	bool_t corretto;
 	int i;
 	int j;
+	int valore_cella;
 
 	corretto = VERO;
 	i = riga;
 	while (i < riga + dimensione_regione) {
 		j = colonna;
 		while (j < colonna + dimensione_regione) {
-			if (valore_griglia_leggere_valore(griglia_leggere_valore(griglia, i, j)) == numero_da_inserire) {
+			valore_cella = valore_griglia_leggere_valore(griglia_leggere_valore(griglia, i, j));
+			if (valore_cella == numero_da_inserire) {
 				corretto = FALSO;
 			}
 			j = j + 1;
@@ -151,7 +166,7 @@ bool_t controllare_riga(griglia sudoku, int riga, int numero_da_inserire, int di
 
 	corretto = VERO;
 	j = 0;
-	while (j < dimensione_sudoku && corretto == VERO) {
+	while (j < dimensione_sudoku) {
 		valore_cella = valore_griglia_leggere_valore(griglia_leggere_valore(sudoku, riga, j));
 		// Se il valore nella cella corrente è uguale al numero che vogliamo inserire,
 		// allora il numero non può essere inserito in questa riga
@@ -189,10 +204,9 @@ stringa* giocare_partita(partita partita_corrente) {
 	griglia griglia_gioco;
 	stringa nome_file;
 	char comando_utente;
-	int riga;
-	int colonna;
-	int valore;
-
+	char riga;
+	char colonna;
+	char valore;
 	partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
 	nome_file = partita_leggere_nome(partita_corrente); // Ottiene il nome del file per il salvataggio dalla partita corrente
 	do {
@@ -203,15 +217,11 @@ stringa* giocare_partita(partita partita_corrente) {
 
 		// Gestisce il comando di salvataggio della partita
 		if (comando_utente == 'S') {
-			// Apre il file in modalità scrittura binaria per salvare la partita
-			file_salvataggio = fopen(stringa_leggere_array(nome_file), "wb");
+			file_salvataggio = fopen("./salvataggi/ciao.bin", "wb");
 			if (file_salvataggio != NULL) {
-				// Scrive i dati della partita nel file
-				fwrite(&partita_corrente, sizeof(partita), 1, file_salvataggio);
-				fclose(file_salvataggio);
-
+				salvare_partita(file_salvataggio, partita_corrente);
 				// Visualizza l'interfaccia per caricare/selezionare slot di salvataggio
-				// TODO: MANCA INTERFACCIA DI CARICARE PARTITA CONTROLLARE ASSOLUTAMENTE QUESRA PARTE
+				/* TODO: MANCA INTERFACCIA DI CARICARE PARTITA CONTROLLARE ASSOLUTAMENTE QUESRA PARTE
 
 				// Legge la scelta dell'utente per lo slot di salvataggio (1-5)
 				comando_utente = nascondere_input_utente();
@@ -220,7 +230,7 @@ stringa* giocare_partita(partita partita_corrente) {
 				// Verifica che la scelta sia valida (tra 1 e 5) e salva nello slot corrispondente
 				if (comando_utente < 6 && comando_utente > 0) {
 						partite_salvate[comando_utente - 1] = nome_file;
-				}
+				}*/
 			}
 		}
 
@@ -229,14 +239,16 @@ stringa* giocare_partita(partita partita_corrente) {
 				// Legge le coordinate e il valore dall'utente
 			impostare_coordinate_cursore(68, 3);
 			mostrare_cursore();
-			scanf("%d", &riga);
+			scanf("\n%c", &riga);
 			impostare_coordinate_cursore(71, 4);
-			scanf("%d", &colonna);
+			scanf("\n%c", &colonna);
 			impostare_coordinate_cursore(70, 5);
-			scanf("%d", &valore);
-
+			scanf("\n%c", &valore);
+			riga = convertire_minuscolo_maiuscolo(riga);
+			colonna = convertire_minuscolo_maiuscolo(colonna);
+			valore = convertire_minuscolo_maiuscolo(valore);
 			griglia_gioco = partita_leggere_griglia(partita_corrente);
-			aggiornare_griglia(&griglia_gioco, valore, riga, colonna);
+			aggiornare_griglia(&griglia_gioco, convertire_lettera_in_numero(valore), convertire_lettera_in_numero(riga), convertire_lettera_in_numero(colonna));
 			partita_scrivere_griglia(&partita_corrente, griglia_gioco);
 		}
 	} while (comando_utente != TASTO_ESC);

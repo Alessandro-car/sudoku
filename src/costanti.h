@@ -24,6 +24,8 @@
 #define COLORE_ANSI_BIANCO "\x1b[37m"
 #define COLORE_ANSI_RESET "\x1b[m"
 
+#define DIM_MAX_NOME_FILE 10
+
 typedef enum {
 	CHAR_0 = 48,
 	CHAR_1 = 49,
