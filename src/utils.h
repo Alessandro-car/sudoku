@@ -27,4 +27,5 @@ void abilitare_ANSI();
 void stampare_colorato(char colore[], char stringa[]);
 void stampare_carattere_colorato(char colore[], char c);
 void prendere_input_stringa_limitato(stringa* str, int dim_input, int x, int y);
+char prendere_input_carattere_limitato(int x, int y);
 #endif

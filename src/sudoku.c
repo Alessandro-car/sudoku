@@ -27,7 +27,8 @@ int main(void) {
 	abilitare_ANSI();
 	stringa* partite_salvate;
 	partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
-	 partite_salvate = menu_principale();
+	partite_salvate = menu_principale();
+
 	/*griglia griglia_gioco;
 	griglia_gioco.dimensione_griglia = 9;
 	azzerare_griglia(&griglia_gioco);

@@ -239,11 +239,15 @@ stringa* giocare_partita(partita partita_corrente) {
 				// Legge le coordinate e il valore dall'utente
 			impostare_coordinate_cursore(68, 3);
 			mostrare_cursore();
-			scanf("\n%c", &riga);
+			riga = prendere_input_carattere_limitato(68, 3);
+
 			impostare_coordinate_cursore(71, 4);
-			scanf("\n%c", &colonna);
+			colonna = prendere_input_carattere_limitato(71,4);
+
 			impostare_coordinate_cursore(70, 5);
-			scanf("\n%c", &valore);
+			valore = prendere_input_carattere_limitato(70 ,5);
+
+
 			riga = convertire_minuscolo_maiuscolo(riga);
 			colonna = convertire_minuscolo_maiuscolo(colonna);
 			valore = convertire_minuscolo_maiuscolo(valore);

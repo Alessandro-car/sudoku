@@ -194,3 +194,32 @@ void prendere_input_stringa_limitato(stringa* str, int dim_input, int x, int y){
 		}
 	return;
 }
+
+char prendere_input_carattere_limitato(int x, int y){
+	int i;
+	char c;
+	char val;
+
+	i = 0;
+	c = '\0';
+	val = '\0';
+	while (c != TASTO_INVIO) {
+			c = getch();
+			if (c == TASTO_BACKSPACE && i > 0) {
+				i = i - 1;
+				val = '\0';
+			}
+			else{
+				if(i < 1 && c != TASTO_BACKSPACE) {
+					i = i + 1;
+					val = c;
+				}
+			}
+			impostare_coordinate_cursore(x, y);
+			printf("%*s", 2, " ");
+			impostare_coordinate_cursore(x, y);
+
+			printf("%c", val);
+		}
+	return val;
+}
