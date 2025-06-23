@@ -42,15 +42,11 @@ void riempire_griglia(griglia* griglia_gioco, impostazioni impostazioni_utente){
 				valore = (rand() % griglia_leggere_dimensione(*griglia_gioco)) + 1;
 				if(verificare_numero_da_inserire(*griglia_gioco, valore, coordinata_x, coordinata_y) == VERO){
 						valore_griglia_scrivere_modificabile(&val, FALSO);
-						if(valore <= 9){
-							valore_griglia_scrivere_valore(&val, valore);
-							griglia_scrivere_valore(griglia_gioco, coordinata_x, coordinata_y, val);
-						}else{
-
+						if(valore > 9){
 							valore = convertire_numeri_in_lettere(valore);
-							valore_griglia_scrivere_valore(&val, valore);
-							griglia_scrivere_valore(griglia_gioco, coordinata_x, coordinata_y, val);
 						}
+						valore_griglia_scrivere_valore(&val, valore);
+						griglia_scrivere_valore(griglia_gioco, coordinata_x, coordinata_y, val);
 						i = i + 1;
 				}
 		}
