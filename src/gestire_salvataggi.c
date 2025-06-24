@@ -102,6 +102,7 @@ int calcolare_n_file_salvati(char* nome_directory) {
 }
 
 void salvare_partita(partita partita_da_salvare) {
+	bool_t errore_salvataggio;
 	bool_t salvato;
 	FILE* file_salvataggio;
 	stringa* partite_salvate;
@@ -110,14 +111,16 @@ void salvare_partita(partita partita_da_salvare) {
 	char* vecchio_file_path;
 	int slot;
 	int n_file_salvati;
+
 	partite_salvate = leggere_directory(CARTELLA_SALVATAGGI);
 	n_file_salvati = calcolare_n_file_salvati(CARTELLA_SALVATAGGI);
 	path_file = concatenare_due_stringhe(stringa_leggere_array(partita_leggere_nome(partita_da_salvare)), ESTENSIONE_FILE);
 	path_file = concatenare_due_stringhe(CARTELLA_SALVATAGGI, path_file);
-	salvato = VERO;
+	salvato = FALSO;
+	errore_salvataggio = FALSO;
 	do {
 		stampare_interfaccia_carica_partita();
-		if (salvato == FALSO) {
+		if (errore_salvataggio == VERO) {
 			stampare_banner_errore(1, 24, 80, ERRORE_SALVATAGGIO);
 		}
 		comando_utente = nascondere_input_utente();
@@ -130,8 +133,10 @@ void salvare_partita(partita partita_da_salvare) {
 					if (fwrite(&partita_da_salvare, sizeof(partita), 1, file_salvataggio) == 1) {
 						fclose(file_salvataggio);
 						salvato = VERO;
+						errore_salvataggio = FALSO;
 					} else {
 						salvato = FALSO;
+						errore_salvataggio = VERO;
 					}
 				}
 			}
@@ -141,10 +146,15 @@ void salvare_partita(partita partita_da_salvare) {
 				if (fwrite(&partita_da_salvare, sizeof(partita), 1, file_salvataggio) == 1) {
 					fclose(file_salvataggio);
 					salvato = VERO;
+					errore_salvataggio = FALSO;
 				} else {
 					salvato = FALSO;
+					errore_salvataggio = VERO;
 				}
 			}
+		} else {
+			errore_salvataggio = VERO;
+			salvato = FALSO;
 		}
 	} while(comando_utente != '6' && !salvato);
 	return;
