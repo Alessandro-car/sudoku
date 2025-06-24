@@ -1,14 +1,11 @@
 #include "gestire_partita.h"
-#include "math.h"
 //TODO: Lo pseudo va modificato
 //Funzione che inserisce un valore nella griglia del sudoku dopo averne controllato la correttezza
 void aggiornare_griglia(griglia* griglia, int valore, int riga, int colonna){
 	valore_griglia val;
-	if (validare_input_utente(riga, colonna, convertire_numeri_in_lettere(valore), *griglia) == VERO){
-		valore_griglia_scrivere_valore(&val, valore);
-		valore_griglia_scrivere_modificabile(&val, VERO);
-		griglia_scrivere_valore(griglia, riga - 1, colonna - 1, val);
-	}
+	valore_griglia_scrivere_valore(&val, valore);
+	valore_griglia_scrivere_modificabile(&val, VERO);
+	griglia_scrivere_valore(griglia, riga - 1, colonna - 1, val);
 	return;
 }
 
@@ -21,8 +18,7 @@ bool_t validare_input_utente(int riga, int colonna, char valore, griglia griglia
 
 	if (validare_riga_input(riga, dim_griglia) == VERO &&
 		validare_colonna_input(colonna, dim_griglia) == VERO &&
-		validare_valore_input(valore, dim_griglia) == VERO &&
-		valore_griglia_leggere_modificabile(griglia_leggere_valore(griglia_gioco, riga - 1, colonna - 1)) == VERO) {
+		validare_valore_input(valore, dim_griglia) == VERO) {
 		validato = VERO;
 	}
 
@@ -108,14 +104,6 @@ bool_t verificare_numero_da_inserire(griglia griglia, int numero_da_inserire, in
 		) {
 		corretto = VERO;
 	}
-	/*if(corretto == VERO) {//Se il primo controllo è andato a buon fine allora passa al controllo della colonna
-		corretto = controllare_colonna(griglia, colonna, numero_da_inserire, dimensione_griglia); //Imposta corretto con la funzione controllare_colonna che ha come output booleano, che sarà VERO se non ci sono valori uguali nella stessa colonna
-	}
-	if(corretto == VERO) {//Se il secondo controllo è andato a buon fine passa al controllo sulla regione
-		riga = riga - calcolare_resto_intero(riga, dimensione_regione);//Permette di ottenere la dimensione della riga della regione
-		colonna =  colonna - calcolare_resto_intero(colonna, dimensione_regione); //Permette di ottenere la dimensione della colonna della regione
-		corretto = controllare_regione(griglia, riga, colonna, numero_da_inserire, dimensione_regione);//Imposta corretto con la funzione controllare_regione che ha come output booleano, che sarà VERO se non ci sono valori uguali nella stessa regione
-	}*/
 	return corretto;
 }
 
@@ -198,9 +186,21 @@ stringa* giocare_partita(partita partita_corrente) {
 	char riga;
 	char colonna;
 	char valore;
+	bool_t valore_modificabile;
+	bool_t input_corretto;
+
+
 	partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
+	valore_modificabile = VERO;
+	input_corretto = VERO;
 	do {
+
 		stampare_schermata_di_gioco(partita_corrente);
+		if (valore_modificabile == FALSO) {
+			stampare_banner_errore(1, 24, 51, ERRORE_VALORE_NON_MODIFICABILE);
+		} else if (input_corretto == FALSO) {
+			stampare_banner_errore(1, 24, 51, ERRORE_INPUT_ERRATI);
+		}
 		comando_utente = nascondere_input_utente();
 		comando_utente = convertire_minuscolo_maiuscolo(comando_utente);
 
@@ -221,9 +221,18 @@ stringa* giocare_partita(partita partita_corrente) {
 			riga = convertire_minuscolo_maiuscolo(riga);
 			colonna = convertire_minuscolo_maiuscolo(colonna);
 			valore = convertire_minuscolo_maiuscolo(valore);
+
 			griglia_gioco = partita_leggere_griglia(partita_corrente);
-			aggiornare_griglia(&griglia_gioco, convertire_lettera_in_numero(valore), convertire_lettera_in_numero(riga), convertire_lettera_in_numero(colonna));
-			partita_scrivere_griglia(&partita_corrente, griglia_gioco);
+
+			input_corretto = validare_input_utente(convertire_lettera_in_numero(riga), convertire_lettera_in_numero(colonna), valore, griglia_gioco);
+			if (input_corretto == VERO) {
+				valore_modificabile = valore_griglia_leggere_modificabile(griglia_leggere_valore(griglia_gioco, convertire_lettera_in_numero(riga) - 1, convertire_lettera_in_numero(colonna) - 1));
+			}
+
+			if (valore_modificabile == VERO && input_corretto == VERO) {
+				aggiornare_griglia(&griglia_gioco, convertire_lettera_in_numero(valore), convertire_lettera_in_numero(riga), convertire_lettera_in_numero(colonna));
+				partita_scrivere_griglia(&partita_corrente, griglia_gioco);
+			}
 		}
 	} while (comando_utente != TASTO_ESC);
 

@@ -13,6 +13,7 @@
 #include "gestire_salvataggi.h"
 #include "utils.h"
 #include "costanti.h"
+#include "gestire_errori.h"
 
 void stampare_interfaccia_menu_principale();
 stringa* menu_principale();

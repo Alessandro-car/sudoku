@@ -15,7 +15,7 @@
 #define DIFFICOLTA_MEDIA 1
 #define DIFFICOLTA_DIFFICILE 2
 #define COLORE_ANSI_NERO "\x1b[30m"
-#define COLORE_ANSI_ROSSO "\x1b[31m"
+#define COLORE_ANSI_ROSSO "\x1b[91m"
 #define COLORE_ANSI_VERDE "\x1b[32m"
 #define COLORE_ANSI_GIALLO "\x1b[33m"
 #define COLORE_ANSI_BLU "\x1b[34m"

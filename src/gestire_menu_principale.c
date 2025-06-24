@@ -19,6 +19,7 @@ void stampare_interfaccia_menu_principale() {
 stringa* menu_principale() {
 	int comando_utente;
 	stringa* nome_partite_salvate;
+	partita partita_caricata;
 	bool_t caricato;
 	nome_partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
 	do {
@@ -28,7 +29,6 @@ stringa* menu_principale() {
 			nome_partite_salvate = iniziare_partita();
 		}
 		if (comando_utente == '2') {
-			partita partita_caricata;
 			caricato = caricare_partita(&partita_caricata);
 			if (caricato == VERO) {
 				nome_partite_salvate = giocare_partita(partita_caricata);
@@ -48,15 +48,20 @@ stringa* iniziare_partita() {
 	impostazioni impostazioni_gioco;
 	partita partita_da_giocare;
 	stringa* nome_partite_salvate;
+	bool_t nome_impostato;
 
+	nome_impostato = FALSO;
 	uscito = FALSO;
 	difficolta_scelta = DIFFICOLTA_STANDARD;
 	dim_griglia_scelta = DIM_GRIGLIA_STANDARD;
 	nome_partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
-
+	stringa_scrivere_dimensione(&nome_partita, 0);
 
 	do {
 		stampare_interfaccia_impostazioni();
+		if (nome_impostato == FALSO) {
+			stampare_banner_errore(1, 24, 80, ERRORE_NOME_FILE);
+		}
 		comando_utente = nascondere_input_utente();
 		if(comando_utente == '1') {
 			difficolta_scelta = selezionare_difficolta(difficolta_scelta);
@@ -68,8 +73,9 @@ stringa* iniziare_partita() {
 			impostare_coordinate_cursore(56, 12);
 			printf(":");
 			prendere_input_stringa_limitato(&nome_partita, DIM_MAX_STRINGA, 58, 12);
+			nome_impostato = VERO;
 		}
-		if(comando_utente == '4') {
+		if(comando_utente == '4' && nome_impostato == VERO) {
 			impostare_parametri_di_gioco(&impostazioni_gioco, difficolta_scelta, dim_griglia_scelta);
 			inizializzare_griglia(&griglia_sudoku, impostazioni_gioco);
 			inizializzare_partita(impostazioni_gioco, griglia_sudoku, nome_partita, &partita_da_giocare);

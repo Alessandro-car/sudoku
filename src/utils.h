@@ -23,6 +23,7 @@ void nascondere_cursore();
 void mostrare_cursore();
 void disegnare_riquadro_interfaccia();
 void abilitare_ANSI();
+void stampare_centrato_colorato(char colore[], char stringa[], int dim_riquadro);
 void stampare_colorato(char colore[], char stringa[]);
 void stampare_carattere_colorato(char colore[], char c);
 char* concatenare_due_stringhe(char* str1, char* str2);

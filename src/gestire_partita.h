@@ -7,6 +7,7 @@
 #include "tipi_di_dato/partita.h"
 #include "tipi_di_dato/stringa.h"
 #include "gestire_salvataggi.h"
+#include "gestire_errori.h"
 #include "utils.h"
 #include "costanti.h"
 

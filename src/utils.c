@@ -148,6 +148,12 @@ void abilitare_ANSI() {
     return;
 }
 
+void stampare_centrato_colorato(char colore[], char stringa[], int dim_riquadro) {
+	int n_spazi;
+	n_spazi = dim_riquadro / 2 - strlen(stringa) / 2 - 2;
+	printf("%s%*c%s%*c%s", colore, n_spazi, ' ', stringa, n_spazi, ' ', COLORE_ANSI_RESET);
+}
+
 void stampare_colorato(char colore[], char stringa[]) {
 	printf("%s%s%s", colore, stringa, COLORE_ANSI_RESET);
 	return;

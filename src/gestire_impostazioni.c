@@ -36,11 +36,13 @@ void menu_scelta_dimensione_griglia() {
 }
 
 int selezionare_dimensione_griglia() {
-	menu_scelta_dimensione_griglia();
 	char comando_utente;
-	comando_utente = nascondere_input_utente();
 	int dim_griglia_scelta;
+
+	comando_utente = nascondere_input_utente();
 	dim_griglia_scelta = DIM_GRIGLIA_STANDARD;
+
+	menu_scelta_dimensione_griglia();
 	if (comando_utente == '1') {
 		dim_griglia_scelta = DIM_GRIGLIA_PICCOLA;
 	}
