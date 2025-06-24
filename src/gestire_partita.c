@@ -216,12 +216,17 @@ void stampare_informazioni_utente(partita partita_corrente) {
 	char* mess_difficolta;
 	dim_griglia = impostazioni_leggere_dimensione_griglia(partita_leggere_impostazioni(partita_corrente));
 	difficolta = impostazioni_leggere_difficolta(partita_leggere_impostazioni(partita_corrente));
+
 	i = 2;
+	impostare_coordinate_cursore(50, i-1);
+	printf("+");
 	while(i < 25) {
 		impostare_coordinate_cursore(50, i);
 		printf("|");
 		i = i + 1;
 	}
+	impostare_coordinate_cursore(50, i);
+	printf("+");
 
 	impostare_coordinate_cursore(52, 2);
 	printf("Input:");
@@ -233,11 +238,16 @@ void stampare_informazioni_utente(partita partita_corrente) {
 	printf("Valore:");
 
 	i = 0;
+	impostare_coordinate_cursore(50, 8);
+	printf("+");
 	while (i < 28) {
 		impostare_coordinate_cursore(51 + i, 8);
 		printf("-");
 		i = i + 1;
 	}
+	impostare_coordinate_cursore(51 + i, 8);
+	printf("+");
+
 	impostare_coordinate_cursore(52, 9);
 	printf("Comandi:");
 	impostare_coordinate_cursore(52, 10);
@@ -252,12 +262,18 @@ void stampare_informazioni_utente(partita partita_corrente) {
 	printf("%c-%c: Range input", val_min, val_max);
 	impostare_coordinate_cursore(52, 14);
 	printf("0: Cancellare valore");
+
 	i = 0;
+	impostare_coordinate_cursore(50, 15);
+	printf("+");
 	while (i < 28) {
 		impostare_coordinate_cursore(51 + i, 15);
 		printf("-");
 		i = i + 1;
 	}
+	impostare_coordinate_cursore(51 + i, 15);
+	printf("+");
+
 	impostare_coordinate_cursore(52, 17);
 	printf("Informazioni partita");
 	if (difficolta == DIFFICOLTA_STANDARD) {
