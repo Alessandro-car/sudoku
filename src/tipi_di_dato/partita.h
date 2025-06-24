@@ -11,11 +11,11 @@ typedef struct {
 	stringa nome_partita;
 } partita;
 
-impostazioni partita_leggere_impostazioni(partita var_partita);
-void partita_scrivere_impostazioni(partita* var_partita, impostazioni nuove_impostazioni);
 griglia partita_leggere_griglia(partita var_partita);
-void partita_scrivere_griglia(partita* var_partita, griglia nuova_griglia);
+impostazioni partita_leggere_impostazioni(partita var_partita);
 stringa partita_leggere_nome(partita var_partita);
+void partita_scrivere_griglia(partita* var_partita, griglia nuova_griglia);
+void partita_scrivere_impostazioni(partita* var_partita, impostazioni nuove_impostazioni);
 void partita_scrivere_nome(partita* var_partita, stringa nuovo_nome);
 
 #endif
