@@ -19,6 +19,7 @@ void stampare_interfaccia_menu_principale() {
 stringa* menu_principale() {
 	int comando_utente;
 	stringa* nome_partite_salvate;
+	bool_t caricato;
 	nome_partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
 	do {
 		stampare_interfaccia_menu_principale();
@@ -28,9 +29,10 @@ stringa* menu_principale() {
 		}
 		if (comando_utente == '2') {
 			partita partita_caricata;
-			//TODO: gestire errore se non ci sono file salvati
-			partita_caricata = caricare_partita(nome_partite_salvate);
-			nome_partite_salvate = giocare_partita(partita_caricata);
+			caricato = caricare_partita(&partita_caricata);
+			if (caricato == VERO) {
+				nome_partite_salvate = giocare_partita(partita_caricata);
+			}
 		}
 	} while(comando_utente != '3');
 	return nome_partite_salvate;
@@ -64,8 +66,7 @@ stringa* iniziare_partita() {
 		}
 		if(comando_utente == '3') {
 			impostare_coordinate_cursore(56, 12);
-			mostrare_cursore();
-			printf(": ");
+			printf(":");
 			prendere_input_stringa_limitato(&nome_partita, DIM_MAX_STRINGA, 58, 12);
 		}
 		if(comando_utente == '4') {
@@ -78,20 +79,3 @@ stringa* iniziare_partita() {
 	} while(comando_utente != '5' && !uscito);
 	return nome_partite_salvate;
 }
-
-
-partita caricare_partita(stringa* partite_salvate) {
-	stringa nome_file_scelto;
-	int comando_utente;
-	partita partita_caricata;
-
-	//printf(interfaccia_caricare_partita);
-	comando_utente = nascondere_input_utente();
-	//file_scelto = partite_salvate[comando_utente];
-	//TODO: Controllo se il numero di partite salvate e' > 0
-
-	nome_file_scelto = partite_salvate[comando_utente];
-	partita_caricata = caricare_partita_da_file(nome_file_scelto);
-	return partita_caricata;
-}
-

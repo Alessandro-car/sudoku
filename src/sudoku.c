@@ -15,6 +15,7 @@
 #include "tipi_di_dato/griglia.h"
 #include "tipi_di_dato/impostazioni.h"
 #include "gestire_griglia_gioco.h"
+#include "gestire_salvataggi.h"
 #include "utils.h"
 #include "costanti.h"
 
@@ -28,21 +29,5 @@ int main(void) {
 	stringa* partite_salvate;
 	partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
 	partite_salvate = menu_principale();
-
-	/*griglia griglia_gioco;
-	griglia_gioco.dimensione_griglia = 9;
-	azzerare_griglia(&griglia_gioco);
-	impostazioni impostazioni_utente;
-	impostazioni_utente.difficolta = DIFFICOLTA_STANDARD;
-	impostazioni_utente.dimensione_griglia = 9;
-
-	riempire_griglia(&griglia_gioco, impostazioni_utente);
-
-	for (int i = 0; i < 9; ++i) {
-		for (int j = 0; j < 9; ++j) {
-			printf("%d ", griglia_gioco.valori[i][j].valore);
-		}
-		printf("\n");
-	}system("pause");*/
 	return 0;
 }

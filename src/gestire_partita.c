@@ -151,13 +151,6 @@ bool_t validare_riga_input(int riga, int dim_griglia) {
 	return validato;
 }
 
-//Funzione che si occupa di salvare la partita su file.
-void salvare_partita(FILE* file_salvataggio, partita partita_da_salvare) {
-	fwrite(&partita_da_salvare, sizeof(partita), 1, file_salvataggio);
-	fclose(file_salvataggio);
-	return;
-}
-
 // Verifica che il numero non sia già presente nella riga specificata
 bool_t controllare_riga(griglia sudoku, int riga, int numero_da_inserire, int dimensione_sudoku) {
 	bool_t corretto;
@@ -181,9 +174,9 @@ bool_t controllare_riga(griglia sudoku, int riga, int numero_da_inserire, int di
 void stampare_interfaccia_impostazioni(void) {
 	pulire_schermo();
 	disegnare_riquadro_interfaccia();
-	impostare_coordinate_cursore(34, 1);
+	impostare_coordinate_cursore(33, 1);
 	printf("| IMPOSTAZIONI |");
-	impostare_coordinate_cursore(34, 2);
+	impostare_coordinate_cursore(33, 2);
 	printf("+--------------+");
 	impostare_coordinate_cursore(31, 10);
  	printf("1. Scegli difficolta'");
@@ -200,53 +193,30 @@ void stampare_interfaccia_impostazioni(void) {
 
 stringa* giocare_partita(partita partita_corrente) {
 	stringa* partite_salvate;
-	FILE* file_salvataggio;
 	griglia griglia_gioco;
-	stringa nome_file;
 	char comando_utente;
 	char riga;
 	char colonna;
 	char valore;
 	partite_salvate = malloc(MAX_PARTITE_SALVATE * sizeof(stringa));
-	nome_file = partita_leggere_nome(partita_corrente); // Ottiene il nome del file per il salvataggio dalla partita corrente
 	do {
-		stampare_schermata_di_gioco(partita_leggere_griglia(partita_corrente));
-		// Legge il comando dell'utente e lo converte da minuscolo a maiuscolo se necessario
+		stampare_schermata_di_gioco(partita_corrente);
 		comando_utente = nascondere_input_utente();
 		comando_utente = convertire_minuscolo_maiuscolo(comando_utente);
 
 		// Gestisce il comando di salvataggio della partita
 		if (comando_utente == 'S') {
-			file_salvataggio = fopen("./salvataggi/ciao.bin", "wb");
-			if (file_salvataggio != NULL) {
-				salvare_partita(file_salvataggio, partita_corrente);
-				// Visualizza l'interfaccia per caricare/selezionare slot di salvataggio
-				/* TODO: MANCA INTERFACCIA DI CARICARE PARTITA CONTROLLARE ASSOLUTAMENTE QUESRA PARTE
-
-				// Legge la scelta dell'utente per lo slot di salvataggio (1-5)
-				comando_utente = nascondere_input_utente();
-				comando_utente = convertire_lettera_in_numero(comando_utente);
-
-				// Verifica che la scelta sia valida (tra 1 e 5) e salva nello slot corrispondente
-				if (comando_utente < 6 && comando_utente > 0) {
-						partite_salvate[comando_utente - 1] = nome_file;
-				}*/
-			}
+			salvare_partita(partita_corrente);
 		}
 
-		// Gestisce il comando per inserire un valore nella griglia
 		if (comando_utente == 'I') {
-				// Legge le coordinate e il valore dall'utente
-			impostare_coordinate_cursore(68, 3);
+			impostare_coordinate_cursore(58, 4);
 			mostrare_cursore();
-			riga = prendere_input_carattere_limitato(68, 3);
-
-			impostare_coordinate_cursore(71, 4);
-			colonna = prendere_input_carattere_limitato(71,4);
-
-			impostare_coordinate_cursore(70, 5);
-			valore = prendere_input_carattere_limitato(70 ,5);
-
+			riga = prendere_input_carattere_limitato(58, 4);
+			impostare_coordinate_cursore(61, 5);
+			colonna = prendere_input_carattere_limitato(61, 5);
+			impostare_coordinate_cursore(60, 6);
+			valore = prendere_input_carattere_limitato(60, 6);
 
 			riga = convertire_minuscolo_maiuscolo(riga);
 			colonna = convertire_minuscolo_maiuscolo(colonna);
@@ -260,11 +230,11 @@ stringa* giocare_partita(partita partita_corrente) {
 	return partite_salvate;
 }
 
-void stampare_schermata_di_gioco(griglia griglia_gioco) {
+void stampare_schermata_di_gioco(partita partita_corrente) {
 	pulire_schermo();
 	disegnare_riquadro_interfaccia();
-	stampare_griglia(griglia_gioco);
-	stampare_informazioni_utente();
+	stampare_griglia(partita_leggere_griglia(partita_corrente));
+	stampare_informazioni_utente(partita_corrente);
 }
 
 void stampare_griglia(griglia griglia_gioco) {
@@ -298,34 +268,71 @@ void stampare_griglia(griglia griglia_gioco) {
 	return;
 }
 
-void stampare_informazioni_utente() {
+void stampare_informazioni_utente(partita partita_corrente) {
 	int i;
+	char val_min;
+	char val_max;
+	int dim_griglia;
+	int difficolta;
+	char* mess_difficolta;
+	dim_griglia = impostazioni_leggere_dimensione_griglia(partita_leggere_impostazioni(partita_corrente));
+	difficolta = impostazioni_leggere_difficolta(partita_leggere_impostazioni(partita_corrente));
 	i = 2;
 	while(i < 25) {
-		impostare_coordinate_cursore(60, i);
+		impostare_coordinate_cursore(50, i);
 		printf("|");
 		i = i + 1;
 	}
 
-	impostare_coordinate_cursore(62, 2);
+	impostare_coordinate_cursore(52, 2);
 	printf("Input:");
-	impostare_coordinate_cursore(62, 3);
+	impostare_coordinate_cursore(52, 4);
 	printf("Riga:");
-	impostare_coordinate_cursore(62, 4);
+	impostare_coordinate_cursore(52, 5);
 	printf("Colonna:");
-	impostare_coordinate_cursore(62, 5);
+	impostare_coordinate_cursore(52, 6);
 	printf("Valore:");
 
 	i = 0;
-	while (i < 18) {
-		impostare_coordinate_cursore(61 + i, 13);
+	while (i < 28) {
+		impostare_coordinate_cursore(51 + i, 8);
 		printf("-");
 		i = i + 1;
 	}
-	impostare_coordinate_cursore(62, 14);
+	impostare_coordinate_cursore(52, 9);
 	printf("Comandi:");
-	impostare_coordinate_cursore(62, 15);
+	impostare_coordinate_cursore(52, 10);
 	printf("S: Salva");
-	impostare_coordinate_cursore(62, 16);
+	impostare_coordinate_cursore(52, 11);
 	printf("I: Input");
+	impostare_coordinate_cursore(52, 12);
+	printf("ESC: Tornare al menu");
+	val_min = '1';
+	val_max = convertire_numeri_in_lettere(dim_griglia);
+	impostare_coordinate_cursore(52, 13);
+	printf("%c-%c: Range input", val_min, val_max);
+
+	i = 0;
+	while (i < 28) {
+		impostare_coordinate_cursore(51 + i, 15);
+		printf("-");
+		i = i + 1;
+	}
+	impostare_coordinate_cursore(52, 16);
+	printf("Informazioni partita");
+	if (difficolta == DIFFICOLTA_STANDARD) {
+		mess_difficolta = "Facile";
+	} else if (difficolta == DIFFICOLTA_MEDIA) {
+		mess_difficolta = "Media";
+	} else if (difficolta == DIFFICOLTA_DIFFICILE) {
+		mess_difficolta = "Difficile";
+	} else {
+		mess_difficolta = "";
+	}
+	impostare_coordinate_cursore(52, 17);
+	printf("Difficolta': %s", mess_difficolta);
+	impostare_coordinate_cursore(52, 18);
+	printf("Dimensione: %dx%d", dim_griglia, dim_griglia);
+	impostare_coordinate_cursore(52, 19);
+	printf("Nome: %s", stringa_leggere_array(partita_leggere_nome(partita_corrente)));
 }

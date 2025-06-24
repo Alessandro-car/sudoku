@@ -10,12 +10,12 @@
 #include "gestire_impostazioni.h"
 #include "gestire_partita.h"
 #include "gestire_griglia_gioco.h"
+#include "gestire_salvataggi.h"
 #include "utils.h"
 #include "costanti.h"
 
 void stampare_interfaccia_menu_principale();
 stringa* menu_principale();
 stringa* iniziare_partita();
-partita caricare_partita(stringa* partite_salvate);
 
 #endif

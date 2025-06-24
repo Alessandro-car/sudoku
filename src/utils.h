@@ -15,7 +15,6 @@ int calcolare_radice_quadrata (int radicando);
 int calcolare_resto_intero (int numeratore, int denominatore);
 int convertire_lettera_in_numero(char lettera);
 char convertire_numeri_in_lettere(int numero);
-partita caricare_partita_da_file(stringa nome_file_partita);
 char nascondere_input_utente();
 char convertire_minuscolo_maiuscolo(char lettera);
 void impostare_coordinate_cursore(int x, int y);
@@ -26,6 +25,7 @@ void disegnare_riquadro_interfaccia();
 void abilitare_ANSI();
 void stampare_colorato(char colore[], char stringa[]);
 void stampare_carattere_colorato(char colore[], char c);
+char* concatenare_due_stringhe(char* str1, char* str2);
 void prendere_input_stringa_limitato(stringa* str, int dim_input, int x, int y);
 char prendere_input_carattere_limitato(int x, int y);
 #endif

@@ -28,8 +28,8 @@
 
 typedef enum {
 	TASTO_BACKSPACE = 8,
-	TASTO_INVIO = 13,
 	TASTO_ESC = 27,
+	TASTO_INVIO = 13,
 	CHAR_0 = 48,
 	CHAR_1 = 49,
 	CHAR_2 = 50,

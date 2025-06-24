@@ -60,18 +60,6 @@ char convertire_numeri_in_lettere(int numero) {
 	return lettera;
 }
 
-partita caricare_partita_da_file(stringa nome_file_partita) {
-	FILE* file_partita;
-	partita partita_caricata;
-
-	file_partita = fopen(stringa_leggere_array(nome_file_partita), "rb");
-	fread(&partita_caricata.nome_partita, sizeof(stringa), 1, file_partita);
-	fread(&partita_caricata.griglia_partita, sizeof(griglia), 1 , file_partita);
-	fread(&partita_caricata.impostazioni_partita, sizeof(impostazioni), 1, file_partita);
-	fclose(file_partita);
-	return partita_caricata;
-}
-
 char nascondere_input_utente() {
 	char comando_utente;
 	nascondere_cursore();
@@ -89,7 +77,7 @@ char convertire_minuscolo_maiuscolo(char lettera) {
 
     lettera_convertita = lettera;
 
-    // Controlliamo se il carattere é una lettera minuscola
+    // Controlliamo se il carattere e' una lettera minuscola
     if ((lettera_convertita >= CHAR_a) && (lettera_convertita <= CHAR_z)) {
         lettera_convertita = lettera - 32; // viene sottratto 32 poichè bisogna portare da lettera minuscola a maiuscola basandoci sull'ascii
     }
@@ -100,18 +88,22 @@ char convertire_minuscolo_maiuscolo(char lettera) {
 
 void impostare_coordinate_cursore(int x, int y) {
 	printf("\033[%d;%dH", y, x);
+	return;
 }
 
 void pulire_schermo() {
 	system("@cls||clear");
+	return;
 }
 
 void nascondere_cursore() {
 	printf("\033[?25l");
+	return;
 }
 
 void mostrare_cursore() {
 	printf("\033[?25h");
+	return;
 }
 
 
@@ -143,6 +135,7 @@ void disegnare_riquadro_interfaccia() {
 	printf("+");
 	impostare_coordinate_cursore(LARGHEZZA_FINESTRA - 1, LUNGHEZZA_FINESTRA);
 	printf("+");
+	return;
 }
 
 void abilitare_ANSI() {
@@ -165,7 +158,16 @@ void stampare_carattere_colorato(char colore[], char c) {
 	return;
 }
 
-void prendere_input_stringa_limitato(stringa* str, int dim_input, int x, int y){
+char* concatenare_due_stringhe(char* str1, char* str2) {
+	char* stringa_finale;
+	stringa_finale = calloc(strlen(str1) + strlen(str2) + 1, sizeof(char));
+	strcpy(stringa_finale, str1);
+	strcat(stringa_finale, str2);
+	stringa_finale[strlen(str1) + strlen(str2) + 1] = '\0';
+	return stringa_finale;
+}
+
+void prendere_input_stringa_limitato(stringa* str, int dim_input, int x, int y) {
 	int i;
 	char c;
 
@@ -173,29 +175,28 @@ void prendere_input_stringa_limitato(stringa* str, int dim_input, int x, int y){
 	c = '\0';
 	stringa_scrivere_dimensione(str, 0);
 	while (c != TASTO_INVIO) {
-			c = getch();
-			if (c == TASTO_BACKSPACE && i > 0) {
-				i = i - 1;
-				stringa_scrivere_dimensione(str, i);
-				stringa_scrivere_carattere(str, i, '\0');
-			}
-			else{
-				if(i < dim_input && c != TASTO_BACKSPACE) {
-					stringa_scrivere_dimensione(str, i + 1);
-					stringa_scrivere_carattere(str, i, c);
-					i = i + 1;
-				}
-			}
-			impostare_coordinate_cursore(x, y);
-			printf("%*s", dim_input, " ");
-			impostare_coordinate_cursore(x, y);
-
-			printf("%s", stringa_leggere_array(*str));
+		c = getch();
+		if (c == TASTO_BACKSPACE && i > 0) {
+			i = i - 1;
+			stringa_scrivere_carattere(str, i, '\0');
+		} else if (i < dim_input && c != TASTO_BACKSPACE) {
+			stringa_scrivere_carattere(str, i, c);
+			i = i + 1;
 		}
+		stringa_scrivere_dimensione(str, i);
+		impostare_coordinate_cursore(x, y);
+		printf("%*c", dim_input, ' ');
+		impostare_coordinate_cursore(x, y);
+		printf("%s", stringa_leggere_array(*str));
+	}
+	if (i < dim_input) {
+		stringa_scrivere_dimensione(str, i - 1);
+	}
+	stringa_scrivere_carattere(str, i, '\0');
 	return;
 }
 
-char prendere_input_carattere_limitato(int x, int y){
+char prendere_input_carattere_limitato(int x, int y) {
 	int i;
 	char c;
 	char val;
@@ -204,22 +205,18 @@ char prendere_input_carattere_limitato(int x, int y){
 	c = '\0';
 	val = '\0';
 	while (c != TASTO_INVIO) {
-			c = getch();
-			if (c == TASTO_BACKSPACE && i > 0) {
-				i = i - 1;
-				val = '\0';
-			}
-			else{
-				if(i < 1 && c != TASTO_BACKSPACE) {
-					i = i + 1;
-					val = c;
-				}
-			}
-			impostare_coordinate_cursore(x, y);
-			printf("%*s", 2, " ");
-			impostare_coordinate_cursore(x, y);
-
-			printf("%c", val);
+		c = getch();
+		if (c == TASTO_BACKSPACE && i > 0) {
+			i = i - 1;
+			val = '\0';
+		} else if (i < 1 && c != TASTO_BACKSPACE) {
+			i = i + 1;
+			val = c;
 		}
+		impostare_coordinate_cursore(x, y);
+		printf("%*c", 2, ' ');
+		impostare_coordinate_cursore(x, y);
+		printf("%c", val);
+	}
 	return val;
 }
