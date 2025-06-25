@@ -109,7 +109,7 @@ bool_t validare_valore_input(char valore, int dim_griglia) {
 	return validato;
 }
 
-bool_t verificare_coordinate_e_valore(griglia griglia_gioco, int coordinata_x, int coordinata_y, int valore) {
+bool_t verificare_coordinate_e_valore(griglia griglia_gioco, int coordinata_x, int coordinata_y) {
 	bool_t valido;
 	valido = VERO;
 
@@ -216,15 +216,15 @@ void stampare_informazioni_utente(partita partita_corrente) {
 	char* mess_difficolta;
 	dim_griglia = impostazioni_leggere_dimensione_griglia(partita_leggere_impostazioni(partita_corrente));
 	difficolta = impostazioni_leggere_difficolta(partita_leggere_impostazioni(partita_corrente));
-
 	i = 2;
-	impostare_coordinate_cursore(50, i-1);
+	impostare_coordinate_cursore(50, i - 1);
 	printf("+");
 	while(i < 25) {
 		impostare_coordinate_cursore(50, i);
 		printf("|");
 		i = i + 1;
 	}
+
 	impostare_coordinate_cursore(50, i);
 	printf("+");
 
@@ -291,6 +291,8 @@ void stampare_informazioni_utente(partita partita_corrente) {
 	printf("Dimensione: %dx%d", dim_griglia, dim_griglia);
 	impostare_coordinate_cursore(52, 20);
 	printf("Nome: %s", stringa_leggere_array(partita_leggere_nome(partita_corrente)));
+	free(mess_difficolta);
+	return;
 }
 
 void stampare_interfaccia_impostazioni(void) {
@@ -325,28 +327,72 @@ void stampare_griglia(griglia griglia_gioco) {
 	int j;
 	valore_griglia val;
 	char val_carattere;
+	int dim_griglia;
+	int dim_regione;
+	int row;
+	int n_regioni;
+
+	dim_griglia = griglia_leggere_dimensione(griglia_gioco);
+	dim_regione = calcolare_radice_quadrata(dim_griglia);
 	i = 0;
-	while(i < griglia_leggere_dimensione(griglia_gioco)) {
+	while (i < dim_griglia + dim_regione - 1) {
 		j = 0;
-		impostare_coordinate_cursore(4, 3 + i);
-		printf("|");
-		while(j < griglia_leggere_dimensione(griglia_gioco)) {
-			val = griglia_leggere_valore(griglia_gioco, i, j);
+		while (j <= dim_griglia * 2) {
+			impostare_coordinate_cursore(4 + j, 3 + i);
+			if (calcolare_resto_intero(j, dim_regione * 2) == 0) {
+				stampare_carattere_colorato(COLORE_ANSI_CIANO, '|');
+			} else {
+				printf("|");
+			}
+			j = j + 2;
+		}
+		i = i + 1;
+	}
+
+	i = dim_regione;
+	while(i < dim_griglia) {
+		j = 0;
+		while (j <= dim_griglia * 2) {
+			impostare_coordinate_cursore(4 + j, 3 + i);
+			if (calcolare_resto_intero(j, dim_regione * 2) == 0) {
+				stampare_carattere_colorato(COLORE_ANSI_CIANO, '+');
+			}
+			else if (calcolare_resto_intero(j, dim_regione / 2) == 0) {
+				printf("+");
+			}else {
+				printf("-");
+			}
+			j = j + 1;
+		}
+		i = i + dim_regione + 1;
+	}
+
+	i = 0;
+	row = 0;
+	n_regioni = 0;
+	while (i <= dim_griglia + dim_regione - 1 && row < dim_griglia) {
+	j = 0;
+	if (calcolare_resto_intero(i, dim_regione) == 0 && i != 0) {
+		n_regioni = n_regioni + 1;
+	}
+	while(j < dim_griglia) {
+			impostare_coordinate_cursore(5 + (j * 2), 3 + i + n_regioni);
+			val = griglia_leggere_valore(griglia_gioco, row, j);
 			val_carattere = convertire_numeri_in_lettere(valore_griglia_leggere_valore(val));
 			if (val_carattere == '0') {
-				printf(" |");
+				printf(" ");
 			} else {
 				if (valore_griglia_leggere_modificabile(val) == FALSO) {
-					stampare_carattere_colorato(COLORE_ANSI_CIANO, val_carattere);
-					printf("|");
+					stampare_carattere_colorato(COLORE_ANSI_ROSSO, val_carattere);
 				} else {
-					printf("%c|", val_carattere);
+					printf("%c", val_carattere);
 				}
 			}
 			j = j + 1;
 		}
-		printf("\n");
+		row = row + 1;
 		i = i + 1;
 	}
+
 	return;
 }

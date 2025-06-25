@@ -28,10 +28,9 @@ char convertire_numeri_in_lettere(int numero) {
 	char lettera;
 
 	lettera = ' '; //Inizializza il carattere in un carattere vuoto
-	if(numero >= 10 && numero<= DIM_GRIGLIA_GRANDE) { // Effettua il controllo sul numero, deve rispettare i vincoli
+	if(numero >= 10 && numero <= DIM_GRIGLIA_GRANDE) { // Effettua il controllo sul numero, deve rispettare i vincoli
 		lettera = numero + 55; // Somma al numero passato da input "55", questo permette di trasformarlo nella lettera corrispondente mediante ASCII
-	}
-	if(numero >= 0 && numero <= 9){
+	} else if(numero >= 0 && numero <= 9){
 		lettera = numero + 48;
 	}
 	return lettera;

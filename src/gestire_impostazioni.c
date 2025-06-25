@@ -1,19 +1,21 @@
 #include "gestire_impostazioni.h"
 
 int selezionare_difficolta(int difficolta_scelta) {
-	menu_scelta_difficolta();
 	char comando_utente;
-	comando_utente = nascondere_input_utente();
-	difficolta_scelta = DIFFICOLTA_STANDARD;
-	if (comando_utente == '1'){
+	do {
+		menu_scelta_difficolta();
+		comando_utente = nascondere_input_utente();
 		difficolta_scelta = DIFFICOLTA_STANDARD;
-	}
-	if (comando_utente == '2'){
-		difficolta_scelta = DIFFICOLTA_MEDIA;
-	}
-	if (comando_utente == '3'){
-		difficolta_scelta = DIFFICOLTA_DIFFICILE;
-	}
+		if (comando_utente == '1'){
+			difficolta_scelta = DIFFICOLTA_STANDARD;
+		}
+		if (comando_utente == '2'){
+			difficolta_scelta = DIFFICOLTA_MEDIA;
+		}
+		if (comando_utente == '3'){
+			difficolta_scelta = DIFFICOLTA_DIFFICILE;
+		}
+	} while (comando_utente < '1' || comando_utente > '4');
 	return difficolta_scelta;
 }
 
@@ -22,18 +24,19 @@ int selezionare_dimensione_griglia() {
 	int dim_griglia_scelta;
 
 	dim_griglia_scelta = DIM_GRIGLIA_STANDARD;
-
-	menu_scelta_dimensione_griglia();
-	comando_utente = nascondere_input_utente();
-	if (comando_utente == '1') {
-		dim_griglia_scelta = DIM_GRIGLIA_PICCOLA;
-	}
-	if (comando_utente == '2') {
-		dim_griglia_scelta = DIM_GRIGLIA_STANDARD;
-	}
-	if (comando_utente == '3') {
-		dim_griglia_scelta = DIM_GRIGLIA_GRANDE;
-	}
+	do {
+		menu_scelta_dimensione_griglia();
+		comando_utente = nascondere_input_utente();
+		if (comando_utente == '1') {
+			dim_griglia_scelta = DIM_GRIGLIA_PICCOLA;
+		}
+		if (comando_utente == '2') {
+			dim_griglia_scelta = DIM_GRIGLIA_STANDARD;
+		}
+		if (comando_utente == '3') {
+			dim_griglia_scelta = DIM_GRIGLIA_GRANDE;
+		}
+	} while (comando_utente < '1' || comando_utente > '4');
 	return dim_griglia_scelta;
 }
 

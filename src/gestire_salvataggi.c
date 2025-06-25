@@ -35,6 +35,8 @@ bool_t caricare_partita(partita* partita_da_caricare) {
 			selezionato_slot_vuoto = VERO;
 		}
 	} while (comando_utente != '6' && (slot < 1 || slot > n_file_salvati));
+	free(partite_salvate);
+	free(path_file);
 	return caricato;
 }
 
@@ -64,6 +66,7 @@ stringa* aprire_directory(DIR* directory) {
 		i = i + 1;
 	}
 	closedir(directory);
+	free(file);
 	return nome_files;
 }
 
@@ -97,7 +100,7 @@ int calcolare_n_file_salvati(char* nome_directory) {
 	} else {
 		perror("Impossibile aprire la directory");
 	}
-
+	free(file);
 	return n_files;
 }
 
@@ -157,6 +160,9 @@ void salvare_partita(partita partita_da_salvare) {
 			salvato = FALSO;
 		}
 	} while(comando_utente != '6' && !salvato);
+	free(partite_salvate);
+	free(path_file);
+	free(vecchio_file_path);
 	return;
 }
 
@@ -182,4 +188,6 @@ void stampare_interfaccia_carica_partita() {
 	}
 	impostare_coordinate_cursore(34, 10 + i);
 	printf("%d. Indietro", (i + 1));
+	free(partite_salvate);
+	return;
 }
