@@ -67,7 +67,7 @@ void riempire_griglia(griglia* griglia_gioco, impostazioni impostazioni_utente){
 	while(i < numeri_da_inserire) {
 		coordinata_x = (rand() % griglia_leggere_dimensione(*griglia_gioco));
 		coordinata_y = (rand() % griglia_leggere_dimensione(*griglia_gioco));
-		if(verificare_coordinate_e_valore(*griglia_gioco, coordinata_x, coordinata_y) == VERO){
+		if(verificare_coordinate(*griglia_gioco, coordinata_x, coordinata_y) == VERO){
 			valore = (rand() % griglia_leggere_dimensione(*griglia_gioco)) + 1;
 			if(verificare_numero_da_inserire(*griglia_gioco, valore, coordinata_x, coordinata_y) == VERO){
 					valore_griglia_scrivere_modificabile(&val, FALSO);

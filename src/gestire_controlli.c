@@ -109,7 +109,7 @@ bool_t validare_valore_input(char valore, int dim_griglia) {
 	return validato;
 }
 
-bool_t verificare_coordinate_e_valore(griglia griglia_gioco, int coordinata_x, int coordinata_y) {
+bool_t verificare_coordinate(griglia griglia_gioco, int coordinata_x, int coordinata_y) {
 	bool_t valido;
 	valido = VERO;
 
