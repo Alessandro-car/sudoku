@@ -17,7 +17,8 @@ bool_t caricare_partita(partita* partita_da_caricare) {
 	do {
 		stampare_interfaccia_carica_partita();
 		if (selezionato_slot_vuoto == VERO) {
-			stampare_banner_errore(1, 24, 80, ERRORE_CARICAMENTO);
+			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, LARGHEZZA_FINESTRA, ERRORE_CARICAMENTO);
+			selezionato_slot_vuoto = FALSO;
 		}
 		comando_utente = nascondere_input_utente();
 		slot = convertire_lettera_in_numero(comando_utente);
@@ -31,7 +32,7 @@ bool_t caricare_partita(partita* partita_da_caricare) {
 				fclose(file_partita);
 				caricato = VERO;
 			}
-		} else {
+		} else if (slot != -1 && (slot < 0 || slot > n_file_salvati)){
 			selezionato_slot_vuoto = VERO;
 		}
 	} while (comando_utente != '6' && (slot < 1 || slot > n_file_salvati));
@@ -124,7 +125,8 @@ void salvare_partita(partita partita_da_salvare) {
 	do {
 		stampare_interfaccia_carica_partita();
 		if (errore_salvataggio == VERO) {
-			stampare_banner_errore(1, 24, 80, ERRORE_SALVATAGGIO);
+			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, LARGHEZZA_FINESTRA, ERRORE_SALVATAGGIO);
+			errore_salvataggio = FALSO;
 		}
 		comando_utente = nascondere_input_utente();
 		slot = convertire_lettera_in_numero(comando_utente);
@@ -155,9 +157,6 @@ void salvare_partita(partita partita_da_salvare) {
 					errore_salvataggio = VERO;
 				}
 			}
-		} else {
-			errore_salvataggio = VERO;
-			salvato = FALSO;
 		}
 	} while(comando_utente != '6' && !salvato);
 	free(partite_salvate);
@@ -166,28 +165,82 @@ void salvare_partita(partita partita_da_salvare) {
 	return;
 }
 
+void stampare_riquadro_informazioni_partita(int x, int y, char* file_path) {
+	FILE* file_partita;
+	partita partita_letta;
+	impostazioni impostazioni_partita;
+	int dim_griglia;
+	stringa nome_partita;
+	int difficolta;
+	char* mess_difficolta;
+	file_partita = fopen(file_path, "rb");
+	if (fread(&partita_letta.impostazioni_partita, sizeof(impostazioni), 1, file_partita) == 1 &&
+		fread(&partita_letta.griglia_partita, sizeof(griglia), 1 , file_partita) == 1  &&
+		fread(&partita_letta.nome_partita, sizeof(stringa), 1, file_partita) == 1) {
+		impostazioni_partita = partita_leggere_impostazioni(partita_letta);
+		nome_partita = partita_leggere_nome(partita_letta);
+		dim_griglia = impostazioni_leggere_dimensione_griglia(impostazioni_partita);
+		difficolta = impostazioni_leggere_difficolta(impostazioni_partita);
+		if (difficolta == DIFFICOLTA_STANDARD) {
+			mess_difficolta = "Facile";
+		} else if (difficolta == DIFFICOLTA_MEDIA) {
+			mess_difficolta = "Media";
+		} else if (difficolta == DIFFICOLTA_DIFFICILE) {
+			mess_difficolta = "Difficile";
+		}
+		impostare_coordinate_cursore(x + 3, y);
+		printf("Nome: %s", stringa_leggere_array(nome_partita));
+		impostare_coordinate_cursore(x + 3, y + 1);
+		printf("Dimensione: %dx%d", dim_griglia, dim_griglia);
+		impostare_coordinate_cursore(x + 3, y + 2);
+		printf("Difficolta': %s", mess_difficolta);
+	}
+	fclose(file_partita);
+	free(mess_difficolta);
+	return;
+}
+
 void stampare_interfaccia_carica_partita() {
 	int i;
+	int voci_menu_y;
+	int voci_menu_x;
+	char *path_file;
 	stringa* partite_salvate;
+	int n_partite;
+	int rosso;
+	int verde;
+	int blu;
+
+	rosso = 100;
+	verde = 100;
+	blu = 100;
+	voci_menu_x = 32;
+	voci_menu_y = 4;
 	partite_salvate = leggere_directory(CARTELLA_SALVATAGGI);
 	pulire_schermo();
 	disegnare_riquadro_interfaccia();
-	impostare_coordinate_cursore(35, 1);
-	printf("| CARICA |");
-	impostare_coordinate_cursore(35, 2);
-	printf("+--------+");
+	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "| CARICA |", LARGHEZZA_FINESTRA, 1);
+	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "+--------+", LARGHEZZA_FINESTRA, 2);
 	i = 0;
+	n_partite = 0;
 	while (i < MAX_PARTITE_SALVATE) {
-		impostare_coordinate_cursore(34, 10 + i);
 		if (stringa_leggere_carattere(partite_salvate[i], 0) != '\0') {
-			printf("%d. %s", (i + 1), rimuovere_estensione_file(partite_salvate[i]));
+			impostare_coordinate_cursore(voci_menu_x, voci_menu_y + i + n_partite * 3);
+			//CODICE ANSI PER STAMPARE STRINGA CON COLORE RGB
+			printf("\x1b[38;2;%d;%d;%dm%d. Salvataggio %d%s", rosso, verde, blu, (i + 1), (i + 1), COLORE_ANSI_RESET);
+			path_file = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partite_salvate[i]));
+			stampare_riquadro_informazioni_partita(voci_menu_x, voci_menu_y + i + 1 + n_partite * 3, path_file);
+			n_partite = n_partite + 1;
 		} else {
-			printf("%d. <SLOT VUOTO>", (i + 1));
+			impostare_coordinate_cursore(voci_menu_x, voci_menu_y + i + n_partite * 3);
+			//CODICE ANSI PER STAMPARE STRINGA CON COLORE RGB
+			printf("\x1b[38;2;%d;%d;%dm%d. <SLOT VUOTO>%s", rosso, verde, blu, (i + 1), COLORE_ANSI_RESET);
 		}
 		i = i + 1;
 	}
-	impostare_coordinate_cursore(34, 10 + i);
+	impostare_coordinate_cursore(voci_menu_x, voci_menu_y + i + n_partite * 3);
 	printf("%d. Indietro", (i + 1));
 	free(partite_salvate);
+	free(path_file);
 	return;
 }

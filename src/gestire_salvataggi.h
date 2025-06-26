@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 
 #include "costanti.h"
+#include "costanti_interfacce.h"
 #include "messaggi_errori.h"
 #include "tipi_di_dato\stringa.h"
 #include "tipi_di_dato\partita.h"

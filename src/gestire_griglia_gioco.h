@@ -10,7 +10,6 @@
 #include "tipi_di_dato/impostazioni.h"
 #include "utilita.h"
 
-
 int n_numeri_di_griglia (impostazioni impostazioni_gioco);
 void azzerare_griglia(griglia* griglia_gioco);
 void inizializzare_griglia(griglia* griglia_gioco, impostazioni impostazioni_selezionate);

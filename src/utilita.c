@@ -216,8 +216,7 @@ void stampare_banner_errore(int x, int y, int dim, char* messaggio_errore) {
 	impostare_coordinate_cursore(x + i, y - 1);
 	printf("+");
 
-	impostare_coordinate_cursore(x + 1, y);
-	stampare_centrato_colorato(COLORE_ANSI_ROSSO, messaggio_errore, dim);
+	stampare_centrato_colorato(COLORE_ANSI_ROSSO, messaggio_errore, dim, y);
 
 }
 
@@ -226,14 +225,25 @@ void stampare_carattere_colorato(char colore[], char c) {
 	return;
 }
 
-void stampare_centrato_colorato(char colore[], char stringa[], int dim_riquadro) {
+void stampare_centrato_colorato(char colore[], char stringa[], int dim_riquadro, int y) {
 	int n_spazi;
-	n_spazi = dim_riquadro / 2 - strlen(stringa) / 2 - 2;
-	printf("%s%*c%s%*c%s", colore, n_spazi, ' ', stringa, n_spazi, ' ', COLORE_ANSI_RESET);
+	n_spazi = (dim_riquadro - strlen(stringa)) / 2 + 1;
+	impostare_coordinate_cursore(n_spazi, y);
+	printf("%s%s%s", colore, stringa, COLORE_ANSI_RESET);
 }
 
 void stampare_colorato(char colore[], char stringa[]) {
 	printf("%s%s%s", colore, stringa, COLORE_ANSI_RESET);
+	return;
+}
+
+void stampare_carattere_colorato_rgb(int r, int g, int b, char c) {
+	printf("\x1b[38;2;%d;%d;%dm%c%s", r, g, b, c, COLORE_ANSI_RESET);
+	return;
+}
+
+void stampare_colorato_rgb(int r, int g, int b, char stringa[]) {
+	printf("\x1b[38;2;%d;%d;%dm%s%s", r, g, b, stringa, COLORE_ANSI_RESET);
 	return;
 }
 

@@ -6,6 +6,7 @@
 #include <windows.h>
 
 #include "costanti.h"
+#include "costanti_interfacce.h"
 #include "tipi_di_dato/stringa.h"
 
 
@@ -30,7 +31,9 @@ void prendere_input_stringa_limitato(stringa* str, int dim_input, int x, int y);
 void pulire_schermo();
 void stampare_banner_errore(int x, int y, int dim, char* messaggio_errore);
 void stampare_carattere_colorato(char colore[], char c);
-void stampare_centrato_colorato(char colore[], char stringa[], int dim_riquadro);
+void stampare_centrato_colorato(char colore[], char stringa[], int dim_riquadro, int y);
 void stampare_colorato(char colore[], char stringa[]);
+void stampare_carattere_colorato_rgb(int r, int g, int b, char c);
+void stampare_colorato_rgb(int r, int g, int b, char stringa[]);
 
 #endif

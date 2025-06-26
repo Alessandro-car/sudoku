@@ -54,37 +54,41 @@ void inizializzare_partita(impostazioni impostazioni_utente, griglia griglia, st
 }
 
 void menu_scelta_difficolta() {
+	int voci_menu_x;
+	int inizio_voci_menu_y;
+	voci_menu_x = 33;
+	inizio_voci_menu_y = 11;
 	pulire_schermo();
 	disegnare_riquadro_interfaccia();
-	impostare_coordinate_cursore(33, 1);
-	printf("| DIFFICOLTA |");
-	impostare_coordinate_cursore(33, 2);
-	printf("+------------+");
-	impostare_coordinate_cursore(33, 11);
+	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "| DIFFICOLTA |", LARGHEZZA_FINESTRA, 1);
+	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "+------------+",  LARGHEZZA_FINESTRA, 2);
+	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y);
 	printf("1. Facile");
-	impostare_coordinate_cursore(33, 12);
+	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y + 1);
 	printf("2. Medio");
-	impostare_coordinate_cursore(33, 13);
+	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y + 2);
 	printf("3. Difficile");
-	impostare_coordinate_cursore(33, 14);
+	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y + 3);
 	printf("4. Indietro");
 	return;
 }
 
 void menu_scelta_dimensione_griglia() {
+	int voci_menu_x;
+	int inizio_voci_menu_y;
+	voci_menu_x = 31;
+	inizio_voci_menu_y = 11;
 	pulire_schermo();
 	disegnare_riquadro_interfaccia();
-	impostare_coordinate_cursore(32, 1);
-	printf("| DIMENSIONE |");
-	impostare_coordinate_cursore(32, 2);
-	printf("+------------+");
-	impostare_coordinate_cursore(31, 11);
+	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "| DIMENSIONE |", LARGHEZZA_FINESTRA, 1);
+	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "+------------+",  LARGHEZZA_FINESTRA, 2);
+	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y);
 	printf("1. Piccola:  4 x 4");
-	impostare_coordinate_cursore(31, 12);
+	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y + 1);
 	printf("2. Standard: 9 x 9");
-	impostare_coordinate_cursore(31, 13);
+	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y + 2);
 	printf("3. Grande:   16 x 16");
-	impostare_coordinate_cursore(31, 14);
+	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y + 3);
 	printf("4. Torna indietro");
 	return;
 }

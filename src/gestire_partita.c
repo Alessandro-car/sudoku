@@ -1,12 +1,12 @@
 #include "gestire_partita.h"
 
-bool_t controllare_colonna(griglia griglia, int colonna, int numeri_da_inserire, int dimensione_griglia) {
+bool_t controllare_colonna(griglia griglia, int colonna, int numeri_da_inserire) {
   bool_t corretto;           //Indica se il numero può essere inserito o meno
   int i;
   int valore_cella;
   corretto = VERO;
   i = 0;
-  while(i < dimensione_griglia){
+  while(i < griglia_leggere_dimensione(griglia)){
 	  valore_cella = valore_griglia_leggere_valore(griglia_leggere_valore(griglia, i, colonna));
       if(valore_cella == numeri_da_inserire){
       	corretto = FALSO;
@@ -38,15 +38,15 @@ bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da
 	return corretto;
 }
 
-bool_t controllare_riga(griglia sudoku, int riga, int numero_da_inserire, int dimensione_sudoku) {
+bool_t controllare_riga(griglia griglia, int riga, int numero_da_inserire) {
 	bool_t corretto;
 	int j;
 	int valore_cella;
 
 	corretto = VERO;
 	j = 0;
-	while (j < dimensione_sudoku) {
-		valore_cella = valore_griglia_leggere_valore(griglia_leggere_valore(sudoku, riga, j));
+	while (j < griglia_leggere_dimensione(griglia)) {
+		valore_cella = valore_griglia_leggere_valore(griglia_leggere_valore(griglia, riga, j));
 		// Se il valore nella cella corrente è uguale al numero che vogliamo inserire,
 		// allora il numero non può essere inserito in questa riga
 		if (valore_cella == numero_da_inserire) {
@@ -126,13 +126,12 @@ bool_t verificare_numero_da_inserire(griglia griglia, int numero_da_inserire, in
 
 	dimensione_griglia = griglia_leggere_dimensione(griglia);
 	dimensione_regione = calcolare_radice_quadrata(dimensione_griglia);//La funzione calcolare_radice_quadrata permette di ottenere la dimensione esatta della regione
-	//corretto = controllare_riga(griglia, riga, numero_da_inserire, dimensione_griglia); //Inizializza corretto con la funzione controllare_riga che ha come output booleano, che sarà VERO se non ci sono valori uguali nella stessa riga
 	corretto = FALSO;
 	int inizio_regione_R = riga - calcolare_resto_intero(riga, dimensione_regione);
 	int inizio_regione_C = colonna - calcolare_resto_intero(colonna, dimensione_regione);
 	if (
-		controllare_riga(griglia, riga, numero_da_inserire, dimensione_griglia ) == VERO   &&
-		controllare_colonna(griglia, colonna, numero_da_inserire, dimensione_griglia) == VERO &&
+		controllare_riga(griglia, riga, numero_da_inserire) == VERO   &&
+		controllare_colonna(griglia, colonna, numero_da_inserire) == VERO &&
 		controllare_regione(griglia, inizio_regione_R, inizio_regione_C, numero_da_inserire, dimensione_regione) == VERO
 		) {
 		corretto = VERO;
@@ -163,9 +162,9 @@ void giocare_partita(partita partita_corrente) {
 
 		stampare_schermata_di_gioco(partita_corrente);
 		if (valore_modificabile == FALSO) {
-			stampare_banner_errore(1, 24, 51, ERRORE_VALORE_NON_MODIFICABILE);
+			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 1, ERRORE_VALORE_NON_MODIFICABILE);
 		} else if (input_corretto == FALSO) {
-			stampare_banner_errore(1, 24, 51, ERRORE_INPUT_ERRATI);
+			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 1, ERRORE_INPUT_ERRATI);
 		}
 		valore_modificabile = VERO;
 		input_corretto = VERO;
@@ -214,31 +213,35 @@ void stampare_informazioni_utente(partita partita_corrente) {
 	int dim_griglia;
 	int difficolta;
 	char* mess_difficolta;
+	int pos_x_input;
+	int pos_y_input;
+	pos_x_input = SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 2;
+	pos_y_input = 2;
 	dim_griglia = impostazioni_leggere_dimensione_griglia(partita_leggere_impostazioni(partita_corrente));
 	difficolta = impostazioni_leggere_difficolta(partita_leggere_impostazioni(partita_corrente));
 	i = 2;
-	impostare_coordinate_cursore(50, i - 1);
+	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X, i - 1);
 	printf("+");
-	while(i < 25) {
-		impostare_coordinate_cursore(50, i);
+	while(i < LUNGHEZZA_FINESTRA) {
+		impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X, i);
 		printf("|");
 		i = i + 1;
 	}
 
-	impostare_coordinate_cursore(50, i);
+	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X, i);
 	printf("+");
 
-	impostare_coordinate_cursore(52, 2);
+	impostare_coordinate_cursore(pos_x_input, pos_y_input);
 	printf("Input:");
-	impostare_coordinate_cursore(52, 4);
+	impostare_coordinate_cursore(pos_x_input, pos_y_input + 2);
 	printf("Riga:");
-	impostare_coordinate_cursore(52, 5);
+	impostare_coordinate_cursore(pos_x_input, pos_y_input + 3);
 	printf("Colonna:");
-	impostare_coordinate_cursore(52, 6);
+	impostare_coordinate_cursore(pos_x_input, pos_y_input + 4);
 	printf("Valore:");
 
 	i = 0;
-	impostare_coordinate_cursore(50, 8);
+	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X, 8);
 	printf("+");
 	while (i < 28) {
 		impostare_coordinate_cursore(51 + i, 8);
@@ -264,7 +267,7 @@ void stampare_informazioni_utente(partita partita_corrente) {
 	printf("0: Cancellare valore");
 
 	i = 0;
-	impostare_coordinate_cursore(50, 15);
+	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X, 15);
 	printf("+");
 	while (i < 28) {
 		impostare_coordinate_cursore(51 + i, 15);
@@ -296,21 +299,23 @@ void stampare_informazioni_utente(partita partita_corrente) {
 }
 
 void stampare_interfaccia_impostazioni(void) {
+	int inizio_voci_menu_y;
+	int voci_menu_x;
+	inizio_voci_menu_y = 10;
+	voci_menu_x = 31;
 	pulire_schermo();
 	disegnare_riquadro_interfaccia();
-	impostare_coordinate_cursore(33, 1);
-	printf("| IMPOSTAZIONI |");
-	impostare_coordinate_cursore(33, 2);
-	printf("+--------------+");
-	impostare_coordinate_cursore(31, 10);
- 	printf("1. Scegli difficolta'");
- 	impostare_coordinate_cursore(31, 11);
+	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "| IMPOSTAZIONI |", LARGHEZZA_FINESTRA, 1);
+	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "+--------------+", LARGHEZZA_FINESTRA, 2);
+	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y);
+	printf("1. Scegli difficolta'");
+ 	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y + 1);
  	printf("2. Scegli dimensione");
- 	impostare_coordinate_cursore(31, 12);
+ 	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y + 2);
  	printf("3. Inserisci nome partita");
- 	impostare_coordinate_cursore(31, 13);
+ 	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y + 3);
  	printf("4. Prosegui");
- 	impostare_coordinate_cursore(31, 14);
+ 	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y + 4);
  	printf("5. Torna indietro");
 	return;
 }
@@ -323,26 +328,50 @@ void stampare_schermata_di_gioco(partita partita_corrente) {
 }
 
 void stampare_griglia(griglia griglia_gioco) {
-	int i;
-	int j;
 	valore_griglia val;
 	char val_carattere;
 	int dim_griglia;
 	int dim_regione;
-	int row;
 	int n_regioni;
+	int i;
+	int j;
+	int rosso;
+	int verde;
+	int blu;
+	int start_pos_x;
+	int start_pos_y;
 
+	rosso = 100;
+	verde = 100;
+	blu = 100;
 	dim_griglia = griglia_leggere_dimensione(griglia_gioco);
 	dim_regione = calcolare_radice_quadrata(dim_griglia);
+	start_pos_x = (SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X - dim_griglia * 2) / 2 + 1;
+	start_pos_y = (SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_Y - (dim_griglia + dim_regione - 1)) / 2 + 1;
+	i = 0;
+	n_regioni = 0;
+	while (i < dim_griglia) {
+		j = 0;
+		if (calcolare_resto_intero(i, dim_regione) == 0 && i != 0) {
+			n_regioni = n_regioni + 1;
+		}
+		while (j < dim_griglia) {
+			impostare_coordinate_cursore(start_pos_x + (j * 2), start_pos_y);
+			j = j + 1;
+			stampare_carattere_colorato_rgb(rosso, verde, blu, convertire_numeri_in_lettere(j));
+		}
+		impostare_coordinate_cursore(start_pos_x - 2, start_pos_y + 1 + i + n_regioni);
+		i = i + 1;
+		stampare_carattere_colorato_rgb(rosso, verde, blu, convertire_numeri_in_lettere(i));
+	}
+
 	i = 0;
 	while (i < dim_griglia + dim_regione - 1) {
 		j = 0;
 		while (j <= dim_griglia * 2) {
-			impostare_coordinate_cursore(4 + j, 3 + i);
+			impostare_coordinate_cursore(start_pos_x - 1 + j, start_pos_y + 1 + i);
 			if (calcolare_resto_intero(j, dim_regione * 2) == 0) {
-				stampare_carattere_colorato(COLORE_ANSI_CIANO, '|');
-			} else {
-				printf("|");
+				stampare_colorato_rgb(rosso, verde, blu, "|");
 			}
 			j = j + 2;
 		}
@@ -353,14 +382,11 @@ void stampare_griglia(griglia griglia_gioco) {
 	while(i < dim_griglia) {
 		j = 0;
 		while (j <= dim_griglia * 2) {
-			impostare_coordinate_cursore(4 + j, 3 + i);
+			impostare_coordinate_cursore(start_pos_x - 1 + j, start_pos_y + 1 + i);
 			if (calcolare_resto_intero(j, dim_regione * 2) == 0) {
-				stampare_carattere_colorato(COLORE_ANSI_CIANO, '+');
-			}
-			else if (calcolare_resto_intero(j, dim_regione / 2) == 0) {
-				printf("+");
-			}else {
-				printf("-");
+				stampare_colorato_rgb(rosso, verde, blu, "+");
+			} else {
+				stampare_colorato_rgb(rosso, verde, blu, "-");
 			}
 			j = j + 1;
 		}
@@ -368,29 +394,27 @@ void stampare_griglia(griglia griglia_gioco) {
 	}
 
 	i = 0;
-	row = 0;
 	n_regioni = 0;
-	while (i <= dim_griglia + dim_regione - 1 && row < dim_griglia) {
+	while (i < dim_griglia) {
 	j = 0;
 	if (calcolare_resto_intero(i, dim_regione) == 0 && i != 0) {
 		n_regioni = n_regioni + 1;
 	}
 	while(j < dim_griglia) {
-			impostare_coordinate_cursore(5 + (j * 2), 3 + i + n_regioni);
-			val = griglia_leggere_valore(griglia_gioco, row, j);
+			impostare_coordinate_cursore(start_pos_x + (j * 2), start_pos_y + 1 + i + n_regioni);
+			val = griglia_leggere_valore(griglia_gioco, i, j);
 			val_carattere = convertire_numeri_in_lettere(valore_griglia_leggere_valore(val));
 			if (val_carattere == '0') {
 				printf(" ");
 			} else {
 				if (valore_griglia_leggere_modificabile(val) == FALSO) {
-					stampare_carattere_colorato(COLORE_ANSI_ROSSO, val_carattere);
+					stampare_carattere_colorato(COLORE_ANSI_CIANO, val_carattere);
 				} else {
 					printf("%c", val_carattere);
 				}
 			}
 			j = j + 1;
 		}
-		row = row + 1;
 		i = i + 1;
 	}
 

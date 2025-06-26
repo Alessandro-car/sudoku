@@ -20,7 +20,7 @@ void iniziare_partita() {
 	do {
 		stampare_interfaccia_impostazioni();
 		if (nome_impostato == FALSO) {
-			stampare_banner_errore(1, 24, 80, ERRORE_NOME_FILE);
+			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, LARGHEZZA_FINESTRA, ERRORE_NOME_FILE);
 		}
 		comando_utente = nascondere_input_utente();
 		if(comando_utente == '1') {
@@ -47,7 +47,7 @@ void iniziare_partita() {
 }
 
 void menu_principale() {
-	int comando_utente;
+	char comando_utente;
 	partita partita_caricata;
 	bool_t caricato;
 	do {
@@ -67,16 +67,18 @@ void menu_principale() {
 }
 
 void stampare_interfaccia_menu_principale() {
+	int voci_menu_x;
+	int inizio_voci_menu_y;
+	voci_menu_x = 32;
+	inizio_voci_menu_y = 12;
 	pulire_schermo();
 	disegnare_riquadro_interfaccia();
-	impostare_coordinate_cursore(34, 1);
-	printf("| SUDOKU |");
-	impostare_coordinate_cursore(34, 2);
-	printf("+--------+");
-	impostare_coordinate_cursore(31, 12);
+	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "| SUDOKU |", LARGHEZZA_FINESTRA, 1);
+	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "+--------+", LARGHEZZA_FINESTRA, 2);
+	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y);
 	printf("1. Inizia partita");
-	impostare_coordinate_cursore(31, 13);
+	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y + 1);
  	printf("2. Carica partita");
- 	impostare_coordinate_cursore(31, 14);
+ 	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y + 2);
 	printf("3. Esci");
 }

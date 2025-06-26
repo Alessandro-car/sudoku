@@ -2,6 +2,7 @@
 #define GESTIRE_PARTITA_H_
 
 #include "costanti.h"
+#include "costanti_interfacce.h"
 #include "messaggi_errori.h"
 #include "gestire_salvataggi.h"
 #include "tipi_di_dato/griglia.h"
@@ -9,9 +10,9 @@
 #include "tipi_di_dato/stringa.h"
 #include "utilita.h"
 
-bool_t controllare_colonna(griglia griglia, int colonna, int numeri_da_inserire, int dimensione_griglia);
+bool_t controllare_colonna(griglia griglia, int colonna, int numeri_da_inserire);
 bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da_inserire, int dimensione_regione);
-bool_t controllare_riga(griglia sudoku, int riga, int numero_da_inserire, int dimensione_sudoku);
+bool_t controllare_riga(griglia griglia, int riga, int numero_da_inserire);
 bool_t validare_colonna_input(int colonna, int dim_griglia);
 bool_t validare_input_utente(int riga, int colonna, char valore, griglia griglia_gioco);
 bool_t validare_riga_input(int riga, int dim_griglia);
