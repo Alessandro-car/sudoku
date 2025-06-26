@@ -130,7 +130,7 @@ void salvare_partita(partita partita_da_salvare) {
 		}
 		comando_utente = nascondere_input_utente();
 		slot = convertire_lettera_in_numero(comando_utente);
-		if (slot >= 1 && slot <= n_file_salvati && !salvato) {
+		if (slot >= 1 && slot <= n_file_salvati && salvato == FALSO) {
 			vecchio_file_path = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partite_salvate[slot - 1]));
 			if (rename(vecchio_file_path, path_file) == 0) {
 				file_salvataggio = fopen(path_file, "wb");
@@ -145,7 +145,7 @@ void salvare_partita(partita partita_da_salvare) {
 					}
 				}
 			}
-		} else if(slot >= 0 && slot <= MAX_PARTITE_SALVATE && !salvato) {
+		} else if(slot > 0 && slot <= MAX_PARTITE_SALVATE && salvato == FALSO) {
 			file_salvataggio = fopen(path_file, "wb");
 			if (file_salvataggio != NULL) {
 				if (fwrite(&partita_da_salvare, sizeof(partita), 1, file_salvataggio) == 1) {
@@ -158,7 +158,7 @@ void salvare_partita(partita partita_da_salvare) {
 				}
 			}
 		}
-	} while(comando_utente != '6' && !salvato);
+	} while(comando_utente != '6' && salvato == FALSO);
 	free(partite_salvate);
 	free(path_file);
 	free(vecchio_file_path);

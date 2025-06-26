@@ -27,7 +27,7 @@ void iniziare_partita() {
 			difficolta_scelta = selezionare_difficolta(difficolta_scelta);
 		}
 		if(comando_utente == '2') {
-			dim_griglia_scelta = selezionare_dimensione_griglia();
+			dim_griglia_scelta = selezionare_dimensione_griglia(dim_griglia_scelta);
 		}
 		if(comando_utente == '3') {
 			impostare_coordinate_cursore(56, 12);
