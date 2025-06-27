@@ -12,7 +12,7 @@ bool_t caricare_partita(partita* partita_da_caricare) {
 
 	selezionato_slot_vuoto = FALSO;
 	caricato = FALSO;
-	partite_salvate = leggere_directory(CARTELLA_SALVATAGGI);
+	partite_salvate = creare_directory(CARTELLA_SALVATAGGI);
 	n_file_salvati = calcolare_n_file_salvati(CARTELLA_SALVATAGGI);
 	do {
 		stampare_interfaccia_carica_partita();
@@ -32,7 +32,7 @@ bool_t caricare_partita(partita* partita_da_caricare) {
 				fclose(file_partita);
 				caricato = VERO;
 			}
-		} else if (slot != -1 && (slot < 0 || slot > n_file_salvati)){
+		} else if (slot != -1 && (slot > n_file_salvati && slot <= MAX_PARTITE_SALVATE)){
 			selezionato_slot_vuoto = VERO;
 		}
 	} while (comando_utente != '6' && (slot < 1 || slot > n_file_salvati));
@@ -54,6 +54,7 @@ char* rimuovere_estensione_file(stringa nome_file) {
 	return file_no_estensione;
 }
 
+
 stringa* aprire_directory(DIR* directory) {
 	stringa* nome_files;
 	struct dirent* file;
@@ -71,7 +72,7 @@ stringa* aprire_directory(DIR* directory) {
 	return nome_files;
 }
 
-stringa* leggere_directory(char* nome_directory) {
+stringa* creare_directory(char* nome_directory) {
 	stringa* nome_files;
 	DIR* directory;
 	nome_files = calloc(MAX_PARTITE_SALVATE, sizeof(stringa));
@@ -105,6 +106,7 @@ int calcolare_n_file_salvati(char* nome_directory) {
 	return n_files;
 }
 
+
 void salvare_partita(partita partita_da_salvare) {
 	bool_t errore_salvataggio;
 	bool_t salvato;
@@ -115,11 +117,10 @@ void salvare_partita(partita partita_da_salvare) {
 	char* vecchio_file_path;
 	int slot;
 	int n_file_salvati;
-
-	partite_salvate = leggere_directory(CARTELLA_SALVATAGGI);
+	partite_salvate = creare_directory(CARTELLA_SALVATAGGI);
 	n_file_salvati = calcolare_n_file_salvati(CARTELLA_SALVATAGGI);
-	path_file = concatenare_due_stringhe(stringa_leggere_array(partita_leggere_nome(partita_da_salvare)), ESTENSIONE_FILE);
-	path_file = concatenare_due_stringhe(CARTELLA_SALVATAGGI, path_file);
+	path_file = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partita_leggere_nome(partita_da_salvare)));
+	path_file = concatenare_due_stringhe(path_file, ESTENSIONE_FILE);
 	salvato = FALSO;
 	errore_salvataggio = FALSO;
 	do {
@@ -176,7 +177,8 @@ void stampare_riquadro_informazioni_partita(int x, int y, char* file_path) {
 	file_partita = fopen(file_path, "rb");
 	if (fread(&partita_letta.impostazioni_partita, sizeof(impostazioni), 1, file_partita) == 1 &&
 		fread(&partita_letta.griglia_partita, sizeof(griglia), 1 , file_partita) == 1  &&
-		fread(&partita_letta.nome_partita, sizeof(stringa), 1, file_partita) == 1) {
+		fread(&partita_letta.nome_partita, sizeof(stringa), 1, file_partita) == 1)
+	{
 		impostazioni_partita = partita_leggere_impostazioni(partita_letta);
 		nome_partita = partita_leggere_nome(partita_letta);
 		dim_griglia = impostazioni_leggere_dimensione_griglia(impostazioni_partita);
@@ -216,7 +218,7 @@ void stampare_interfaccia_carica_partita() {
 	blu = 100;
 	voci_menu_x = 32;
 	voci_menu_y = 4;
-	partite_salvate = leggere_directory(CARTELLA_SALVATAGGI);
+	partite_salvate = creare_directory(CARTELLA_SALVATAGGI);
 	pulire_schermo();
 	disegnare_riquadro_interfaccia();
 	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "| CARICA |", LARGHEZZA_FINESTRA, 1);

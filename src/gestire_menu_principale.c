@@ -10,8 +10,12 @@ void iniziare_partita() {
 	impostazioni impostazioni_gioco;
 	partita partita_da_giocare;
 	bool_t nome_impostato;
+	bool_t nome_vuoto;
+	bool_t nome_errato;
 
+	nome_errato = FALSO;
 	nome_impostato = FALSO;
+	nome_vuoto = FALSO;
 	uscito = FALSO;
 	difficolta_scelta = DIFFICOLTA_STANDARD;
 	dim_griglia_scelta = DIM_GRIGLIA_STANDARD;
@@ -19,9 +23,15 @@ void iniziare_partita() {
 
 	do {
 		stampare_interfaccia_impostazioni();
-		if (nome_impostato == FALSO) {
+		if (nome_impostato == FALSO && nome_vuoto == VERO) {
+			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, LARGHEZZA_FINESTRA, ERRORE_NOME_FILE_VUOTO);
+		} else if (nome_impostato == FALSO && nome_errato == VERO) {
+			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, LARGHEZZA_FINESTRA, ERRORE_NOME_FILE_ERRATO);
+		} else if (nome_impostato == FALSO) {
 			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, LARGHEZZA_FINESTRA, ERRORE_NOME_FILE);
 		}
+		nome_errato = FALSO;
+		nome_vuoto = FALSO;
 		comando_utente = nascondere_input_utente();
 		if(comando_utente == '1') {
 			difficolta_scelta = selezionare_difficolta(difficolta_scelta);
@@ -32,8 +42,17 @@ void iniziare_partita() {
 		if(comando_utente == '3') {
 			impostare_coordinate_cursore(56, 12);
 			printf(":");
-			prendere_input_stringa_limitato(&nome_partita, DIM_MAX_STRINGA, 58, 12);
-			nome_impostato = VERO;
+			prendere_input_stringa_limitato(&nome_partita, DIM_MAX_STRINGA - strlen(ESTENSIONE_FILE), 58, 12);
+			if (controllare_caratteri_stringa(nome_partita, CARATTERI_NOME_FILE_NON_AMMESSI) == FALSO) {
+				nome_impostato = FALSO;
+				nome_errato = VERO;
+			} else if (stringa_leggere_dimensione(nome_partita) <= 0) {
+				nome_impostato = FALSO;
+				nome_vuoto = VERO;
+			} else {
+				nome_impostato = VERO;
+			}
+
 		}
 		if(comando_utente == '4' && nome_impostato == VERO) {
 			impostare_parametri_di_gioco(&impostazioni_gioco, difficolta_scelta, dim_griglia_scelta);

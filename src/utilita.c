@@ -1,18 +1,35 @@
 #include "utilita.h"
 
+bool_t controllare_caratteri_stringa(stringa str, char *caratteri_da_controllare) {
+	bool_t esito;
+	int i;
+	int j;
+
+	esito = VERO;
+	i = 0;
+	while (i < strlen(caratteri_da_controllare) && esito != FALSO) {
+		j = 0;
+		while (j < stringa_leggere_dimensione(str) && esito != FALSO) {
+			if (stringa_leggere_carattere(str, j) == *(caratteri_da_controllare + i)) {
+				esito = FALSO;
+			}
+			j = j + 1;
+		}
+		i = i + 1;
+	}
+	return esito;
+}
+
 char* concatenare_due_stringhe(char* str1, char* str2) {
 	char* stringa_finale;
 	stringa_finale = calloc(strlen(str1) + strlen(str2) + 1, sizeof(char));
 	strcpy(stringa_finale, str1);
 	strcat(stringa_finale, str2);
-	stringa_finale[strlen(str1) + strlen(str2) + 1] = '\0';
 	return stringa_finale;
 }
 
 char convertire_minuscolo_maiuscolo(char lettera) {
     char lettera_convertita;  // Carattere risultante dalla conversione
-
-
     lettera_convertita = lettera;
 
     // Controlliamo se il carattere e' una lettera minuscola
@@ -59,7 +76,7 @@ char prendere_input_carattere_limitato(int x, int y) {
 		if (c == TASTO_BACKSPACE && i > 0) {
 			i = i - 1;
 			val = '\0';
-		} else if (i < 1 && c != TASTO_BACKSPACE) {
+		} else if (i < 1 && c != TASTO_BACKSPACE && c != TASTO_ESC) {
 			i = i + 1;
 			val = c;
 		}
@@ -181,7 +198,7 @@ void prendere_input_stringa_limitato(stringa* str, int dim_input, int x, int y) 
 		if (c == TASTO_BACKSPACE && i > 0) {
 			i = i - 1;
 			stringa_scrivere_carattere(str, i, '\0');
-		} else if (i < dim_input && c != TASTO_BACKSPACE) {
+		} else if (i < dim_input && c != TASTO_BACKSPACE && c != TASTO_INVIO) {
 			stringa_scrivere_carattere(str, i, c);
 			i = i + 1;
 		}
@@ -191,9 +208,7 @@ void prendere_input_stringa_limitato(stringa* str, int dim_input, int x, int y) 
 		impostare_coordinate_cursore(x, y);
 		printf("%s", stringa_leggere_array(*str));
 	}
-	if (i < dim_input) {
-		stringa_scrivere_dimensione(str, i - 1);
-	}
+
 	stringa_scrivere_carattere(str, i, '\0');
 	return;
 }

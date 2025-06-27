@@ -3,6 +3,7 @@
 
 #include <conio.h>
 #include <stdio.h>
+#include <string.h>
 #include <windows.h>
 
 #include "costanti.h"
@@ -11,6 +12,8 @@
 
 
 #define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
+
+bool_t controllare_caratteri_stringa(stringa str, char* caratteri_da_controllare);
 
 char* concatenare_due_stringhe(char* str1, char* str2);
 char convertire_minuscolo_maiuscolo(char lettera);

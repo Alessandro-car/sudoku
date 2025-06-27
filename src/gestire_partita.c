@@ -37,7 +37,6 @@ void giocare_partita(partita partita_corrente) {
 			colonna = prendere_input_carattere_limitato(61, 5);
 			impostare_coordinate_cursore(60, 6);
 			valore = prendere_input_carattere_limitato(60, 6);
-
 			riga = convertire_minuscolo_maiuscolo(riga);
 			colonna = convertire_minuscolo_maiuscolo(colonna);
 			valore = convertire_minuscolo_maiuscolo(valore);
