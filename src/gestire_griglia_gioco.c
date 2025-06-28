@@ -1,8 +1,17 @@
 #include "gestire_griglia_gioco.h"
 
+/*	Funzione: n_numeri_di_griglia()
+ * 	Descrizione: Questa funzione calcola, in base alla difficolta e alla dimenione della griglia scelta,
+ * 				quante celle della griglia devono essere scoperte all'avvio del gioco
+ * 	Parametri:
+ * 		-impostazioni_gioco, impostazioni del gioco scelte dall'utente
+ *	Dato di ritorno:
+ *		-numeri_da_inserire_in_griglia, intero che indica quante numeri bisogna inserire nella griglia all'avvio della partita
+ */
+
 int n_numeri_di_griglia(impostazioni impostazioni_gioco) {
-	int difficolta;
-	int dimensione_griglia;
+	int difficolta;				//Difficolta di gioco scelta dall'utente
+	int dimensione_griglia;		//Dimensione della griglia scelta dall'utente
 	int numeri_da_inserire_in_griglia;
 
 	difficolta = impostazioni_leggere_difficolta(impostazioni_gioco);
@@ -19,6 +28,15 @@ int n_numeri_di_griglia(impostazioni impostazioni_gioco) {
 	return numeri_da_inserire_in_griglia;
 }
 
+/*	Funzione: aggiornare_griglia()
+ * 	Descrizione: Questa funzione inserisce un valore dato nella griglia nella posizione data
+ * 	Parametri:
+ * 		-griglia, griglia nella quale inserire il valore
+ * 		-riga, riga della griglia nella quale inserire il valore
+ * 		-coordinata_y, colonna della griglia nella quale inserire il valore
+ *	Dato di ritorno:
+ *		-griglia, la griglia aggiornata
+ */
 void aggiornare_griglia(griglia* griglia, int valore, int riga, int colonna){
 	valore_griglia val;
 	valore_griglia_scrivere_valore(&val, valore);
@@ -27,10 +45,17 @@ void aggiornare_griglia(griglia* griglia, int valore, int riga, int colonna){
 	return;
 }
 
+/*	Funzione: azzerare_griglia()
+ * 	Descrizione: Questa funzione imposta la griglia con tutti i valori a 0
+ * 	Parametri:
+ * 		-griglia_gioco, griglia di gioco
+ *	Dato di ritorno:
+ *		-griglia_gioco: la griglia con i valori impostati a 0
+ */
 void azzerare_griglia(griglia* griglia_gioco) {
-	valore_griglia val;
-	int i;
-	int j;
+	valore_griglia val; 	//Valore della griglia nella riga 'i' e colonna 'j'
+	int i; 					//Indice della riga della griglia
+	int j;					//Indice della colonna della griglia
 	i = 0;
 	while (i < griglia_leggere_dimensione(*griglia_gioco)) {
 		j = 0;
@@ -45,6 +70,14 @@ void azzerare_griglia(griglia* griglia_gioco) {
 	return;
 }
 
+/*	Funzione: inizializzare_griglia()
+ * 	Descrizione: Questa funzione inizializza la griglia impostandone la dimensione scelta dall'utente e i valori della griglia a 0
+ * 	Parametri:
+ * 		-griglia_gioco, griglia di gioco
+ * 		-impostazioni_selezionate, impostazioni di gioco scelte dall'utente
+ *	Dato di ritorno:
+ *		-griglia_gioco, griglia inizializzata con dimensione e valori impostati a 0
+ */
 void inizializzare_griglia(griglia* griglia_gioco, impostazioni impostazioni_selezionate) {
 	griglia_scrivere_dimensione(griglia_gioco, impostazioni_leggere_dimensione_griglia(impostazioni_selezionate));
 	azzerare_griglia(griglia_gioco);
@@ -52,12 +85,21 @@ void inizializzare_griglia(griglia* griglia_gioco, impostazioni impostazioni_sel
 	return;
 }
 
+/*	Funzione: riempire_griglia()
+ * 	Descrizione: Questa funzione imposta dei valori casuali in delle coordinate casuali della griglia.
+ * 				Il numero dei valori da impostare è dato dalla funzione n_numeri_di_griglia()
+ * 	Parametri:
+ * 		-griglia_gioco, griglia di gioco
+ * 		-impostazioni_utente, impostazioni di gioco scelte dall'utente
+ * 	Dato di ritorno:
+ *		-griglia_gioco, griglia di gioco aggiornata con le celle riempite
+ */
 void riempire_griglia(griglia* griglia_gioco, impostazioni impostazioni_utente){
 	int numeri_da_inserire;     //Rappresenta il numero di elementi che verrano inseriri in griglia
 	int coordinata_x;           //Rappresenta una posizione casuale tra le righe
 	int coordinata_y;           //Rappresenta una posizione casuale tra le colonne
 	int valore;  				//Rappresenta il valore che verrà inserito nella griglia
-	int i;
+	int i;						//Indice della riga della griglia
 	valore_griglia val;
 
 	i = 0;
@@ -67,10 +109,12 @@ void riempire_griglia(griglia* griglia_gioco, impostazioni impostazioni_utente){
 	while(i < numeri_da_inserire) {
 		coordinata_x = (rand() % griglia_leggere_dimensione(*griglia_gioco));
 		coordinata_y = (rand() % griglia_leggere_dimensione(*griglia_gioco));
+		//Se la cella è vuota allora calcoliamo il valore casuale da inserire
 		if(verificare_coordinate(*griglia_gioco, coordinata_x, coordinata_y) == VERO){
 			valore = (rand() % griglia_leggere_dimensione(*griglia_gioco)) + 1;
+			//Controlliamo se il valore può essere inserito nella griglia
 			if(verificare_numero_da_inserire(*griglia_gioco, valore, coordinata_x, coordinata_y) == VERO){
-				valore_griglia_scrivere_modificabile(&val, FALSO);
+				valore_griglia_scrivere_modificabile(&val, FALSO); //I valori generati non possono essere modificati dall'utente
 				valore_griglia_scrivere_valore(&val, valore);
 				griglia_scrivere_valore(griglia_gioco, coordinata_x, coordinata_y, val);
 				i = i + 1;
@@ -91,16 +135,16 @@ void stampare_griglia(griglia griglia_gioco) {
 	int rosso;
 	int verde;
 	int blu;
-	int start_pos_x;
-	int start_pos_y;
+	int inizio_griglia_x;
+	int inizio_griglia_y;
 
 	rosso = 100;
 	verde = 100;
 	blu = 100;
 	dim_griglia = griglia_leggere_dimensione(griglia_gioco);
 	dim_regione = calcolare_radice_quadrata(dim_griglia);
-	start_pos_x = (SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X - dim_griglia * 2) / 2 + 1;
-	start_pos_y = (SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_Y - (dim_griglia + dim_regione - 1)) / 2 + 1;
+	inizio_griglia_x = (SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X - dim_griglia * 2) / 2 + 1;
+	inizio_griglia_y = (SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_Y - (dim_griglia + dim_regione - 1)) / 2 + 1;
 	i = 0;
 	n_regioni = 0;
 	while (i < dim_griglia) {
@@ -109,11 +153,11 @@ void stampare_griglia(griglia griglia_gioco) {
 			n_regioni = n_regioni + 1;
 		}
 		while (j < dim_griglia) {
-			impostare_coordinate_cursore(start_pos_x + (j * 2), start_pos_y);
+			impostare_coordinate_cursore(inizio_griglia_x + (j * 2), inizio_griglia_y);
 			j = j + 1;
 			stampare_carattere_colorato_rgb(rosso, verde, blu, convertire_numeri_in_lettere(j));
 		}
-		impostare_coordinate_cursore(start_pos_x - 2, start_pos_y + 1 + i + n_regioni);
+		impostare_coordinate_cursore(inizio_griglia_x - 2, inizio_griglia_y + 1 + i + n_regioni);
 		i = i + 1;
 		stampare_carattere_colorato_rgb(rosso, verde, blu, convertire_numeri_in_lettere(i));
 	}
@@ -122,7 +166,7 @@ void stampare_griglia(griglia griglia_gioco) {
 	while (i < dim_griglia + dim_regione - 1) {
 		j = 0;
 		while (j <= dim_griglia * 2) {
-			impostare_coordinate_cursore(start_pos_x - 1 + j, start_pos_y + 1 + i);
+			impostare_coordinate_cursore(inizio_griglia_x - 1 + j, inizio_griglia_y + 1 + i);
 			if (calcolare_resto_intero(j, dim_regione * 2) == 0) {
 				stampare_colorato_rgb(rosso, verde, blu, "|");
 			}
@@ -135,7 +179,7 @@ void stampare_griglia(griglia griglia_gioco) {
 	while(i < dim_griglia) {
 		j = 0;
 		while (j <= dim_griglia * 2) {
-			impostare_coordinate_cursore(start_pos_x - 1 + j, start_pos_y + 1 + i);
+			impostare_coordinate_cursore(inizio_griglia_x - 1 + j, inizio_griglia_y + 1 + i);
 			if (calcolare_resto_intero(j, dim_regione * 2) == 0) {
 				stampare_colorato_rgb(rosso, verde, blu, "+");
 			} else {
@@ -154,7 +198,7 @@ void stampare_griglia(griglia griglia_gioco) {
 		n_regioni = n_regioni + 1;
 	}
 	while(j < dim_griglia) {
-			impostare_coordinate_cursore(start_pos_x + (j * 2), start_pos_y + 1 + i + n_regioni);
+			impostare_coordinate_cursore(inizio_griglia_x + (j * 2), inizio_griglia_y + 1 + i + n_regioni);
 			val = griglia_leggere_valore(griglia_gioco, i, j);
 			val_carattere = convertire_numeri_in_lettere(valore_griglia_leggere_valore(val));
 			if (val_carattere == '0') {

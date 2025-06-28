@@ -1,14 +1,24 @@
 #include "gestire_controlli.h"
 
-bool_t controllare_colonna(griglia griglia, int colonna, int numeri_da_inserire) {
-  bool_t corretto;           //Indica se il numero può essere inserito o meno
-  int i;
-  int valore_cella;
+/*	Funzione: controllare_colonna()
+ * 	Descrizione: Questa funzione controlla se un numero può inserito inserito in una colonna data della griglia
+ * 	Parametri:
+ * 		-griglia, griglia nella quale controllare se il numero può essere inserito
+ *		-colonna, colonna della griglia nella quale si vuole inserire il numero
+ *		-numero_da_inserire, numero che si vuole inserire
+ *	Dato di ritorno:
+ *		-corretto, booleano che indica se il numero può essere inserito o meno
+ */
+
+bool_t controllare_colonna(griglia griglia, int colonna, int numero_da_inserire) {
+  bool_t corretto;
+  int i;			//Indice della riga della griglia
+  int valore_cella; //Il valore della griglia nella riga 'i' e colonna 'colonna'
   corretto = VERO;
   i = 0;
   while(i < griglia_leggere_dimensione(griglia)){
 	  valore_cella = valore_griglia_leggere_valore(griglia_leggere_valore(griglia, i, colonna));
-      if(valore_cella == numeri_da_inserire){
+      if(valore_cella == numero_da_inserire){ // Se nella colonna è presente almeno un valore uguale al numero da inserire allora l'esito è FALSO
       	corretto = FALSO;
       }
       i = i + 1;
@@ -16,19 +26,36 @@ bool_t controllare_colonna(griglia griglia, int colonna, int numeri_da_inserire)
 	return corretto;
 }
 
-bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da_inserire, int dimensione_regione) {
-	bool_t corretto;
-	int i;
-	int j;
-	int valore_cella;
+/*	Funzione: controllare_regione()
+ * 	Descrizione: Questa funzione controlla se un numero può inserito inserito in una regione data della griglia
+ * 	Parametri:
+ * 		-griglia, griglia nella quale controllare se il numero può essere inserito
+ * 		-riga, riga della regione da controllare
+ *		-colonna, colonna della regione da controllare
+ *		-numero_da_inserire, numero che si vuole inserire
+ *	Dato di ritorno:
+ *		-corretto, booleano che indica se il numero può essere inserito o meno
+ */
 
+bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da_inserire) {
+	bool_t corretto;
+	int riga_inizio_regione;  	//Prima riga della regione
+	int colonna_inizio_regione; //Prima colonna della regione
+	int dimensione_regione; 	//Dimesione della regione della griglia
+	int i; 						//Indice della riga della regione della griglia
+	int j;						//Indice della colonna della regione della griglia
+	int valore_cella;			//Il valore della griglia nella riga 'i' e colonna 'colonna
+
+	dimensione_regione = calcolare_radice_quadrata(griglia_leggere_dimensione(griglia));
+	riga_inizio_regione = riga - calcolare_resto_intero(riga, dimensione_regione);
+	colonna_inizio_regione = colonna - calcolare_resto_intero(colonna, dimensione_regione);
 	corretto = VERO;
 	i = riga;
-	while (i < riga + dimensione_regione) {
+	while (i < riga_inizio_regione + dimensione_regione) {
 		j = colonna;
-		while (j < colonna + dimensione_regione) {
+		while (j < colonna_inizio_regione + dimensione_regione) {
 			valore_cella = valore_griglia_leggere_valore(griglia_leggere_valore(griglia, i, j));
-			if (valore_cella == numero_da_inserire) {
+			if (valore_cella == numero_da_inserire) { //Se nella regione è presente almeno un valore uguale al numero da inserire allora l'esito è FALSO
 				corretto = FALSO;
 			}
 			j = j + 1;
@@ -38,18 +65,25 @@ bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da
 	return corretto;
 }
 
+/*	Funzione: controllare_riga()
+ * 	Descrizione: Questa funzione controlla se un numero può inserito inserito in una riga data della griglia
+ * 	Parametri:
+ * 		-griglia, griglia nella quale controllare se il numero può essere inserito
+ * 		-riga, riga nella quale si vuole inserire il numero
+ *		-numero_da_inserire, numero che si vuole inserire
+ * 	Dato di ritorno:
+ *		-corretto, booleano che indica se il numero può essere inserito o meno
+ */
 bool_t controllare_riga(griglia griglia, int riga, int numero_da_inserire) {
 	bool_t corretto;
-	int j;
-	int valore_cella;
+	int j;				//Indice della colonna della griglia
+	int valore_cella;  //Il valore della griglia nella riga 'riga' e colonna 'j'
 
 	corretto = VERO;
 	j = 0;
 	while (j < griglia_leggere_dimensione(griglia)) {
 		valore_cella = valore_griglia_leggere_valore(griglia_leggere_valore(griglia, riga, j));
-		// Se il valore nella cella corrente è uguale al numero che vogliamo inserire,
-		// allora il numero non può essere inserito in questa riga
-		if (valore_cella == numero_da_inserire) {
+		if (valore_cella == numero_da_inserire) { //Se nella griglia è presente almeno un valore uguale al numero da inserire allora l'esito è FALSO
 				corretto = FALSO;
 		}
 		j = j + 1;
@@ -57,16 +91,32 @@ bool_t controllare_riga(griglia griglia, int riga, int numero_da_inserire) {
 	return corretto;
 }
 
+/*	Funzione: validare_colonna_input()
+ * 	Descrizione: Questa funzione controlla se l'utente ha inserito un valore della colonna valido
+ * 	Parametri:
+ * 		-colonna, valore della colonna inserito dall'utente
+ * 		-dim_griglia, dimensione della griglia
+ *	Dato di ritorno:
+ *		-validato, booleano che indica se il numero di colonna inserito è valido o meno
+ */
 bool_t validare_colonna_input(int colonna, int dim_griglia) {
-	bool_t validato;       //Indica se la colonna è valida o meno
+	bool_t validato;
 
 	validato = VERO;
-  if(colonna <= 0 || colonna > dim_griglia){
+  if(colonna <= 0 || colonna > dim_griglia) { //Se il valore di colonna non è nell'intervallo [1, dim_griglia] allora l'esito è FALSO
   	validato = FALSO;
   }
   return validato;
 }
 
+/*	Funzione: validare_input_utente()
+ * 	Descrizione: Questa funzione controlla se l'utente ha inserito dei valori di riga, colonna e valore
+ * 	Parametri:
+ * 		-colonna, valore della colonna inserito dall'utente
+ * 		-dim_griglia, dimensione della griglia
+ *	Dato di ritorno:
+ *		-validato, booleano che indica se il numero di colonna inserito è valido o meno
+ */
 bool_t validare_input_utente(int riga, int colonna, char valore, griglia griglia_gioco){
 	bool_t validato;
 	int dim_griglia;
@@ -83,56 +133,82 @@ bool_t validare_input_utente(int riga, int colonna, char valore, griglia griglia
 	return validato;
 }
 
+/*	Funzione: validare_riga_input()
+ * 	Descrizione: Questa funzione controlla se l'utente ha inserito un valore della riga valido
+ * 	Parametri:
+ * 		-colonna, valore della riga inserito dall'utente
+ * 		-dim_griglia, dimensione della griglia
+ *	Dato di ritorno:
+ *		-validato, booleano che indica se il numero di riga inserito è valido o meno
+ */
 bool_t validare_riga_input(int riga, int dim_griglia) {
 	bool_t validato;
 	validato = VERO;
-	if (riga <= 0 || riga > dim_griglia) {
+	if (riga <= 0 || riga > dim_griglia) { //Se il valore della griglia non è nell'intervallo [1, riga] allora l'esito è FALSO
 		validato = FALSO;
 	}
 	return validato;
 }
 
+/*	Funzione: validare_valore_input()
+ * 	Descrizione: Questa funzione controlla se l'utente ha inserito un valore del valore della griglia valido
+ * 	Parametri:
+ * 		-colonna, valore del valore della griglia inserito dall'utente
+ * 		-dim_griglia, dimensione della griglia
+ *	Dato di ritorno:
+ *		-validato, booleano che indica se il numero del valore inserito è valido o meno
+ */
 bool_t validare_valore_input(char valore, int dim_griglia) {
 	int validato;
-	int dim_griglia_carattere;
+	char dim_griglia_carattere;  //Valore in lettera della dimensione della griglia
 
 	validato = VERO;
 	dim_griglia_carattere = convertire_numeri_in_lettere(dim_griglia);
 
-	if(dim_griglia > DIM_GRIGLIA_GRANDE) {
+	//Se il valore non è nell'intervallo [0, dim_griglia_carattere] allora l'esito è FALSO
+	if(valore < CHAR_0 || (valore > CHAR_9 && valore < CHAR_A) || valore > dim_griglia_carattere) {
 		validato = FALSO;
-	} else {
-		if(dim_griglia <= DIM_GRIGLIA_GRANDE && (valore < CHAR_0 || (valore > CHAR_9 && valore < CHAR_A) || valore > dim_griglia_carattere))  {
-			validato = FALSO;
-		}
 	}
 	return validato;
 }
 
+/*	Funzione: verificare_coordinate()
+ * 	Descrizione: Questa funzione controlla la cella della griglia nelle coordinate date è vuota
+ * 	Parametri:
+ * 		-griglia, griglia di gioco
+ * 		-coordinata_x, riga della cella della griglia da controllare
+ * 		-coordinata_y, colonna della cella della griglia da controllare
+ *	Dato di ritorno:
+ *		-valido, booleano che indica se la cella è vuota o meno
+ */
 bool_t verificare_coordinate(griglia griglia_gioco, int coordinata_x, int coordinata_y) {
 	bool_t valido;
 	valido = VERO;
 
+	//Se il valore della griglia nelle coordinate date è diverso da 0 allora la cella è piena e quindi l'esito è FALSO
 	if (valore_griglia_leggere_valore(griglia_leggere_valore(griglia_gioco, coordinata_x, coordinata_y)) != 0) {
 		valido = FALSO;
 	}
 	return valido;
 }
 
+/*	Funzione: verificare_numero_da_inserire()
+ * 	Descrizione: Questa funzione controlla se un numero dato può essere inserito nella griglia nelle coordinate date
+ * 	Parametri:
+ * 		-griglia, griglia di gioco
+ * 		-numero_da_inserire, numero che si vuole inserire nella griglia
+ * 		-riga, riga della griglia nella quale si vuole inserire il numero
+ * 		-colonna, colonna della griglia nella quale inserire il numero
+ *	Dato di ritorno:
+ *		-corretto, booleano che indica se il numero può essere inserito o meno
+ */
 bool_t verificare_numero_da_inserire(griglia griglia, int numero_da_inserire, int riga, int colonna) {
-	bool_t corretto; //Sarà l'output della funzione ed è un booleano, permette di capire se il numero è già presente in riga, colonna, regione o meno
-	int dimensione_griglia;//La seguente variabile verrà inizializzata con la dimensione della griglia
-	int dimensione_regione;//Viene inizializzata con la dimensione della regione della griglia
-
-	dimensione_griglia = griglia_leggere_dimensione(griglia);
-	dimensione_regione = calcolare_radice_quadrata(dimensione_griglia);//La funzione calcolare_radice_quadrata permette di ottenere la dimensione esatta della regione
+	bool_t corretto;
 	corretto = FALSO;
-	int inizio_regione_R = riga - calcolare_resto_intero(riga, dimensione_regione);
-	int inizio_regione_C = colonna - calcolare_resto_intero(colonna, dimensione_regione);
 	if (
 		controllare_riga(griglia, riga, numero_da_inserire) == VERO   &&
 		controllare_colonna(griglia, colonna, numero_da_inserire) == VERO &&
-		controllare_regione(griglia, inizio_regione_R, inizio_regione_C, numero_da_inserire, dimensione_regione) == VERO
+		controllare_regione(griglia, riga, colonna, numero_da_inserire) == VERO
 		) {
 		corretto = VERO;
 	}

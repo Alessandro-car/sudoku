@@ -1,5 +1,12 @@
 #include "gestire_impostazioni.h"
 
+/*	Funzione: selezionare_difficolta()
+ * 	Descrizione: Questa funzione si occupa di far scegliere all'utente la difficolà di gioco
+ * 	Parametri:
+ * 		-difficolta_scelta, la difficolta di gioco che dovrà scegliere l'utente, il valore standard è 1
+ *	Dato di ritorno:
+ *		-difficolta_scelta, difficoltà scelta dall'utente
+ */
 int selezionare_difficolta(int difficolta_scelta) {
 	char comando_utente;
 	do {
@@ -18,6 +25,13 @@ int selezionare_difficolta(int difficolta_scelta) {
 	return difficolta_scelta;
 }
 
+/*	Funzione: selezionare_dimensione_griglia()
+ * 	Descrizione: Questa funzione si occupa di far scegliere all'utente la dimensione della griglia di gioco
+ * 	Parametri:
+ * 		-dim_griglia_scelta, dimensione della griglia che l'utente dovrà scegliere, la standard è 9
+ *	Dato di ritorno:
+ *		-dim_griglia_scelta, dimensione della griglia scelta dall'utente
+ */
 int selezionare_dimensione_griglia(int dim_griglia_scelta) {
 	char comando_utente;
 
@@ -37,12 +51,34 @@ int selezionare_dimensione_griglia(int dim_griglia_scelta) {
 	return dim_griglia_scelta;
 }
 
+/*	Funzione: n_numeri_di_griglia()
+ * 	Descrizione: Questa funzione si occupa di impostare le impostazioni scelte dall'utente
+ * 	Parametri:
+ * 		-impostazioni_gioco, impostazioni di gioco da impostare
+ * 		-difficolta_scelta, difficoltà di gicoo scelta dall'utente
+ * 		-dim_griglia_scelta, dimensione della griglia scelta dall'utente
+ *	Dato di ritorno:
+ *		-impostazioni_gioco, impostazioni di gioco con la difficoltà e la dimensione impostate
+ */
 void impostare_parametri_di_gioco(impostazioni* impostazioni_gioco, int difficolta_scelta, int dim_griglia_scelta) {
 	impostazioni_scrivere_difficolta(impostazioni_gioco, difficolta_scelta);
 	impostazioni_scrivere_dimensione_griglia(impostazioni_gioco,dim_griglia_scelta);
 	return;
 }
 
+/*	Funzione: inizializzare_partita()
+ * 	Descrizione: Questa funzione inizializza la partita impostandone:
+ * 					-Le impostazioni scelte dall'utente;
+ * 					-Il nome della partita scelto dall'utente;
+ * 					-La griglia di gioco generata
+ * 	Parametri:
+ * 		-impostazioni_utente, impostazioni di gioco scelte dall'utente
+ * 		-griglia, griglia di gioco
+ * 		-nome_partita, nome della partita scelto dall'utente
+ * 		-partita, partita da inizializzare
+ *	Dato di ritorno:
+ *		-partita, la partita inizializzata con i dati elencati precedentemente
+ */
 void inizializzare_partita(impostazioni impostazioni_utente, griglia griglia, stringa nome_partita, partita* partita) {
 	partita_scrivere_impostazioni(partita, impostazioni_utente);
 	partita_scrivere_griglia(partita, griglia);

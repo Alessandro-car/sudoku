@@ -41,7 +41,8 @@ void iniziare_partita(stringa* partite_salvate) {
 		}
 		if(comando_utente == '3') {
 			impostare_coordinate_cursore(56, 12);
-			printf(":");
+			printf(": ");
+			mostrare_cursore();
 			prendere_input_stringa_limitato(&nome_partita, DIM_MAX_STRINGA - strlen(ESTENSIONE_FILE), 58, 12);
 			if (controllare_caratteri_stringa(nome_partita, CARATTERI_NOME_FILE_NON_AMMESSI) == FALSO) {
 				nome_impostato = FALSO;

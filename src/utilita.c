@@ -1,9 +1,17 @@
 #include "utilita.h"
 
-bool_t controllare_caratteri_stringa(stringa str, char *caratteri_da_controllare) {
+/*	Funzione: controllare_caratteri_stringa()
+ * 	Descrizione: Questa funzione controlla se una stringa contiene almeno uno della stringa di caratteri da controllare
+ * 	Parametri:
+ * 		-str, stringa da controllare
+ * 		-caratteri_da_controllare, array di caratteri da controllare se almeno uno di essi è presente in str
+ *	Dato di ritorno:
+ *		-esito, booleano che indica se str contiene almeno uno dei caratteri dati
+ */
+bool_t controllare_caratteri_stringa(stringa str, char* caratteri_da_controllare) {
 	bool_t esito;
-	int i;
-	int j;
+	int i; 				//Indice di str
+	int j; 				//Indice di caratteri_da_controllare
 
 	esito = VERO;
 	i = 0;
@@ -20,24 +28,39 @@ bool_t controllare_caratteri_stringa(stringa str, char *caratteri_da_controllare
 	return esito;
 }
 
+/*	Funzione: concatenare_due_stringhe()
+ * 	Descrizione: Questa funzione concatena due array di caratteri passati in input
+ * 	Parametri:
+ * 		-str1, primo array di caratteri da concatenare
+ * 		-str2, secondo array di caratteri da concatenare
+ *	Dato di ritorno:
+ *		-stringa_finale, array di caratteri con str1 e str2 concatenate
+ */
 char* concatenare_due_stringhe(char* str1, char* str2) {
 	char* stringa_finale;
+	//La lunghezza di stringa_finale è data dalla lunghezza di str1 + la lunghezza di str2 + 1 per il null byte
 	stringa_finale = calloc(strlen(str1) + strlen(str2) + 1, sizeof(char));
-	strcpy(stringa_finale, str1);
-	strcat(stringa_finale, str2);
+	strcpy(stringa_finale, str1); //Copia il contenuto di str1 in stringa_finale
+	strcat(stringa_finale, str2); //Concatena il contenuto di str2 al contenuto di stringa_finale
 	return stringa_finale;
 }
 
+/*	Funzione: convertire_minuscolo_maiuscolo()
+ * 	Descrizione: Questa funzione converte una lettera minuscola nella corrispondente in maiuscolo
+ * 	Parametri:
+ * 		-lettera, lettera da convertire
+ *	Dato di ritorno:
+ *		-lettera_convertita, 'lettera' convertita da minuscolo a maiuscolo
+ */
 char convertire_minuscolo_maiuscolo(char lettera) {
-    char lettera_convertita;  // Carattere risultante dalla conversione
-    lettera_convertita = lettera;
+    char lettera_convertita;
+    lettera_convertita = lettera; //Se 'lettera' non è una lettera dell'alfabeto allora la funzione restituisce il carattere stesso
 
     // Controlliamo se il carattere e' una lettera minuscola
     if ((lettera_convertita >= CHAR_a) && (lettera_convertita <= CHAR_z)) {
-        lettera_convertita = lettera - 32; // viene sottratto 32 poichè bisogna portare da lettera minuscola a maiuscola basandoci sull'ascii
+        lettera_convertita = lettera - 32; // Viene sottratto 32 poichè bisogna portare da lettera minuscola a maiuscola basandoci sui codici ASCII
     }
 
-    // Restituiamo il carattere convertito
     return lettera_convertita;
 }
 
