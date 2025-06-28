@@ -12,7 +12,7 @@
 #include "tipi_di_dato/stringa.h"
 #include "utilita.h"
 
-void giocare_partita(partita partita_corrente);
+stringa* giocare_partita(partita partita_corrente);
 void stampare_informazioni_utente(partita partita_corrente);
 void stampare_schermata_di_gioco(partita partita_corrente);
 

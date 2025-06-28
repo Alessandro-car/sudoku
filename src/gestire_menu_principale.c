@@ -1,6 +1,6 @@
 #include "gestire_menu_principale.h"
 
-void iniziare_partita() {
+void iniziare_partita(stringa* partite_salvate) {
 	bool_t uscito;
 	char comando_utente;
 	int difficolta_scelta;
@@ -58,14 +58,14 @@ void iniziare_partita() {
 			impostare_parametri_di_gioco(&impostazioni_gioco, difficolta_scelta, dim_griglia_scelta);
 			inizializzare_griglia(&griglia_sudoku, impostazioni_gioco);
 			inizializzare_partita(impostazioni_gioco, griglia_sudoku, nome_partita, &partita_da_giocare);
-			giocare_partita(partita_da_giocare);
+			partite_salvate = giocare_partita(partita_da_giocare);
 			uscito = VERO; //Se l'utente ha premuto ESC, deve uscire da questa funzione in modo da tornare al menu principale
 		}
 	} while(comando_utente != '5' && !uscito);
 	return;
 }
 
-void menu_principale() {
+void menu_principale(stringa* partite_salvate) {
 	char comando_utente;
 	partita partita_caricata;
 	bool_t caricato;
@@ -73,12 +73,12 @@ void menu_principale() {
 		stampare_interfaccia_menu_principale();
 		comando_utente = nascondere_input_utente();
 		if (comando_utente == '1') {
-			iniziare_partita();
+			iniziare_partita(partite_salvate);
 		}
 		if (comando_utente == '2') {
 			caricato = caricare_partita(&partita_caricata);
 			if (caricato == VERO) {
-				giocare_partita(partita_caricata);
+				partite_salvate = giocare_partita(partita_caricata);
 			}
 		}
 	} while(comando_utente != '3');

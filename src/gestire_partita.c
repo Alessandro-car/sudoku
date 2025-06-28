@@ -1,6 +1,7 @@
 #include "gestire_partita.h"
 
-void giocare_partita(partita partita_corrente) {
+stringa* giocare_partita(partita partita_corrente) {
+	stringa* partite_salvate;
 	griglia griglia_gioco;
 	char comando_utente;
 	char riga;
@@ -8,7 +9,7 @@ void giocare_partita(partita partita_corrente) {
 	char valore;
 	bool_t valore_modificabile;
 	bool_t input_corretto;
-
+	partite_salvate = calloc(MAX_PARTITE_SALVATE, sizeof(stringa));
 	valore_modificabile = VERO;
 	input_corretto = VERO;
 	do {
@@ -24,9 +25,8 @@ void giocare_partita(partita partita_corrente) {
 		comando_utente = nascondere_input_utente();
 		comando_utente = convertire_minuscolo_maiuscolo(comando_utente);
 
-		// Gestisce il comando di salvataggio della partita
 		if (comando_utente == 'S') {
-			salvare_partita(partita_corrente);
+			partite_salvate = salvare_partita(partita_corrente);
 		}
 
 		if (comando_utente == 'I') {
@@ -55,7 +55,7 @@ void giocare_partita(partita partita_corrente) {
 		}
 	} while (comando_utente != TASTO_ESC);
 
-	return;
+	return partite_salvate;
 }
 
 void stampare_informazioni_utente(partita partita_corrente) {

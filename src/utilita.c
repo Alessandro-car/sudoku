@@ -63,6 +63,7 @@ char nascondere_input_utente() {
 	return comando_utente;
 }
 
+
 char prendere_input_carattere_limitato(int x, int y) {
 	int i;
 	char c;

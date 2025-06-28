@@ -9,6 +9,9 @@ bool_t caricare_partita(partita* partita_da_caricare) {
 	char* path_file;
 	int slot;
 	bool_t selezionato_slot_vuoto;
+	impostazioni impostazioni_partita;
+	stringa nome_partita;
+	griglia griglia_partita;
 
 	selezionato_slot_vuoto = FALSO;
 	caricato = FALSO;
@@ -25,10 +28,13 @@ bool_t caricare_partita(partita* partita_da_caricare) {
 		if (slot >= 1 && slot <= n_file_salvati) {
 			path_file = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partite_salvate[slot - 1]));
 			file_partita = fopen(path_file, "rb");
-			if (fread(&partita_da_caricare->impostazioni_partita, sizeof(impostazioni), 1, file_partita) == 1 &&
-				fread(&partita_da_caricare->griglia_partita, sizeof(griglia), 1 , file_partita) == 1  &&
-				fread(&partita_da_caricare->nome_partita, sizeof(stringa), 1, file_partita) == 1)
-			{
+			if (fread(&impostazioni_partita, sizeof(impostazioni), 1, file_partita) == 1 &&
+				fread(&griglia_partita, sizeof(griglia), 1 , file_partita) == 1  &&
+				fread(&nome_partita, sizeof(stringa), 1, file_partita) == 1
+			) {
+				partita_scrivere_impostazioni(partita_da_caricare, impostazioni_partita);
+				partita_scrivere_griglia(partita_da_caricare, griglia_partita);
+				partita_scrivere_nome(partita_da_caricare, nome_partita);
 				fclose(file_partita);
 				caricato = VERO;
 			}
@@ -107,7 +113,7 @@ int calcolare_n_file_salvati(char* nome_directory) {
 }
 
 
-void salvare_partita(partita partita_da_salvare) {
+stringa* salvare_partita(partita partita_da_salvare) {
 	bool_t errore_salvataggio;
 	bool_t salvato;
 	FILE* file_salvataggio;
@@ -117,6 +123,14 @@ void salvare_partita(partita partita_da_salvare) {
 	char* vecchio_file_path;
 	int slot;
 	int n_file_salvati;
+	impostazioni impostazioni_partita;
+	griglia griglia_partita;
+	stringa nome_partita;
+
+
+	impostazioni_partita = partita_leggere_impostazioni(partita_da_salvare);
+	griglia_partita = partita_leggere_griglia(partita_da_salvare);
+	nome_partita = partita_leggere_nome(partita_da_salvare);
 	partite_salvate = creare_directory(CARTELLA_SALVATAGGI);
 	n_file_salvati = calcolare_n_file_salvati(CARTELLA_SALVATAGGI);
 	path_file = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partita_leggere_nome(partita_da_salvare)));
@@ -136,7 +150,10 @@ void salvare_partita(partita partita_da_salvare) {
 			if (rename(vecchio_file_path, path_file) == 0) {
 				file_salvataggio = fopen(path_file, "wb");
 				if (file_salvataggio != NULL) {
-					if (fwrite(&partita_da_salvare, sizeof(partita), 1, file_salvataggio) == 1) {
+					if (fwrite(&impostazioni_partita, sizeof(impostazioni), 1, file_salvataggio) == 1 &&
+						fwrite(&griglia_partita, sizeof(griglia), 1, file_salvataggio) == 1 &&
+						fwrite(&nome_partita, sizeof(stringa), 1, file_salvataggio) == 1
+					) {
 						fclose(file_salvataggio);
 						salvato = VERO;
 						errore_salvataggio = FALSO;
@@ -149,7 +166,10 @@ void salvare_partita(partita partita_da_salvare) {
 		} else if(slot > 0 && slot <= MAX_PARTITE_SALVATE && salvato == FALSO) {
 			file_salvataggio = fopen(path_file, "wb");
 			if (file_salvataggio != NULL) {
-				if (fwrite(&partita_da_salvare, sizeof(partita), 1, file_salvataggio) == 1) {
+				if (fwrite(&impostazioni_partita, sizeof(impostazioni), 1, file_salvataggio) == 1 &&
+						fwrite(&griglia_partita, sizeof(griglia), 1, file_salvataggio) == 1 &&
+						fwrite(&nome_partita, sizeof(stringa), 1, file_salvataggio) == 1
+				) {
 					fclose(file_salvataggio);
 					salvato = VERO;
 					errore_salvataggio = FALSO;
@@ -160,27 +180,26 @@ void salvare_partita(partita partita_da_salvare) {
 			}
 		}
 	} while(comando_utente != '6' && salvato == FALSO);
-	free(partite_salvate);
+	partite_salvate = creare_directory(CARTELLA_SALVATAGGI);
 	free(path_file);
 	free(vecchio_file_path);
-	return;
+	return partite_salvate;
 }
 
 void stampare_riquadro_informazioni_partita(int x, int y, char* file_path) {
 	FILE* file_partita;
-	partita partita_letta;
 	impostazioni impostazioni_partita;
-	int dim_griglia;
 	stringa nome_partita;
+	griglia griglia_partita;
+	int dim_griglia;
+
 	int difficolta;
 	char* mess_difficolta;
 	file_partita = fopen(file_path, "rb");
-	if (fread(&partita_letta.impostazioni_partita, sizeof(impostazioni), 1, file_partita) == 1 &&
-		fread(&partita_letta.griglia_partita, sizeof(griglia), 1 , file_partita) == 1  &&
-		fread(&partita_letta.nome_partita, sizeof(stringa), 1, file_partita) == 1)
-	{
-		impostazioni_partita = partita_leggere_impostazioni(partita_letta);
-		nome_partita = partita_leggere_nome(partita_letta);
+	if (fread(&impostazioni_partita, sizeof(impostazioni), 1, file_partita) == 1 &&
+		fread(&griglia_partita, sizeof(griglia), 1 , file_partita) == 1  &&
+		fread(&nome_partita, sizeof(stringa), 1, file_partita) == 1
+	) {
 		dim_griglia = impostazioni_leggere_dimensione_griglia(impostazioni_partita);
 		difficolta = impostazioni_leggere_difficolta(impostazioni_partita);
 		if (difficolta == DIFFICOLTA_STANDARD) {

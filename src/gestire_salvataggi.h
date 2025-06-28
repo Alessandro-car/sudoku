@@ -23,7 +23,7 @@ char* rimuovere_estensione_file(stringa nome_file);
 stringa* aprire_directory(DIR* directory);
 stringa* creare_directory(char* nome_directory);
 int calcolare_n_file_salvati(char* nome_directory);
-void salvare_partita(partita partita_da_salvare);
+stringa* salvare_partita(partita partita_da_salvare);
 void stampare_riquadro_informazioni_partita(int x, int y, char* file_path);
 void stampare_interfaccia_carica_partita();
 
