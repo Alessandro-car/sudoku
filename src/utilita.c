@@ -15,7 +15,7 @@ bool_t controllare_caratteri_stringa(stringa str, char* caratteri_da_controllare
 
 	esito = VERO;
 	i = 0;
-	while (i < strlen(caratteri_da_controllare) && esito != FALSO) {
+	while (i < calcolare_lunghezza_stringa(caratteri_da_controllare) && esito != FALSO) {
 		j = 0;
 		while (j < stringa_leggere_dimensione(str) && esito != FALSO) {
 			if (stringa_leggere_carattere(str, j) == *(caratteri_da_controllare + i)) {
@@ -37,11 +37,22 @@ bool_t controllare_caratteri_stringa(stringa str, char* caratteri_da_controllare
  *		-stringa_finale, array di caratteri con str1 e str2 concatenate
  */
 char* concatenare_due_stringhe(char* str1, char* str2) {
-	char* stringa_finale;
+	int i; 					//Indice di str1
+	int j;					//Indice di str2
+	char* stringa_finale;	//Array di caratteri finale
 	//La lunghezza di stringa_finale è data dalla lunghezza di str1 + la lunghezza di str2 + 1 per il null byte
-	stringa_finale = calloc(strlen(str1) + strlen(str2) + 1, sizeof(char));
-	strcpy(stringa_finale, str1); //Copia il contenuto di str1 in stringa_finale
-	strcat(stringa_finale, str2); //Concatena il contenuto di str2 al contenuto di stringa_finale
+	stringa_finale = calloc(calcolare_lunghezza_stringa(str1) + calcolare_lunghezza_stringa(str2) + 1, sizeof(char));
+	i = 0;
+	while (i < calcolare_lunghezza_stringa(str1)) {
+		stringa_finale[i] = str1[i];
+		i = i + 1;
+	}
+	j = 0;
+	while (j < calcolare_lunghezza_stringa(str2)) {
+		stringa_finale[i + j] = str2[j];
+		j = j + 1;
+	}
+	stringa_finale[i + j] = '\0';
 	return stringa_finale;
 }
 
@@ -193,6 +204,22 @@ int convertire_lettera_in_numero(char lettera) {
 		numero = lettera - 48;
 	}
 	return numero;
+}
+
+/*	Funzione: calcolare_lunghezza_stringa()
+ * 	Descrizione: Questa funzione permette di calcolare la dimensione di un array di caratteri
+ * 	Parametri:
+ * 		-str: array di caratteri del quale calcolarne la dimensione
+ *	Dato di ritorno:
+ *		-i: dimensione dell'array di caratteri
+ */
+int calcolare_lunghezza_stringa(char* str) {
+	int i; 			//Indice della stringa e rispettiva dimensione
+	i = 0;
+	while (str[i] != '\0') {
+		i = i + 1;
+	}
+	return i;
 }
 
 /*	Funzione: abilitare_ANSI()
@@ -358,7 +385,7 @@ void stampare_carattere_colorato(char* colore, char c) {
  */
 void stampare_centrato_colorato(char* colore, char* stringa, int dim_riquadro, int y) {
 	int n_spazi;			//Colonna, determinata con un calcolo, dove iniziare a stampre il messaggio
-	n_spazi = (dim_riquadro - strlen(stringa)) / 2 + 1;
+	n_spazi = (dim_riquadro - calcolare_lunghezza_stringa(stringa)) / 2 + 1;
 	impostare_coordinate_cursore(n_spazi, y);
 	printf("%s%s%s", colore, stringa, COLORE_ANSI_RESET); //Dopo aver stampato l'array di caratteri colorato, bisogna resettare il colore con codici ANSI.
 }

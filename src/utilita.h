@@ -3,7 +3,6 @@
 
 #include <conio.h>
 #include <stdio.h>
-#include <string.h>
 #include <windows.h>
 
 #include "costanti.h"
@@ -21,9 +20,10 @@ char convertire_numeri_in_lettere(int numero);
 char nascondere_input_utente();
 char prendere_input_carattere_limitato(int x, int y);
 
-int calcolare_radice_quadrata (int radicando);
-int calcolare_resto_intero (int numeratore, int denominatore);
+int calcolare_radice_quadrata(int radicando);
+int calcolare_resto_intero(int numeratore, int denominatore);
 int convertire_lettera_in_numero(char lettera);
+int calcolare_lunghezza_stringa(char* str);
 
 void abilitare_ANSI();
 void disegnare_riquadro_interfaccia();
