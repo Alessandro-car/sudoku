@@ -116,11 +116,10 @@ FINE
 - griglia_gioco, griglia del gioco, griglia
 
 **OUTPUT**:
-- dim_griglia, indica la dimensione della griglia, naturale > 0 <= DIM_GRIGLIA_GRANDE
+- validato, indica se il valore inserito è valido con VERO, booleano
 
 **DATI DI LAVORO**:
-- j, indice per scorrere la griglia, numero naturale > 0 <= DIM_GRIGLIA_GRANDE
-- valore_cella, valore della cella, numero naturale > 0 <= DIM_GRIGLIA_GRANDE
+- dim_griglia_carattere, indica la dimensione della griglia convertita in lettera, carattere
 
 **PSEUDOCODICE**:
 ```C
