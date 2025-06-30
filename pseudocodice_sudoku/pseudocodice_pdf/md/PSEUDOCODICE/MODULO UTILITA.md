@@ -57,30 +57,26 @@ MENTRE(i <= dimensione_stringa_finale)
 	i'esimo elemento di stringa_finale = i'esimo elemento di str1
 	i = i + 1
 FINE
-i = dimensione1 + 1
+
 MENTRE(i <= dimensione_stringa_finale)
-	i'esimo elemento di stringa_finale = j'esimo elemento di str2
-	i = i + 1
+	(i + j)'esimo elemento di stringa_finale = j'esimo elemento di str2
 	j = j + 1
 FINE
+(i + j)'esimo elemento di stringa_finale = '\0'
 ```
 ---
-### FUNZIONE  calcolare_dimensione_array
+### FUNZIONE  calcolare_lunghezza_stringa
 **INPUT**:
 - caratteri, insieme di caratteri, array di caratteri
 
 **OUTPUT**:
-- dimensione, dimensione dell'array, numero naturale > 0
-
-**DATI DI LAVORO**:
-- i, indice per scorrere caratteri, numero naturale > 0
+- dim, dimensione dell'array di caratteri, numero naturale > 0
 
 **PSEUDOCODICE**:
 ```C
-i = 1
-MENTRE(i'esimo elemento di caratteri <> '\0')
-	dimensione = dimensione + 1
-	i = i + 1
+dim = 1
+MENTRE(dim'esimo elemento di caratteri <> '\0')
+	dim = dim + 1
 FINE
 ```
 ---
