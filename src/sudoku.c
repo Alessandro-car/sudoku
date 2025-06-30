@@ -11,8 +11,6 @@
 #include "gestire_menu_principale.h"
 #include "gestire_salvataggi.h"
 
-//TODO: SISTEMARE I COMMENTI
-
 int main(void) {
 	stringa* partite_salvate;
 	partite_salvate = creare_directory(CARTELLA_SALVATAGGI);

@@ -86,14 +86,19 @@ void inizializzare_partita(impostazioni impostazioni_utente, griglia griglia, st
 	return;
 }
 
+/*	Funzione: menu_scelta_difficolta()
+ * 	Descrizione: Questa funzione stampa il menu di selezione della difficoltà di gioco.
+ */
 void menu_scelta_difficolta() {
-	int voci_menu_x;
-	int inizio_voci_menu_y;
+	int voci_menu_x;			//Colonna nella quale stampare le voci del menu
+	int inizio_voci_menu_y;		//Riga di inizio nella quale stampare le voci del menu
 	voci_menu_x = 33;
 	inizio_voci_menu_y = 11;
 	pulire_schermo();
 	disegnare_riquadro_interfaccia();
+	//Stampiamo all'inizio della finestra la scritta | DIFFICOLTA | centrandola rispetto alla larghezza della finestra
 	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "| DIFFICOLTA |", LARGHEZZA_FINESTRA, 1);
+	//Stampiamo alla riga successiva la scritta +------------+ centrandola rispetto alla larghezza della finestra
 	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "+------------+",  LARGHEZZA_FINESTRA, 2);
 	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y);
 	printf("1. Facile");
@@ -106,14 +111,19 @@ void menu_scelta_difficolta() {
 	return;
 }
 
+/*	Funzione: menu_scelta_dimensione_griglia()
+ * 	Descrizione: Questa funzione stampa il menu di selezione della dimensione della griglia del sudoku.
+ */
 void menu_scelta_dimensione_griglia() {
-	int voci_menu_x;
-	int inizio_voci_menu_y;
+	int voci_menu_x;			//Colonna nella quale stampare le voci del menu
+	int inizio_voci_menu_y;		//Inizio della riga dove stampare le voci del menu
 	voci_menu_x = 31;
 	inizio_voci_menu_y = 11;
 	pulire_schermo();
 	disegnare_riquadro_interfaccia();
+	//Stampiamo all'inizio della finestra la scritta | DIMENSIONE | centrandola rispetto alla larghezza della finestra
 	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "| DIMENSIONE |", LARGHEZZA_FINESTRA, 1);
+	//Stampiamo alla riga successiva la scritta +------------+ centrandola rispetto alla larghezza della finestra
 	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "+------------+",  LARGHEZZA_FINESTRA, 2);
 	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y);
 	printf("1. Piccola:  4 x 4");
@@ -126,14 +136,20 @@ void menu_scelta_dimensione_griglia() {
 	return;
 }
 
+
+/*	Funzione: stampare_interfaccia_impostazioni()
+ * 	Descrizione: Questa funzione stampa il menu di selezione impostazioni.
+ */
 void stampare_interfaccia_impostazioni(void) {
-	int inizio_voci_menu_y;
-	int voci_menu_x;
+	int inizio_voci_menu_y;			//Inizio della riga dove stampare le voci del menu
+	int voci_menu_x;				//Colonna nella quale stampare le voci del menu
 	inizio_voci_menu_y = 10;
 	voci_menu_x = 31;
 	pulire_schermo();
 	disegnare_riquadro_interfaccia();
+	//Stampiamo all'inizio della finestra la scritta | IMPOSTAZIONI | centrandola rispetto alla larghezza della finestra
 	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "| IMPOSTAZIONI |", LARGHEZZA_FINESTRA, 1);
+	//Stampiamo alla riga successiva la scritta +--------------+ centrandola rispetto alla larghezza della finestra
 	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "+--------------+", LARGHEZZA_FINESTRA, 2);
 	impostare_coordinate_cursore(voci_menu_x, inizio_voci_menu_y);
 	printf("1. Scegli difficolta'");

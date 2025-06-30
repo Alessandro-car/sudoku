@@ -64,29 +64,48 @@ char convertire_minuscolo_maiuscolo(char lettera) {
     return lettera_convertita;
 }
 
+/*	Funzione: convertire_numeri_in_lettere()
+ * 	Descrizione: Questa funzione converte un numero compreso nell'intervallo [0, 16] nella lettera corrispondente.
+ * 	Parametri:
+ * 		-numero, numero da convertire in carattere
+ *	Dato di ritorno:
+ *		-lettera, carattere corrispondente al numero convertito
+ */
 char convertire_numeri_in_lettere(int numero) {
 	char lettera;
 
 	lettera = ' '; //Inizializza il carattere in un carattere vuoto
-	if(numero >= 10 && numero <= DIM_GRIGLIA_GRANDE) { // Effettua il controllo sul numero, deve rispettare i vincoli
-		lettera = numero + 55; // Somma al numero passato da input "55", questo permette di trasformarlo nella lettera corrispondente mediante ASCII
+	if(numero >= 10 && numero <= DIM_GRIGLIA_GRANDE) {
+		lettera = numero + 55; // Somma 55 al numero passato da input e la lettera corrispondente è nell'intervallo ['A', 'G']
 	} else if(numero >= 0 && numero <= 9){
-		lettera = numero + 48;
+		lettera = numero + 48; // Somma 48 al numero passato da input e la lettera corrispondente è nell'intervallo ['0', '9']
 	}
 	return lettera;
 }
 
+/*	Funzione: nascondere_input_utente()
+ * 	Descrizione: Questa funzione prende in input un carattere da tastiera ma non lo stampa a video e ne nasconde anche il cursore
+ * 	Parametri:
+ *	Dato di ritorno:
+ *		-comando_utente, carattere inserito dall'utente
+ */
 char nascondere_input_utente() {
 	char comando_utente;
 	nascondere_cursore();
-	printf("\033[8m");
 	comando_utente = getch();
-	printf("\033[0m");
 	fflush(stdout);
 	return comando_utente;
 }
 
-
+/*	Funzione: prendere_input_carattere_limitato()
+ * 	Descrizione: Questa funzione permette di leggere un solo carattere da tastiera, stamparlo a video e aspettare l'invio da parte dell'utente.
+ * 	Questa funzione è stata creata in quanto la funzione getch() non stampa a video il carattere inserito, la funzione getchar() e scanf(),
+ * 	stampano a video tutti i caratteri fino a quando non viene premuto INVIO.
+ * 	Parametri:
+ *		-x, y: coordinate dove stampare sul terminale l'inserimento del carattere da parte dell'utente.
+ *	Dato di ritorno:
+ *		-val, carattere inserito dall'utente
+ */
 char prendere_input_carattere_limitato(int x, int y) {
 	int i;
 	char c;
@@ -112,6 +131,13 @@ char prendere_input_carattere_limitato(int x, int y) {
 	return val;
 }
 
+/*	Funzione: calcolare_radice_quadrata()
+ * 	Descrizione: Questa funzione permette di calcolare la radice quadrata di un numero
+ * 	Parametri:
+ * 		-radicando, numero del quale calcolarne la radice quadrata
+ *	Dato di ritorno:
+ *		-radice, radice quadrata del numero passato in input
+ */
 int calcolare_radice_quadrata(int radicando){
 	int radice;             //Possibile radice quadrata intera
 	int radice_quad;        //Quadrato di radice
@@ -134,6 +160,14 @@ int calcolare_radice_quadrata(int radicando){
 	return radice;
 }
 
+/*	Funzione: calcolare_resto_intero()
+ * 	Descrizione: Questa funzione implementa l'operatore modulo, quindi calcola la parte intera di una divisione fra due numeri
+ * 	Parametri:
+ * 		-numeratore, numeratore della divisione
+ * 		-denominatore, denominatore della divisione
+ *	Dato di ritorno:
+ *		-numeratore, parte intera del resto calcolato nella divisione tra i due numeri
+ */
 int calcolare_resto_intero(int numeratore, int denominatore) {
 	while (numeratore >= denominatore)
 	{
@@ -142,9 +176,16 @@ int calcolare_resto_intero(int numeratore, int denominatore) {
 	return numeratore;
 }
 
+/*	Funzione: convertire_lettera_in_numero()
+ * 	Descrizione: Questa funzione prende converte un carattere nell'intervallo ['0', '9'] o ['A', 'G'] in un numero nell'intervallo ['A', 'G']
+ * 	Parametri:
+ * 		-lettera, carattere da convertire in numero
+ *	Dato di ritorno:
+ *		-numero, numero corrispondente del carattere passato in input
+ */
 int convertire_lettera_in_numero(char lettera) {
 	int numero;
-	numero = -1;
+	numero = -1; 		//Questa funzione restituisce -1 se il carattere non è in uno dei due intervalli descritti
 
 	if (lettera >= 'A' && lettera <= 'G') {
 		numero = lettera - 55;
@@ -154,6 +195,11 @@ int convertire_lettera_in_numero(char lettera) {
 	return numero;
 }
 
+/*	Funzione: abilitare_ANSI()
+ * 	Descrizione: Questa funzione permette di abilitare i codici ANSI nella cmd.
+ * 	Parametri:
+ *	Dato di ritorno:
+ */
 void abilitare_ANSI() {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     DWORD dwMode = 0;
@@ -164,11 +210,14 @@ void abilitare_ANSI() {
     return;
 }
 
+/*	Funzione: disegnare_riquadro_interfaccia()
+ *	Descrizione: Questa funzione stampa il riquadro della finestra
+ */
 void disegnare_riquadro_interfaccia() {
-	int i;
+	int i; 				//Indice delle colonne del cursore
+	int j;				//Indice delle righe del cursore
 	i = 0;
 	while (i < LARGHEZZA_FINESTRA) {
-		int j;
 		j = 0;
 		while (j <= LUNGHEZZA_FINESTRA) {
 			if ((j == 0 || j == LUNGHEZZA_FINESTRA)) {
@@ -195,21 +244,41 @@ void disegnare_riquadro_interfaccia() {
 	return;
 }
 
+/*	Funzione: impostare_coordinate_cursore()
+ * 	Descrizione: Questa funzione permette di impostare, tramite i codici ANSI, le coordinate del cursore nel terminale dove iniziare a stampare.
+ * 	Parametri:
+ * 		-x, y: coordinate nelle quali impostare il cursore sul terminale.
+ */
 void impostare_coordinate_cursore(int x, int y) {
-	printf("\033[%d;%dH", y, x);
+	printf("\033[%d;%dH", y, x); //Il codice ANSI prevede di impostare prima la coordinata y e dopo la coordinata x.
 	return;
 }
 
+/*	Funzione: mostare_cursore()
+ * 	Descrizione: Questa funzione permette, tramite i codici ANSI, di mostare a video il cursore.
+ */
 void mostrare_cursore() {
 	printf("\033[?25h");
 	return;
 }
 
+/*	Funzione: nascondere_cursore()
+ * 	Descrizione: Questa funzione permette, tramite i codici ANSI, di nascondere il cursore sul terminale.
+ */
 void nascondere_cursore() {
 	printf("\033[?25l");
 	return;
 }
 
+/*	Funzione: prendere_input_stringa_limitato()
+ * 	Descrizione: Questa funzione permette di prendere in input una stringa da tastiera con un numero di caratteri limitato e stamparla a video.
+ * 	Parametri:
+ * 		-str, stringa da inserire
+ * 		-dim_input, dimensione massima dell'input, ovvero quanti caratteri può inserire al massimo l'utente
+ * 	 	-x, y: coordinate nelle quali stampare a video l'inserimento della stringa da parte dell'utente.
+ *	Dato di ritorno:
+ *		-str, stringa inserita dall'utente
+ */
 void prendere_input_stringa_limitato(stringa* str, int dim_input, int x, int y) {
 	int i;
 	char c;
@@ -237,13 +306,22 @@ void prendere_input_stringa_limitato(stringa* str, int dim_input, int x, int y) 
 	return;
 }
 
+/*	Funzione: pulire_schermo()
+ * 	Descrizione: Questa funzione permette di pulire tutto ciò che era stampato sul terminale
+ */
 void pulire_schermo() {
-	system("@cls||clear");
+	system("@cls||clear"); //cls è il comando da terminale per Windows, clear è il comando per Linux
 	return;
 }
 
+/*	Funzione: stampare_banner_errore()
+ * 	Descrizione: Questa funzione stampa il banner di errore qualora se ne verifichi uno.
+ * 	Parametri:
+ * 		-x, y: coordinate nelle quali iniziare a stampare il banner di errore
+ * 		-messaggio_errore: array di caratteri contenente il messaggio di errore da stampare
+ */
 void stampare_banner_errore(int x, int y, int dim, char* messaggio_errore) {
-	int i;
+	int i;				//Indice delle colonne del cursore
 	i = 1;
 	impostare_coordinate_cursore(x, y - 1);
 	printf("+");
@@ -259,30 +337,68 @@ void stampare_banner_errore(int x, int y, int dim, char* messaggio_errore) {
 
 }
 
-void stampare_carattere_colorato(char colore[], char c) {
-	printf("%s%c%s", colore, c, COLORE_ANSI_RESET);
+/*	Funzione: stampare_carattere_colorato()
+ * 	Descrizione: Questa funzione permette di stampare, tramite codici ANSI, un carattere passato in input con un colore passato in input.
+ * 	Parametri:
+ * 		-colore: array di caratteri contentente il codice ANSI del colore
+ * 		-c: carattere da stampare
+ */
+void stampare_carattere_colorato(char* colore, char c) {
+	printf("%s%c%s", colore, c, COLORE_ANSI_RESET); //Dopo aver stampato il carattere colorato bisogna resettare il colore, sempre con codici ANSI
 	return;
 }
 
-void stampare_centrato_colorato(char colore[], char stringa[], int dim_riquadro, int y) {
-	int n_spazi;
+/*	Funzione: stampare_centrato_colorato()
+ * 	Descrizione: Questa funzione permette di stampare un messaggio, con un dato colore, centrandolo rispetto alla dimensione del riquadro dato.
+ * 	Parametri:
+ * 		-colore: array di caratteri contentente il codice ANSI del colore
+ * 		-stringa: array di caratteri contenente il messaggio da stampare
+ * 		-dim_riquadro: dimensione del riquadro dove stampare il messaggio
+ * 		-y: Riga del terminale dove stampare il riquadro
+ */
+void stampare_centrato_colorato(char* colore, char* stringa, int dim_riquadro, int y) {
+	int n_spazi;			//Colonna, determinata con un calcolo, dove iniziare a stampre il messaggio
 	n_spazi = (dim_riquadro - strlen(stringa)) / 2 + 1;
 	impostare_coordinate_cursore(n_spazi, y);
-	printf("%s%s%s", colore, stringa, COLORE_ANSI_RESET);
+	printf("%s%s%s", colore, stringa, COLORE_ANSI_RESET); //Dopo aver stampato l'array di caratteri colorato, bisogna resettare il colore con codici ANSI.
 }
 
-void stampare_colorato(char colore[], char stringa[]) {
-	printf("%s%s%s", colore, stringa, COLORE_ANSI_RESET);
+/*	Funzione: stampare_colorato()
+ * 	Descrizione: Questa funzione permette di stampare, tramite codici ANSI, un array di caratteri passato in input con un colore passato in input.
+ * 	Parametri:
+ * 		-colore: array di caratteri contentente il codice ANSI del colore
+ * 		-stringa: array di caratteri da stampare
+ */
+void stampare_colorato(char* colore, char* stringa) {
+	printf("%s%s%s", colore, stringa, COLORE_ANSI_RESET); //Dopo aver stampato l'array di caratteri colorato, bisogna resettare il colore con codici ANSI.
 	return;
 }
 
+/*	Funzione: stampare_carattere_colorato_rgb()
+ * 	Descrizione: Questa funzione permette di stampare, tramite codici ANSI, un carattere passato in input con un colore RGB passato in input.
+ * 	Parametri:
+ * 		-r: tonalità di rosso del colore RGB
+ * 		-g: tonalità di verde del colore RGB
+ * 		-b: tonalità di blu del colore RGB
+ * 		-c: carattere da stampare
+ */
 void stampare_carattere_colorato_rgb(int r, int g, int b, char c) {
 	printf("\x1b[38;2;%d;%d;%dm%c%s", r, g, b, c, COLORE_ANSI_RESET);
+	//Dopo aver stampato l'array di caratteri colorato, bisogna resettare il colore con codici ANSI.
 	return;
 }
 
-void stampare_colorato_rgb(int r, int g, int b, char stringa[]) {
+/*	Funzione: stampare_colorato_rgb()
+ * 	Descrizione: Questa funzione permette di stampare, tramite codici ANSI, un array di caratteri passato in input con un colore RGB passato in input.
+ * 	Parametri:
+ * 		-r: tonalità di rosso del colore RGB
+ * 		-g: tonalità di verde del colore RGB
+ * 		-b: tonalità di blu del colore RGB
+ * 		-stringa: array di caratteri da stampare
+ */
+void stampare_colorato_rgb(int r, int g, int b, char* stringa) {
 	printf("\x1b[38;2;%d;%d;%dm%s%s", r, g, b, stringa, COLORE_ANSI_RESET);
+	//Dopo aver stampato l'array di caratteri colorato, bisogna resettare il colore con codici ANSI.
 	return;
 }
 

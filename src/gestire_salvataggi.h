@@ -19,7 +19,6 @@
 #define CARATTERI_NOME_FILE_NON_AMMESSI "/<>:\"\\|?*"
 
 bool_t caricare_partita(partita* partita_da_caricare);
-char* rimuovere_estensione_file(stringa nome_file);
 stringa* aprire_directory(DIR* directory);
 stringa* creare_directory(char* nome_directory);
 int calcolare_n_file_salvati(char* nome_directory);
