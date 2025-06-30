@@ -11,8 +11,8 @@ All'interno del seguente modulo sono presenti in totale 5 funzioni, ovvero: n_nu
 - numeri_da_inserire_in_griglia, numero di valori inseriti nella griglia, numero naturale >0
 
 **DATI DI LAVORO**:
-- difficolta, difficoltà scelta dall'utente, numero naturale \in \[0,2]
-- dimensione_griglia, dimensione della griglia, numero naturale >0 <= DIM_GRIGLIA_GRANDE
+- difficolta, difficoltà scelta dall'utente, numero naturale $\in$ \[0,2]
+- dimensione_griglia, dimensione della griglia, numero naturale > 0 <= DIM_GRIGLIA_GRANDE
 
 **PSEUDOCODICE**:
 ```C
