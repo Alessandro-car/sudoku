@@ -217,15 +217,15 @@ int convertire_lettera_in_numero(char lettera) {
  * 	Parametri:
  * 		-str: array di caratteri del quale calcolarne la dimensione
  *	Dato di ritorno:
- *		-i: dimensione dell'array di caratteri
+ *		-dim: dimensione dell'array di caratteri
  */
 int calcolare_lunghezza_stringa(char* str) {
-	int i; 			//Indice della stringa e rispettiva dimensione
-	i = 0;
-	while (str[i] != '\0') {
-		i = i + 1;
+	int dim; 			//Indice della stringa e rispettiva dimensione
+	dim = 0;
+	while (str[dim] != '\0') {
+		dim = dim + 1;
 	}
-	return i;
+	return dim;
 }
 
 /*	Funzione: leggere_carattere()
