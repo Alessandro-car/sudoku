@@ -18,7 +18,10 @@ bool_t controllare_caratteri_stringa(stringa str, char* caratteri_da_controllare
 	while (i < calcolare_lunghezza_stringa(caratteri_da_controllare) && esito != FALSO) {
 		j = 0;
 		while (j < stringa_leggere_dimensione(str) && esito != FALSO) {
-			if (stringa_leggere_carattere(str, j) == *(caratteri_da_controllare + i)) {
+			if (stringa_leggere_carattere(str, j) == *(caratteri_da_controllare + i) ||
+				stringa_leggere_carattere(str, j) < 0 ||
+				stringa_leggere_carattere(str, j) > 127
+			) {
 				esito = FALSO;
 			}
 			j = j + 1;
@@ -261,8 +264,6 @@ int leggere_carattere() {
 
 /*	Funzione: abilitare_ANSI()
  * 	Descrizione: Questa funzione permette di abilitare i codici ANSI nella cmd.
- * 	Parametri:
- *	Dato di ritorno:
  */
 void abilitare_ANSI() {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -272,6 +273,15 @@ void abilitare_ANSI() {
     dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
     SetConsoleMode(hOut, dwMode);
     return;
+}
+
+/*	Funzione: abilitare_numpad()
+ * 	Descrizione: Questa funzione permette di abilitare, tramite codici ANSI, il tastierino numerico
+ */
+void abilitare_numpad() {
+	printf(ANSI_ABILITA_NUMPAD);
+	fflush(stdout);
+	return;
 }
 
 /*	Funzione: disegnare_riquadro_interfaccia()

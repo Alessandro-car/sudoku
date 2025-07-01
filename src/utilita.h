@@ -27,6 +27,7 @@ int calcolare_lunghezza_stringa(char* str);
 int leggere_carattere();
 
 void abilitare_ANSI();
+void abilitare_numpad();
 void disegnare_riquadro_interfaccia();
 void impostare_coordinate_cursore(int x, int y);
 void mostrare_cursore();

@@ -16,7 +16,7 @@
 
 #define CARTELLA_SALVATAGGI ".\\salvataggi\\"
 #define ESTENSIONE_FILE ".bin"
-#define CARATTERI_NOME_FILE_NON_AMMESSI "/<>:\"\\|?*"
+#define CARATTERI_NOME_FILE_NON_AMMESSI "/<>:\"\\|?*#{}&%!'+`@=$"
 
 bool_t caricare_partita(partita* partita_da_caricare);
 stringa* aprire_directory(DIR* directory);
