@@ -19,7 +19,7 @@ bool_t controllare_caratteri_stringa(stringa str, char* caratteri_da_controllare
 		j = 0;
 		while (j < stringa_leggere_dimensione(str) && esito != FALSO) {
 			if (stringa_leggere_carattere(str, j) == *(caratteri_da_controllare + i) ||
-				stringa_leggere_carattere(str, j) < 0 ||
+				stringa_leggere_carattere(str, j) < 32 ||
 				stringa_leggere_carattere(str, j) > 127
 			) {
 				esito = FALSO;
@@ -44,9 +44,6 @@ bool_t controllare_stringhe_uguali(stringa str1, stringa str2) {
 	bool_t esito;
 	int i;
 	esito = FALSO;
-	if (stringa_leggere_dimensione(str1) != stringa_leggere_dimensione(str2)) {
-		esito = VERO;
-	}
 	if (stringa_leggere_dimensione(str1) == stringa_leggere_dimensione(str2)) {
 		i = 0;
 		while (i < stringa_leggere_dimensione(str1) && esito != VERO) {

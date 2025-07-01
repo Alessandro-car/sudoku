@@ -20,6 +20,8 @@ void iniziare_partita(stringa* partite_salvate) {
 	char comando_utente;
 	int difficolta_scelta;					//Difficoltà di gioco scelta dall'utente
 	int dim_griglia_scelta;					//Dimensione della griglia scelta dall'utente
+	int n_files;							//Numero di files salvati
+	int i;									//Indice delle partite salvate
 	stringa nome_partita;					//Nome della partita scelta dall'utente
 	griglia griglia_sudoku;					//Griglia di gioco della partita
 	impostazioni impostazioni_gioco;		//Impostazioni di gioco della partita scelte dall'utente
@@ -27,9 +29,9 @@ void iniziare_partita(stringa* partite_salvate) {
 	bool_t nome_impostato;					//Indica se il nome della partita è stato impostato o meno
 	bool_t nome_vuoto;						//Indica se è stato inserito un nome di partita vuoto
 	bool_t nome_errato;						//Indica se è stato inserito un nome di partita con caratteri non ammessi
-	bool_t file_presente;
+	bool_t file_presente;					//Indica se è prsente un file con lo stesso nome
 
-	int n_files = calcolare_n_file_salvati(CARTELLA_SALVATAGGI);
+	n_files = calcolare_n_file_salvati(CARTELLA_SALVATAGGI);
 	file_presente = FALSO;
 	nome_errato = FALSO;
 	nome_impostato = FALSO;
@@ -73,22 +75,20 @@ void iniziare_partita(stringa* partite_salvate) {
 			} else if (stringa_leggere_dimensione(nome_partita) <= 0) {
 				nome_impostato = FALSO;
 				nome_vuoto = VERO;
-			} else {
+			}  else {
 				nome_impostato = VERO;
 			}
-
-		}
-
-		if (nome_impostato == VERO) {
-			int i = 0;
-			while (i < n_files) {
+			i = 0;
+			while (i < n_files && file_presente != VERO) {
 				if (controllare_stringhe_uguali(nome_partita, *(partite_salvate + i)) == VERO) {
 					file_presente = VERO;
 					nome_impostato = FALSO;
 				}
 				i = i + 1;
 			}
+
 		}
+
 		//Se il nome della partita è stato impostato, vengono inizializzate le impostazioni con dimensione e difficoltà scelte.
 		//Viene inizializzata la griglia secondo le impostazioni scelte e viene inizializzata la partita secondo le impostazioni, la griglia e il nome scelto.
 		if(comando_utente == '4' && nome_impostato == VERO) {
