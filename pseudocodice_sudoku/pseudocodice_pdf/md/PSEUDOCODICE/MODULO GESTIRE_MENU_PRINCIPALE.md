@@ -14,12 +14,14 @@ All'interno del seguente modulo sono presenti in totale 2 funzioni, ovvero: iniz
 - difficolta_scelta, difficolta scelta dall'utente, numero naturale $\in$ \[0,2]
 - dim_griglia_scelta, dimensione scelta della griglia, numero naturale > 0 <= DIM_GRIGLIA_GRANDE
 - nome_partita, nome della partita scelto dall'utente, stringa
+- nome_con_estensione, nome scelto con aggiunta dell'estensione utilizzato per i controlli, array di caratteri
 - griglia_sudoku, griglia della partita, griglia
 - impostazioni_gioco, impostazioni del gioco, impostazioni
 - nome_impostato, indica se il nome è stato impostato correttamente con VERO, booleano
 - partita_da_giocare, partita che verrà iniziata, partita
 - nome_vuoto, indica se il nome inserito è vuoto con VERO, booleano
 - nome_errato, indica se il nome inserito è errato con VERO, booleano
+- tmp, stringa temporanea, stringa
 
 **PSEUDOCODICE**:
 ```C
@@ -65,11 +67,24 @@ RIPETI
 					nome_impostato = FALSO 
 					nome_errato = VERO
 				ALTRIMENTI 
-					SE(stringa_leggere_dimensione(nome_partita)<= 0)
+					SE(stringa_leggere_dimensione(nome_partita) <= 0)
 						ALLORA 
 							nome_impostato = FALSO
 							nome_vuoto = VERO
-						ALTRIMENTI nome_impostato = VERO
+						ALTRIMENTI 
+							nome_impostato = VERO
+							i = 1
+							MENTRE(i <= n_file)
+								nome_con_estensione = concatenare_due_stringhe(stringa_leggere_array(nome_partita), ESTENSIONE_FILE)
+								tmp = stringa_scrivere_dimensione(tmp, calcolare_lunghezza_array_caratteri(nome_con_estensione))
+								tmp = stringa_scrivere_array(tmp, nome_con_estensione, caloclare_lunghezza_array(nome_con_estensione))
+								SE(controllare_stringhe_uguali(tmp, i'esima posizione di partite_salvate) = VERO)
+									ALLORA
+										file_presente = VERO
+										nome_impostato = FALSO
+								FINE
+								i = i + 1
+							FINE
 					FINE		
 			FINE
 	FINE

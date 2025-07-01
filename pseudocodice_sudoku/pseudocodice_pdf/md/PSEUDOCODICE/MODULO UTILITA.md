@@ -5,10 +5,10 @@ controllare_caratteri_stringa; concatenare_due_stringhe; calcolare_dimensione_ar
 ### FUNZIONE  controllare_caratteri_stringa
 **INPUT**:
 - str, stringa di cui controllare i caratteri, stringa
-- caratteri_da_controllare, caratteri da controllare, array di caratteri
+- caratteri_da_controllare, caratteri da controllare se presenti in str, array di caratteri
 
 **OUTPUT**:
-- esito, indica se due caratteri sono uguali con FALSO, booleano
+- esito, indica se str contiene almeno uno dei caratteri dati, booleano
 
 **DATI DI LAVORO**:
 - i, indice per scorrere str, numero naturale > 0 
@@ -22,7 +22,7 @@ i = 1
 MENTRE(i <= calcolare_lunghezza_array_caratteri(caratteri_da_controllare) AND esito <> FALSO)
     j = 1 
     MENTRE(j <= stringa_leggere_dimensione(str) AND esito <> FALSO)
-        SE(stringa_leggere_carattere(str, j) = i'esima posizione di caratteri_da_controllare OR stringa_leggere_carattere(str, j) <0 OR stringa_leggere_carattere(str, j) > 127) 
+        SE(stringa_leggere_carattere(str, j) = i'esima posizione di caratteri_da_controllare OR stringa_leggere_carattere(str, j) < 32 OR stringa_leggere_carattere(str, j) > 127) 
             ALLORA esito = FALSO
         FINE
         j = j + 1
@@ -30,6 +30,33 @@ MENTRE(i <= calcolare_lunghezza_array_caratteri(caratteri_da_controllare) AND es
     i = i + 1
 FINE
 ```
+---
+### FUNZIONE  controllare_stringhe_uguali
+**INPUT**:
+- str1, prima stringa su cui eseguire il controllo, stringa
+- str2, seconda stringa su cui eseguire il controllo, stringa
+
+**OUTPUT**:
+- esito, indica se le due stringhe sono uguali, booleano
+
+**DATI DI LAVORO**:
+- i, indice per scorrere str, numero naturale > 0 
+
+**PSEUDOCODICE**:
+```C
+esito = VERO
+SE(stringa_leggere_dimensione(str1) = stringa_leggere_dimensione(str2))
+	ALLORA
+		i = 1
+		MENTRE(i < stringa_leggere_dimensione(str1) AND esito != VERO)
+			SE(convertire_minuscolo_maiuscolo(stringa_leggere_carattere(str1, i)) <> convertire_minuscolo_maiuscolo(stringa_leggere_carattere(str2, i)))
+				ALLORA esito = VERO
+			FINE
+			i = i + 1
+		FINE
+FINE
+```
+
 ---
 ### FUNZIONE  concatenare_due_stringhe
 **INPUT**:

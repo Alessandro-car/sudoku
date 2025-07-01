@@ -27,23 +27,29 @@ n_file_salvati = calcolare_n_file_salvati(CARTELLA_SALVATAGGI)
 
 RIPETI
 	stampare_a_schermo(stampare_interfaccia_carica_partita())
-	SE(selezionato_slot_vuoto = VERO)
-		ALLORA	stampare_banner_errore(ERRORE_CARICAMENTO)
-		selezionato_slot_vuoto = FALSO
+	SE(slot_non_esistente= VERO)
+		ALLORA	
+			stampare_banner_errore(ERRORE_CARICAMENTO)
+			slot_non_esistente = FALSO
 	FINE
+	
 	comando_utente = nascondere_input_utente()
-	slot = convertire_lettera_in_numero(comando_utente)
-	SE(slot >= 1 AND <= n_file_salvati)
-		ALLORA percorso_file = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partite_salvate[slot -1]))
+	n_file_salvati = convertire_lettera_in_numero(comando_utente)
+	
+	SE(n_file_salvati >= 1 AND <= n_file_salvati)
+		ALLORA 
+			percorso_file = concatenerare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partite_salvate[slot - 1]))
 		SE(leggere_elemento(file_partita))
-			ALLORA partita_da_caricare = partita_scrivere_impostazioni(partita_da_caricare, impostazioni_partita)
-			partita_da_caricare = partita_scrivere_nome(partita_da_caricare, nome_partita)
-			caricato = VERO
-			ALTRIMENTI
-				SE(slot <> -1 AND slot >= n_file_salvati AND slot <= MAX_PARTITE_SALVATE))
-					ALLORA selezionato_slot_vuoto = VERO
-				FINE
-		FINE
+			ALLORA 
+				partita_da_caricare = partita_scrivere_impostazioni(partita_da_caricare, impostazioni_partita)
+				partita_da_caricare = partita_scrivere_griglia(partita_da_caricare, griglia_partita)
+				partita_da_caricare = partita_scrivere_nome(partita_da_caricare, nome_partita)
+				caricato = VERO
+		FINE	
+		ALTRIMENTI 
+			SE(slot <> -1 AND slot => n_file_salvati AND slot <= MAX_PARTITE_SALVATE))
+				ALLORA slot_non_esistente = VERO
+			FINE
 	FINE
 FINCHE(comando_utente <> '6' AND (slot < 1 OR slot > n_file_salvati))
 ```
@@ -83,42 +89,44 @@ errore_salvataggio = FALSO
 RIPETI
 	stampare_a_schermo(stampare_interfaccia_carica_partita())	
 	SE(errore_salvataggio = VERO)
-		ALLORA stampare_banner_errore(ERRORE_SALVATAGGIO)
-		errore_salvataggio = FALSO
+		ALLORA 
+			stampare_banner_errore(ERRORE_SALVATAGGIO)
+			errore_salvataggio = FALSO
 	FINE
+	
 	comando_utente = nascondere_input_utente()
 	slot = convertire_lettera_in_numero(comando_utente)
-	SE(slot >= 1 AND slot <= n_file_salvati AND salvato = FALSO)
-		ALLORA vecchio_file_percorso = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partite_salvate[slot - 1]))
-		SE(rename(vecchio_file_percorso, percorso_file) = 0)
-			ALLORA
+	
+	SE(slot >= 0 AND slot <= n_file_salvati)
+		ALLORA 
+			vecchio_percorso_file = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partite_salvate[slot - 1]))
+			remove(vecchio_percorso_file)
+		SE(file_salvataggio <> NULL)
+			ALLORA 
+				SE(scrivere_elemento(file_salvataggio, partita_da_salvare))
+					ALLORA 
+						salvato = VERO
+						errore_salvataggio = FALSO
+					ALTRIMENTI
+						salvato = FALSO
+						errore_salvataggio = VERO
+					
+				FINE		
+		FINE	 
+		ALTRIMENTI 
+			SE(slot > 0 AND slot <= MAX_PARTITE_SALVATE)
 				SE(file_salvataggio <> NULL)
-					SE(scrivere_elemento(file_salvataggio, partita_da_salvare))
-						ALLORA 
-							salvato = VERO
-							errore_salvataggio = FALSO
-						ALTRIMENTI
-							salvato = FALSO
-							errore_salvataggio = VERO
-					FINE
-				FINE
-			ALTRIMENTI
-				SE(slot > 0 AND slot <= MAX_PARTITE_SALVATE AND salvato = FALSO)
-					ALLORA
-						SE(file_salvataggio <> NULL)
-							ALLORA
-								SE(file_salvataggio <> NULL)
-									ALLORA 
-										salvato = VERO
-										errore_salvataggio = FALSO
-									ALTRIMENTI
-										salvato = FALSO
-										errore_salvataggio = VERO
-								FINE
-						FINE
-				FINE
-		FINE
-	FINE
+					ALLORA 	
+						SE(scrivere_elemento(file_salvataggio, partita_da_scrivere))
+							ALLORA 
+								salvato = VERO
+								errore_salvataggio = FALSO
+							ALTRIMENTI
+								salvato = FALSO
+								errore_salvataggio = VERO
+						FINE 	
+	            FINE
+			FINE
 FINCHE(comando_utente <> '6' AND salvato = FALSO)
 partite_salvate = scrivere_elemento(partite_salvate, creare_directory(CARTELLA_SALVATAGGI))
 ```
