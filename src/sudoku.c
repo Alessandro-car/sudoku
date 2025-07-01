@@ -10,6 +10,7 @@
 
 #include "gestire_menu_principale.h"
 #include "gestire_salvataggi.h"
+#include "utilita.h"
 
 int main(void) {
 	stringa* partite_salvate;

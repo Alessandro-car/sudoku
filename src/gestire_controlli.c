@@ -50,9 +50,9 @@ bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da
 	riga_inizio_regione = riga - calcolare_resto_intero(riga, dimensione_regione);
 	colonna_inizio_regione = colonna - calcolare_resto_intero(colonna, dimensione_regione);
 	corretto = VERO;
-	i = riga;
+	i = riga_inizio_regione;
 	while (i < riga_inizio_regione + dimensione_regione) {
-		j = colonna;
+		j = colonna_inizio_regione;
 		while (j < colonna_inizio_regione + dimensione_regione) {
 			valore_cella = valore_griglia_leggere_valore(griglia_leggere_valore(griglia, i, j));
 			if (valore_cella == numero_da_inserire) { //Se nella regione è presente almeno un valore uguale al numero da inserire allora l'esito è FALSO

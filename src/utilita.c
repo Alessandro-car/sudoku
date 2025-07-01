@@ -119,25 +119,31 @@ char nascondere_input_utente() {
  */
 char prendere_input_carattere_limitato(int x, int y) {
 	int i;
-	char c;
+	int c;
 	char val;
 
 	i = 0;
-	c = '\0';
+	c = 0;
 	val = '\0';
 	while (c != TASTO_INVIO) {
-		c = getch();
-		if (c == TASTO_BACKSPACE && i > 0) {
-			i = i - 1;
-			val = '\0';
-		} else if (i < 1 && c != TASTO_BACKSPACE && c != TASTO_ESC) {
-			i = i + 1;
-			val = c;
+		c = leggere_carattere();
+		if (c != FRECCIA_SX &&
+			c != FRECCIA_DX &&
+			c != FRECCIA_SU &&
+			c != FRECCIA_GIU
+		) {
+			if (c == TASTO_BACKSPACE && i > 0) {
+				i = i - 1;
+				val = '\0';
+			} else if (i < 1 && c != TASTO_BACKSPACE && c != TASTO_ESC) {
+				i = i + 1;
+				val = c;
+			}
+			impostare_coordinate_cursore(x, y);
+			printf("%*c", 2, ' ');
+			impostare_coordinate_cursore(x, y);
+			printf("%c", val);
 		}
-		impostare_coordinate_cursore(x, y);
-		printf("%*c", 2, ' ');
-		impostare_coordinate_cursore(x, y);
-		printf("%c", val);
 	}
 	return val;
 }
@@ -220,6 +226,37 @@ int calcolare_lunghezza_stringa(char* str) {
 		i = i + 1;
 	}
 	return i;
+}
+
+/*	Funzione: leggere_carattere()
+ * 	Descrizione: Questa funzione permette di leggere un carattere da tastiera e individua se sono state premute delle freccette.
+ * 	Le freccette sono riconosciute da due sequenze di valori esadecimali e sono le seguenti:
+ * 		-Freccia SU:  0xE0 0x48
+ * 		-Freccia GIU: 0xE0 0x50
+ * 		-Freccia SX:  0xE0 0x4B
+ * 		-Freccia DX:  0xE0 0x4D
+ * 	Dato di ritorno:
+ *		-c: carattere letto da tastiera
+ */
+int leggere_carattere() {
+	int c;
+	c = getch();
+	if (c == 0xE0) {
+		c = getch();
+		if (c == 0x4B) {
+			c = FRECCIA_SX;
+		}
+		else if (c == 0x4D) {
+			c = FRECCIA_DX;
+		}
+		else if (c == 0x50) {
+			c = FRECCIA_GIU;
+		}
+		else if (c == 0x48) {
+			c = FRECCIA_SU;
+		}
+	}
+	return c;
 }
 
 /*	Funzione: abilitare_ANSI()
@@ -308,25 +345,31 @@ void nascondere_cursore() {
  */
 void prendere_input_stringa_limitato(stringa* str, int dim_input, int x, int y) {
 	int i;
-	char c;
+	int c;
 
 	i = 0;
-	c = '\0';
+	c = 0;
 	stringa_scrivere_dimensione(str, 0);
 	while (c != TASTO_INVIO) {
-		c = getch();
-		if (c == TASTO_BACKSPACE && i > 0) {
-			i = i - 1;
-			stringa_scrivere_carattere(str, i, '\0');
-		} else if (i < dim_input && c != TASTO_BACKSPACE && c != TASTO_INVIO) {
-			stringa_scrivere_carattere(str, i, c);
-			i = i + 1;
+		c = leggere_carattere();
+		if (c != FRECCIA_SX &&
+			c != FRECCIA_DX &&
+			c != FRECCIA_SU &&
+			c != FRECCIA_GIU
+		) {
+			if (c == TASTO_BACKSPACE && i > 0) {
+				i = i - 1;
+				stringa_scrivere_carattere(str, i, '\0');
+			} else if (i < dim_input && c != TASTO_BACKSPACE && c != TASTO_INVIO) {
+				stringa_scrivere_carattere(str, i, c);
+				i = i + 1;
+			}
+			stringa_scrivere_dimensione(str, i);
+			impostare_coordinate_cursore(x, y);
+			printf("%*c", dim_input, ' ');
+			impostare_coordinate_cursore(x, y);
+			printf("%s", stringa_leggere_array(*str));
 		}
-		stringa_scrivere_dimensione(str, i);
-		impostare_coordinate_cursore(x, y);
-		printf("%*c", dim_input, ' ');
-		impostare_coordinate_cursore(x, y);
-		printf("%s", stringa_leggere_array(*str));
 	}
 
 	stringa_scrivere_carattere(str, i, '\0');

@@ -24,6 +24,7 @@ int calcolare_radice_quadrata(int radicando);
 int calcolare_resto_intero(int numeratore, int denominatore);
 int convertire_lettera_in_numero(char lettera);
 int calcolare_lunghezza_stringa(char* str);
+int leggere_carattere();
 
 void abilitare_ANSI();
 void disegnare_riquadro_interfaccia();
