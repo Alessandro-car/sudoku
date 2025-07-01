@@ -34,6 +34,7 @@ dim_griglia_scelta = DIM_GRIGLIA_STANDARD
 stringa = stringa_scrivere_dimensione(nome_partita, 0)
 
 RIPETI
+	partite_salvate = creare_directory(CARTELLA_SALVATAGGI);
 	stampare_a_schermo(stampare_interfaccia_impostazioni())  
 	SE(nome_impostato = FALSO AND nome_vuoto = VERO)
 		ALLORA stampare_a_video(stampare_banner_errore(ERRORE_NOME_FILE_VUOTO))
