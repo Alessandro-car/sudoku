@@ -47,12 +47,12 @@ char* concatenare_due_stringhe(char* str1, char* str2) {
 	stringa_finale = calloc(calcolare_lunghezza_array_caratteri(str1) + calcolare_lunghezza_array_caratteri(str2) + 1, sizeof(char));
 	i = 0;
 	while (i < calcolare_lunghezza_array_caratteri(str1)) {
-		stringa_finale[i] = str1[i];
+		*(stringa_finale + i) = *(str1 + i);
 		i = i + 1;
 	}
 	j = 0;
 	while (j < calcolare_lunghezza_array_caratteri(str2)) {
-		stringa_finale[i + j] = str2[j];
+		*(stringa_finale + i + j) = *(str2 + j);
 		j = j + 1;
 	}
 	stringa_finale[i + j] = '\0';
