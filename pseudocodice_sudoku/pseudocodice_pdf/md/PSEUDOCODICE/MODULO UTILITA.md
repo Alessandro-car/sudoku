@@ -54,6 +54,8 @@ SE(stringa_leggere_dimensione(str1) = stringa_leggere_dimensione(str2))
 			FINE
 			i = i + 1
 		FINE
+	ALTRIMENTI
+		esito = FALSO
 FINE
 ```
 
