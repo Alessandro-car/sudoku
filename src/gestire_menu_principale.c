@@ -44,6 +44,7 @@ void iniziare_partita(stringa* partite_salvate) {
 	stringa_scrivere_dimensione(&nome_partita, 0);
 
 	do {
+		partite_salvate = creare_directory(CARTELLA_SALVATAGGI);
 		stampare_interfaccia_impostazioni();
 		//Se il nome della partita è vuoto, contiene caratteri non ammessi o non è stato impostato allora viene stampato un banner di errore
 		if (nome_impostato == FALSO && nome_vuoto == VERO) {
@@ -69,7 +70,7 @@ void iniziare_partita(stringa* partite_salvate) {
 			impostare_coordinate_cursore(56, 12);
 			printf(": ");
 			mostrare_cursore();
-			prendere_input_stringa_limitato(&nome_partita, DIM_MAX_STRINGA - calcolare_lunghezza_array_caratteri(ESTENSIONE_FILE), 58, 12);
+			prendere_input_stringa_limitato(&nome_partita, DIM_MAX_STRINGA - calcolare_lunghezza_array_caratteri(ESTENSIONE_FILE) - 1, 58, 12);
 			//Controlliamo se il nome inserito contiene caratteri non ammessi oppure ha una dimensione pari a 0, cioè costituito dal solo carattere \n.
 			if (controllare_caratteri_stringa(nome_partita, CARATTERI_NOME_FILE_NON_AMMESSI) == FALSO) {
 				nome_impostato = FALSO;
