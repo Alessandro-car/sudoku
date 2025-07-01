@@ -133,7 +133,8 @@ char prendere_input_carattere_limitato(int x, int y) {
 		if (c != FRECCIA_SX &&
 			c != FRECCIA_DX &&
 			c != FRECCIA_SU &&
-			c != FRECCIA_GIU
+			c != FRECCIA_GIU &&
+			c != -1 					//-1 indica che è stato premuto un carattere da blocco numerico disattivato
 		) {
 			if (c == TASTO_BACKSPACE && i > 0) {
 				i = i - 1;
@@ -243,6 +244,7 @@ int calcolare_lunghezza_stringa(char* str) {
  */
 int leggere_carattere() {
 	int c;
+	int esteso;
 	c = getch();
 	if (c == 0xE0) {
 		c = getch();
@@ -257,6 +259,14 @@ int leggere_carattere() {
 		}
 		else if (c == 0x48) {
 			c = FRECCIA_SU;
+		}
+	}
+	//Se viene premuto un tasto da blocco numerico disattivato allora impostiamo c a -1 per ignorarlo
+	//I numeri premuti da tastierino numerico disattivato hanno come prefisso il valore 0 o 224 e con codice esteso che va da 71 a 83
+	if (((GetKeyState(VK_NUMLOCK) & 0x0001) != 1) && (c == 0 || c == 224)) {
+		esteso = getch();
+		if (esteso >= 71 && esteso <= 83) {
+			c = -1;
 		}
 	}
 	return c;
@@ -364,14 +374,14 @@ void prendere_input_stringa_limitato(stringa* str, int dim_input, int x, int y) 
 	int c;
 
 	i = 0;
-	c = 0;
 	stringa_scrivere_dimensione(str, 0);
 	while (c != TASTO_INVIO) {
 		c = leggere_carattere();
 		if (c != FRECCIA_SX &&
 			c != FRECCIA_DX &&
 			c != FRECCIA_SU &&
-			c != FRECCIA_GIU
+			c != FRECCIA_GIU &&
+			c != -1							//-1 indica che è stato premuto un carattere da blocco numerico disattivato
 		) {
 			if (c == TASTO_BACKSPACE && i > 0) {
 				i = i - 1;
