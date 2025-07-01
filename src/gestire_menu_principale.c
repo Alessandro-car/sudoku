@@ -18,11 +18,13 @@
 void iniziare_partita(stringa* partite_salvate) {
 	bool_t uscito;							//Indica se l'utente ha smesso di giocare la partita
 	char comando_utente;
+	char* nome_con_estensione; 				//Nome del file inserito dall'utente con l'estensione
 	int difficolta_scelta;					//Difficoltà di gioco scelta dall'utente
 	int dim_griglia_scelta;					//Dimensione della griglia scelta dall'utente
 	int n_files;							//Numero di files salvati
 	int i;									//Indice delle partite salvate
 	stringa nome_partita;					//Nome della partita scelta dall'utente
+	stringa tmp;							//Stringa temporeanea dove verrà scritto il nome del file con estensione e serve per controllare se ci sono stringhe uguali
 	griglia griglia_sudoku;					//Griglia di gioco della partita
 	impostazioni impostazioni_gioco;		//Impostazioni di gioco della partita scelte dall'utente
 	partita partita_da_giocare;				//Partita inizializzata con le impostazioni e il nome della partita selezionati
@@ -77,14 +79,17 @@ void iniziare_partita(stringa* partite_salvate) {
 				nome_vuoto = VERO;
 			}  else {
 				nome_impostato = VERO;
-			}
-			i = 0;
-			while (i < n_files && file_presente != VERO) {
-				if (controllare_stringhe_uguali(nome_partita, *(partite_salvate + i)) == VERO) {
-					file_presente = VERO;
-					nome_impostato = FALSO;
+				i = 0;
+				while (i < n_files) {
+					nome_con_estensione = concatenare_due_stringhe(stringa_leggere_array(nome_partita), ESTENSIONE_FILE);
+					stringa_scrivere_dimensione(&tmp, calcolare_lunghezza_array_caratteri(nome_con_estensione));
+					stringa_scrivere_array(&tmp, nome_con_estensione, calcolare_lunghezza_array_caratteri(nome_con_estensione));
+					if (controllare_stringhe_uguali(tmp, partite_salvate[i]) == VERO) {
+						file_presente = VERO;
+						nome_impostato = FALSO;
+					}
+					i = i + 1;
 				}
-				i = i + 1;
 			}
 
 		}

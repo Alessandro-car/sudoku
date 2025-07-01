@@ -43,14 +43,13 @@ bool_t controllare_caratteri_stringa(stringa str, char* caratteri_da_controllare
 bool_t controllare_stringhe_uguali(stringa str1, stringa str2) {
 	bool_t esito;
 	int i;
-	esito = FALSO;
+	esito = VERO;
 	if (stringa_leggere_dimensione(str1) == stringa_leggere_dimensione(str2)) {
 		i = 0;
-		while (i < stringa_leggere_dimensione(str1) && esito != VERO) {
+		while (i < stringa_leggere_dimensione(str1) && esito != FALSO) {
 			if (convertire_minuscolo_maiuscolo(stringa_leggere_carattere(str1, i)) != convertire_minuscolo_maiuscolo(stringa_leggere_carattere(str2, i))) {
-				esito = VERO;
+				esito = FALSO;
 			}
-
 			i = i + 1;
 		}
 	}
@@ -66,22 +65,23 @@ bool_t controllare_stringhe_uguali(stringa str1, stringa str2) {
  *		-stringa_finale, array di caratteri con str1 e str2 concatenate
  */
 char* concatenare_due_stringhe(char* str1, char* str2) {
-	int i; 					//Indice di str1
-	int j;					//Indice di str2
 	char* stringa_finale;	//Array di caratteri finale
 	//La lunghezza di stringa_finale è data dalla lunghezza di str1 + la lunghezza di str2 + 1 per il null byte
 	stringa_finale = calloc(calcolare_lunghezza_array_caratteri(str1) + calcolare_lunghezza_array_caratteri(str2) + 1, sizeof(char));
-	i = 0;
-	while (i < calcolare_lunghezza_array_caratteri(str1)) {
-		*(stringa_finale + i) = *(str1 + i);
+	strcpy(stringa_finale, str1);
+	strcat(stringa_finale, str2);
+
+	//Abbiamo usato una funzione alternativa di concatenazione in quanto la sottostante era troppo lenta nel concantenare e dava problemi nel salvataggio.
+	/*while (i < calcolare_lunghezza_array_caratteri(str1)) {
+		stringa_finale[i] = str1[i];
 		i = i + 1;
 	}
 	j = 0;
 	while (j < calcolare_lunghezza_array_caratteri(str2)) {
-		*(stringa_finale + i + j) = *(str2 + j);
+		stringa_finale[i + j] = str2[j];
 		j = j + 1;
 	}
-	stringa_finale[i + j] = '\0';
+	stringa_finale[i + j] = '\0';*/
 	return stringa_finale;
 }
 

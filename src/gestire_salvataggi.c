@@ -166,7 +166,7 @@ stringa* salvare_partita(partita partita_da_salvare) {
 		comando_utente = nascondere_input_utente();
 		slot = convertire_lettera_in_numero(comando_utente);
 		//Se viene selezionato uno slot pieno, viene eliminato il vecchio file dove è salvata la partita già salvata.
-		if (slot > 0 && slot <= n_file_salvati) {
+		if (n_file_salvati > 0 && slot > 0 && slot <= n_file_salvati) {
 			vecchio_percorso_file = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partite_salvate[slot - 1]));
 			remove(vecchio_percorso_file);
 			file_salvataggio = fopen(percorso_file, "wb");
