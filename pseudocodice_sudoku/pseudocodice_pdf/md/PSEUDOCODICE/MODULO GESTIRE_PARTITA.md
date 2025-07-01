@@ -26,10 +26,12 @@ RIPETI
 	stampare_schermata_di_gioco(partita_corrente)
 	SE(valore_modificabile = FALSO)
 		ALLORA stampare_banner_errore(ERRORE_VALORE_NON_MODIFICABILE)
-		ALTRIMENTI SE(input_corretto = FALSO)
-			ALLORA stampare_banner_errore(ERRORE_INPUT_ERRATI)
+		ALTRIMENTI 
+			 SE(input_corretto = FALSO)
+				ALLORA stampare_banner_errore(ERRORE_INPUT_ERRATI)
 			FINE
 	FINE
+	
 	valore_modificabile = VERO
 	input_corretto = VERO
 	comando_utente = nascondere_input_utente()
@@ -38,29 +40,31 @@ RIPETI
 	SE(comando_utente = 'S')
 		ALLORA	partite_salvate = scrivere_elemento(partite_salvate, partita_corrente)
 	FINE
+	
 	SE(comando_utente = 'I')
 		ALLORA
 			impostare_coordinate_cursore()
 			mostrare_cursore()
 			riga = prendere_input_carattere_limitato()
 			impostare_coordinate_cursore()
-			colonna = prendere_input_carattere_limite(impostare_coordinate_cursore())
-			valore = prendere_input_carattere_limitato()
+			colonna = prendere_input_carattere_limitato()
+			impostare_coordinate_cursore()
+			valore = prendere_input_carattere_limitato()	
 			riga = convertire_minuscolo_maiuscolo(riga)
-			colonna = convertire_minuscolo_maiuscolo(colonna)
-			valora = convertire_minuscolo_maiuscolo(valore)
-			
+			colonna = convertire_minuscolo_maiuscolo(colonna)	
+			valore = convertire_minuscolo_maiuscolo(valore)
 			griglia_gioco = partita_leggere_griglia(partita_corrente)
-			
-		input_corretto = validare_valore_input(convertire_lettera_in_numero(riga), convertire_lettera_in_numero(colonna), valore, griglia_gioco)
-			
+			input_corretto = validare_valore_input(convertire_lettera_in_numero(riga), convertire_lettera_in_numero(colonna), valore, griglia_gioco)
+		
 			SE(input_corretto = VERO)
-				ALLORA valore_modificabile = valore_griglia_leggere_modificabile(griglia_leggere_valore(griglia_gioco, convertire_lettera_in_numero(riga)-1, convertire_lettera_in_numero(colonna)-1))
+				ALLORA 
+					valore_modificabile = valore_griglia_leggere_modificabile(griglia_leggere_valore(griglia_gioco, convertire_lettera_in_numero(riga)-1, convertire_lettera_in_numero(colonna)-1))
 			FINE
+			
 			SE(valore_modificabile = VERO AND input_corretto = VERO)
-				ALLORA
-					griglia_gioco = aggiornare_griglia(griglia_gioco, convertire_lettere_in_numero(valore), convertire_lettera_in_numero(riga), convertire_lettera_in_numero(colonna))
-					partita_corrente = partita_scrivere_griglia(partita_corrente, griglia_gioco)
+				ALLORA 
+					griglia_gioco = aggiornare_griglia(griglia_gioco, convertire_lettera_in_numero(valore), convertire_lettera_in_numero(riga), convertire_lettera_in_numero(colonna))
+				partita_corrente = partita_scrivere_griglia(partita_corrente, griglia_gioco)
 			FINE
 	FINE
 FINCHE(comando_utente <> TASTO_ESC)

@@ -8,7 +8,7 @@ All'interno del seguente modulo sono presenti in totale 5 funzioni, ovvero: n_nu
 - impostazioni_gioco, impostazioni del gioco, impostazioni
 
 **OUTPUT**:
-- numeri_da_inserire_in_griglia, numero di valori inseriti nella griglia, numero naturale >0
+- numeri_da_inserire_in_griglia, numero di valori inseriti nella griglia, numero naturale > 0
 
 **DATI DI LAVORO**:
 - difficolta, difficoltà scelta dall'utente, numero naturale $\in$ \[0,2]
@@ -17,17 +17,16 @@ All'interno del seguente modulo sono presenti in totale 5 funzioni, ovvero: n_nu
 **PSEUDOCODICE**:
 ```C
 difficolta = impostazioni_leggere_difficolta(impostazioni_gioco)
-dimensione_griglia = griglia_leggere_dimensione(impostazioni_gioco)
+dimensione_griglia = impostazioni_leggere_dimensione_griglia(impostazioni_gioco)
 
 SE(difficolta = 0) 
-	ALL0RA numeri_da_inserire_in_griglia = ((dimensione_griglia)^2 *PERCENTUALE_DIFFICOLTA_FACILE)
+	ALLORA numeri_da_inserire_in_griglia = ((dimensione_griglia) * (dimensione_griglia) * PERCENTUALE_DIFFICOLTA_FACILE)
 FINE
 SE(difficolta = 1) 
-	ALLORA numeri_da_inserire_in_griglia = ((dimensione_griglia)^2 * PERCENTUALE_DIFFICOLTA_MEDIA)
-FINE
+	ALLORA numeri_da_inserire_in_griglia = ((dimensione_griglia) * (dimensione_griglia) * PERCENTUALE_DIFFICOLTA_MEDIA)
 
 SE(difficolta = 2) 
-	ALLORA numeri_da_inserire_in_griglia = ((dimensione_griglia)^2 *PERCENTUALE_DIFFICOLTA_DIFFICILE)
+	ALLORA numeri_da_inserire_in_griglia = ((dimensione_griglia) * (dimensione_griglia) * PERCENTUALE_DIFFICOLTA_DIFFICILE)
 FINE
 ```
 ---

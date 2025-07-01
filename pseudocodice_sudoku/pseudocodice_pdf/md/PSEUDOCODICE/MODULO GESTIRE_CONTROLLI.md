@@ -164,12 +164,8 @@ FINE
 validato = VERO
 dim_griglia_carattere = convertire_numeri_in_lettere(dim_griglia)
 
-SE(dim_griglia > DIM_GRIGLIA_GRANDE)
-	ALLORA validato = FALSO
-	ALTRIMENTI 
-		SE(dim_griglia <= DIM_GRIGLIA_GRANDE AND (valore < CHAR_0 OR (valore > CHAR_9 AND valore < CHAR_A)))
-			ALLORA validato = FALSO
-		FINE
+SE(valore < CHAR_0 OR (valore > CHAR_9 AND valore < CHAR_A) OR valore > dim_griglia_carattere)
+	ALLORA validato = FALSO	  
 FINE
 ```
 ---

@@ -5,9 +5,10 @@ controllare_caratteri_stringa; concatenare_due_stringhe; calcolare_dimensione_ar
 ### FUNZIONE  controllare_caratteri_stringa
 **INPUT**:
 - str, stringa di cui controllare i caratteri, stringa
+- caratteri_da_controllare, caratteri da controllare, array di caratteri
 
 **OUTPUT**:
-- caratteri_da_controllare, caratteri da controllare, array di caratteri
+- esito, indica se due caratteri sono uguali con FALSO, booleano
 
 **DATI DI LAVORO**:
 - i, indice per scorrere str, numero naturale > 0 
@@ -15,17 +16,18 @@ controllare_caratteri_stringa; concatenare_due_stringhe; calcolare_dimensione_ar
 
 **PSEUDOCODICE**:
 ```C
+esito = VERO
 i = 1
 
-MENTRE(i <= stringa_leggere_dimensione(caratteri_da_controllare) AND esito = FALSO)
-	j = 1 
-	MENTRE(j <= stringa_leggere_dimensione(str) AND esito <> FALSO)
-		SE(stringa_leggere_carattere(str, j) = i'esima posizione di caratteri_da_controllare + i)	
-			ALLORA esito = FALSO
-		FINE
-		j = j + 1
-	FINE
-	i = i + 1
+MENTRE(i <= calcolare_lunghezza_array_caratteri(caratteri_da_controllare) AND esito <> FALSO)
+    j = 1 
+    MENTRE(j <= stringa_leggere_dimensione(str) AND esito <> FALSO)
+        SE(stringa_leggere_carattere(str, j) = i'esima posizione di caratteri_da_controllare OR stringa_leggere_carattere(str, j) <0 OR stringa_leggere_carattere(str, j) > 127) 
+            ALLORA esito = FALSO
+        FINE
+        j = j + 1
+    FINE
+    i = i + 1
 FINE
 ```
 ---
@@ -41,7 +43,7 @@ FINE
 - dimensione1, dimensione di str1, numero naturale > 0
 - dimensione2, dimensione di str2, numero naturale > 0
 - i, indice per scorrere le dimensioni, numero naturale > 0
-- dimensione_stringa_finale, rappresenta la dimensione della stringa finale, numero naturale >0
+- dimensione_stringa_finale, rappresenta la dimensione della stringa finale, numero naturale > 0
 
 **PSEUDOCODICE**:
 ```C
@@ -53,19 +55,19 @@ dimensione2 = calcolare_dimensione_array(str2)
 
 dimensione_stringa_finale = dimensione1 + dimensione2
 
-MENTRE(i <= dimensione_stringa_finale)
+MENTRE(i <= dimensione1)
 	i'esimo elemento di stringa_finale = i'esimo elemento di str1
 	i = i + 1
 FINE
 
-MENTRE(i <= dimensione_stringa_finale)
+MENTRE(j <= dimensione2)	
 	(i + j)'esimo elemento di stringa_finale = j'esimo elemento di str2
 	j = j + 1
-FINE
+FINE 
 (i + j)'esimo elemento di stringa_finale = '\0'
 ```
 ---
-### FUNZIONE  calcolare_lunghezza_stringa
+### FUNZIONE  calcolare_lunghezza_array_caratteri
 **INPUT**:
 - caratteri, insieme di caratteri, array di caratteri
 
