@@ -51,9 +51,9 @@ dimensione_regione = calcolare_radice_quadrata(griglia_leggere_dimensione(grigli
 riga_inizio_regione = riga - calcolare_resto_intero(riga, dimensione_regione)
 colonna_inizio_regione = colonna - calcolare_resto_intero(colonna, dimensione_regione)
 corretto = VERO
-i = riga
+i = riga_inizio_regione
 MENTRE(i < riga_inizio_regione + dimensione_regione)
-	j = colonna
+	j = colonna_inizio_regione
 	MENTRE(j < colonna_inizio_regione + dimensione_regione)
 		valore_cella = valore_griglia_leggere_valore(griglia_leggere_valore(griglia, i, j))
 		SE(valore_cella = numero_da_inserire)
@@ -116,10 +116,10 @@ FINE
 - griglia_gioco, griglia del gioco, griglia
 
 **OUTPUT**:
-- validato, indica se il valore inserito è valido con VERO, booleano
+- validato, indica se la riga, colonna e valore inseriti dall'utente sono validi con VERO, booleano
 
 **DATI DI LAVORO**:
-- dim_griglia_carattere, indica la dimensione della griglia convertita in lettera, carattere
+- dim_griglia, indica la dimensione della griglia, naturale > 0 <= DIM_GRIGLIA_GRANDE
 
 **PSEUDOCODICE**:
 ```C
