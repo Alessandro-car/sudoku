@@ -147,21 +147,28 @@ void stampare_informazioni_utente(partita partita_corrente) {
 	printf("%c-%c: Range input", val_min, val_max);
 	//Messaggio di cancellazione di un valore della griglia inserendone le coordinate
 	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 2, 14);
-	printf("0: Cancellare valore");
+	printf("Cancellazione valore:");
+	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 4, 15);
+	printf("1. I: Input");
+	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 4, 16);
+	printf("2. Inserire coordinate");
+	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 4, 17);
+	printf("3. 0 al valore");
+
 
 	//Separiamo l'area riservata ai comandi dall'area riservata alla informazioni della partita
 	i = 0;
-	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X, 15);
+	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X, 18);
 	printf("+");
 	while (i < LARGHEZZA_FINESTRA - SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X - 2) {
-		impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 1 + i, 15);
+		impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 1 + i, 18);
 		printf("-");
 		i = i + 1;
 	}
-	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 1 + i, 15);
+	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 1 + i, 18);
 	printf("+");
 
-	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 2, 16);
+	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 2, 19);
 	printf("Informazioni partita");
 	if (difficolta == DIFFICOLTA_STANDARD) {
 		mess_difficolta = "Facile";
@@ -173,13 +180,13 @@ void stampare_informazioni_utente(partita partita_corrente) {
 		mess_difficolta = "";
 	}
 	//Messaggio della difficoltà di gioco
-	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 2, 17);
+	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 2, 20);
 	printf("Difficolta': %s", mess_difficolta);
 	//Messaggio della dimensione della griglia di gioco
-	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 2, 18);
+	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 2, 21);
 	printf("Dimensione: %dx%d", dim_griglia, dim_griglia);
 	//Messaggio del nome della partita
-	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 2, 19);
+	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 2, 22);
 	printf("Nome: %s", stringa_leggere_array(partita_leggere_nome(partita_corrente)));
 	free(mess_difficolta);
 	return;
