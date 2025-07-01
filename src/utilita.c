@@ -52,6 +52,8 @@ bool_t controllare_stringhe_uguali(stringa str1, stringa str2) {
 			}
 			i = i + 1;
 		}
+	} else {
+		esito = FALSO;
 	}
 	return esito;
 }

@@ -21,7 +21,7 @@ void iniziare_partita(stringa* partite_salvate) {
 	char* nome_con_estensione; 				//Nome del file inserito dall'utente con l'estensione
 	int difficolta_scelta;					//Difficoltà di gioco scelta dall'utente
 	int dim_griglia_scelta;					//Dimensione della griglia scelta dall'utente
-	int n_files;							//Numero di files salvati
+	int n_file;							    //Numero di files salvati
 	int i;									//Indice delle partite salvate
 	stringa nome_partita;					//Nome della partita scelta dall'utente
 	stringa tmp;							//Stringa temporeanea dove verrà scritto il nome del file con estensione e serve per controllare se ci sono stringhe uguali
@@ -33,7 +33,7 @@ void iniziare_partita(stringa* partite_salvate) {
 	bool_t nome_errato;						//Indica se è stato inserito un nome di partita con caratteri non ammessi
 	bool_t file_presente;					//Indica se è prsente un file con lo stesso nome
 
-	n_files = calcolare_n_file_salvati(CARTELLA_SALVATAGGI);
+	n_file = calcolare_n_file_salvati(CARTELLA_SALVATAGGI);
 	file_presente = FALSO;
 	nome_errato = FALSO;
 	nome_impostato = FALSO;
@@ -80,7 +80,7 @@ void iniziare_partita(stringa* partite_salvate) {
 			}  else {
 				nome_impostato = VERO;
 				i = 0;
-				while (i < n_files) {
+				while (i < n_file) {
 					nome_con_estensione = concatenare_due_stringhe(stringa_leggere_array(nome_partita), ESTENSIONE_FILE);
 					stringa_scrivere_dimensione(&tmp, calcolare_lunghezza_array_caratteri(nome_con_estensione));
 					stringa_scrivere_array(&tmp, nome_con_estensione, calcolare_lunghezza_array_caratteri(nome_con_estensione));
