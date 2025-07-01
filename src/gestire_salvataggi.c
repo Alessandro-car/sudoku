@@ -9,7 +9,7 @@ bool_t caricare_partita(partita* partita_da_caricare) {
 	stringa* partite_salvate;			//Array di stringhe dei nomi delle partite salvate
 	int n_file_salvati;					//Numero di partite salvate
 	char comando_utente;
-	char* path_file;					//Path al file dal quale caricare la partita
+	char* percorso_file;				//Percorso al file dal quale caricare la partita
 	int slot;							//Slot selezionato
 	bool_t slot_non_esistente;		 	//Indica se è stato selezionato uno slot non esistente
 	impostazioni impostazioni_partita; 	//Impostazioni di gioco da leggere da file
@@ -21,7 +21,7 @@ bool_t caricare_partita(partita* partita_da_caricare) {
 	partite_salvate = creare_directory(CARTELLA_SALVATAGGI);
 	n_file_salvati = calcolare_n_file_salvati(CARTELLA_SALVATAGGI);
 	do {
-		stampare_interfaccia_carica_partita();
+		stampare_interfaccia_carica_partita(VERO);
 		//Se viene selezionato uno slot non esistente allora viene stampato il banner di errore.
 		if (slot_non_esistente == VERO) {
 			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, LARGHEZZA_FINESTRA, ERRORE_CARICAMENTO);
@@ -31,8 +31,8 @@ bool_t caricare_partita(partita* partita_da_caricare) {
 		slot = convertire_lettera_in_numero(comando_utente);
 		if (slot >= 1 && slot <= n_file_salvati) {
 			//Il path del file viene calcolato concatenando la cartella dove vengono salvate le partite e il nome della partita selezionato
-			path_file = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partite_salvate[slot - 1]));
-			file_partita = fopen(path_file, "rb");
+			percorso_file = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partite_salvate[slot - 1]));
+			file_partita = fopen(percorso_file, "rb");
 			if (fread(&impostazioni_partita, sizeof(impostazioni), 1, file_partita) == 1 &&
 				fread(&griglia_partita, sizeof(griglia), 1 , file_partita) == 1  &&
 				fread(&nome_partita, sizeof(stringa), 1, file_partita) == 1
@@ -48,7 +48,7 @@ bool_t caricare_partita(partita* partita_da_caricare) {
 		}
 	} while (comando_utente != '6' && (slot < 1 || slot > n_file_salvati));
 	free(partite_salvate);
-	free(path_file);
+	free(percorso_file);
 	return caricato;
 }
 
@@ -138,8 +138,8 @@ stringa* salvare_partita(partita partita_da_salvare) {
 	FILE* file_salvataggio;					//File sul quale salvare la partita
 	stringa* partite_salvate;				//Insieme dei nomi dei file delle partite salvate
 	char comando_utente;
-	char* path_file;						//Path del file dove salvare la partita
-	char* vecchio_file_path;				//Path del file dove è presente la partita da sovrascrivere
+	char* percorso_file;					//Path del file dove salvare la partita
+	char* vecchio_percorso_file;			//Path del file dove è presente la partita da sovrascrivere
 	int slot;								//Slot selezionato
 	int n_file_salvati;						//Numero di file presenti nella directory
 	impostazioni impostazioni_partita;		//Impostazioni della partita da salvare
@@ -151,14 +151,14 @@ stringa* salvare_partita(partita partita_da_salvare) {
 	griglia_partita = partita_leggere_griglia(partita_da_salvare);
 	nome_partita = partita_leggere_nome(partita_da_salvare);
 	partite_salvate = creare_directory(CARTELLA_SALVATAGGI);
-	n_file_salvati = calcolare_n_file_salvati(CARTELLA_SALVATAGGI);\
-	//Il path del file viene calcolato concatenando il nome della cartella dove salvare il file, il nome della partita e l'estensione del file.
-	path_file = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partita_leggere_nome(partita_da_salvare)));
-	path_file = concatenare_due_stringhe(path_file, ESTENSIONE_FILE);
+	n_file_salvati = calcolare_n_file_salvati(CARTELLA_SALVATAGGI);
+	//Il percorso del file viene calcolato concatenando il nome della cartella dove salvare il file, il nome della partita e l'estensione del file.
+	percorso_file = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partita_leggere_nome(partita_da_salvare)));
+	percorso_file = concatenare_due_stringhe(percorso_file, ESTENSIONE_FILE);
 	errore_salvataggio = FALSO;
 	salvato = FALSO;
 	do {
-		stampare_interfaccia_carica_partita();
+		stampare_interfaccia_carica_partita(FALSO);
 		if (errore_salvataggio == VERO) {
 			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, LARGHEZZA_FINESTRA, ERRORE_SALVATAGGIO);
 			errore_salvataggio = FALSO;
@@ -167,9 +167,9 @@ stringa* salvare_partita(partita partita_da_salvare) {
 		slot = convertire_lettera_in_numero(comando_utente);
 		//Se viene selezionato uno slot pieno, viene eliminato il vecchio file dove è salvata la partita già salvata.
 		if (slot > 0 && slot <= n_file_salvati) {
-			vecchio_file_path = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partite_salvate[slot - 1]));
-			remove(vecchio_file_path);
-			file_salvataggio = fopen(path_file, "wb");
+			vecchio_percorso_file = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partite_salvate[slot - 1]));
+			remove(vecchio_percorso_file);
+			file_salvataggio = fopen(percorso_file, "wb");
 			if (file_salvataggio != NULL) {
 				if (fwrite(&impostazioni_partita, sizeof(impostazioni), 1, file_salvataggio) == 1 &&
 					fwrite(&griglia_partita, sizeof(griglia), 1, file_salvataggio) == 1 &&
@@ -185,7 +185,7 @@ stringa* salvare_partita(partita partita_da_salvare) {
 			}
 		} else if(slot > 0 && slot <= MAX_PARTITE_SALVATE) {
 			//Altrimenti, se viene selezionato uno slot vuoto, viene creato un nuovo file dove salvare la partita.
-			file_salvataggio = fopen(path_file, "wb");
+			file_salvataggio = fopen(percorso_file, "wb");
 			if (file_salvataggio != NULL) {
 				if (fwrite(&impostazioni_partita, sizeof(impostazioni), 1, file_salvataggio) == 1 &&
 					fwrite(&griglia_partita, sizeof(griglia), 1, file_salvataggio) == 1 &&
@@ -202,8 +202,8 @@ stringa* salvare_partita(partita partita_da_salvare) {
 		}
 	} while(comando_utente != '6' && salvato == FALSO);
 	partite_salvate = creare_directory(CARTELLA_SALVATAGGI);
-	free(path_file);
-	free(vecchio_file_path);
+	free(percorso_file);
+	free(vecchio_percorso_file);
 	return partite_salvate;
 }
 
@@ -256,11 +256,11 @@ void stampare_riquadro_informazioni_partita(int x, int y, char* file_path) {
  * 		-x, y: coordinate nelle quali iniziare a stampare le informazioni della partita
  * 		-file_path: path del file nel quale è salvata la partita
  */
-void stampare_interfaccia_carica_partita() {
+void stampare_interfaccia_carica_partita(bool_t caricare) {
 	int i;							//Indice della colonna del cursore
 	int voci_menu_y;				//Riga nella quale iniziare a stampare le voci del menu
 	int voci_menu_x;				//Colonna nella quale iniziare a stampare le voci del menu
-	char *path_file;				//Path del file dove è salvata la partita
+	char *percorso_file;			//Path del file dove è salvata la partita
 	stringa* partite_salvate;		//Array di stringhe dei nomi dei file delle partite salvate
 	int n_partite;					//Numero di partite salvate
 	int rosso;						//Tonalità di rosso del colore RGB
@@ -270,15 +270,22 @@ void stampare_interfaccia_carica_partita() {
 	rosso = 100;
 	verde = 100;
 	blu = 100;
-	voci_menu_x = 33;
 	voci_menu_y = 4;
 	partite_salvate = creare_directory(CARTELLA_SALVATAGGI);
 	pulire_schermo();
 	disegnare_riquadro_interfaccia();
-	//Stampiamo all'inizio della finestra la scritta | CARICA | centrandola rispetto alla larghezza della finestra
-	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "| CARICA |", LARGHEZZA_FINESTRA, 1);
-	//Stampiamo alla riga successiva la scritta +--------+ centrandola rispetto alla larghezza della finestra
-	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "+--------+", LARGHEZZA_FINESTRA, 2);
+	//Stampiamo all'inizio della finestra la scritta | CARICA | o | SALVARE | centrandola rispetto alla larghezza della finestra
+	if (caricare == VERO) {
+		voci_menu_x = 33;
+		stampare_centrato_colorato(COLORE_ANSI_BIANCO, "| CARICA |", LARGHEZZA_FINESTRA, 1);
+		//Stampiamo alla riga successiva la scritta +--------+ centrandola rispetto alla larghezza della finestra
+		stampare_centrato_colorato(COLORE_ANSI_BIANCO, "+--------+", LARGHEZZA_FINESTRA, 2);
+	} else {
+		voci_menu_x = 32;
+		stampare_centrato_colorato(COLORE_ANSI_BIANCO, "| SALVARE |", LARGHEZZA_FINESTRA, 1);
+		//Stampiamo alla riga successiva la scritta +---------+ centrandola rispetto alla larghezza della finestra
+		stampare_centrato_colorato(COLORE_ANSI_BIANCO, "+---------+", LARGHEZZA_FINESTRA, 2);
+	}
 	i = 0;
 	n_partite = 0;
 	while (i < MAX_PARTITE_SALVATE) {
@@ -288,8 +295,8 @@ void stampare_interfaccia_carica_partita() {
 			impostare_coordinate_cursore(voci_menu_x, voci_menu_y + i + n_partite * 3);
 			//CODICE ANSI PER STAMPARE STRINGA CON COLORE RGB
 			printf("\x1b[38;2;%d;%d;%dm%d. Salvataggio %d%s", rosso, verde, blu, (i + 1), (i + 1), COLORE_ANSI_RESET);
-			path_file = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partite_salvate[i]));
-			stampare_riquadro_informazioni_partita(voci_menu_x + 3, voci_menu_y + i + 1 + n_partite * 3, path_file);
+			percorso_file = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partite_salvate[i]));
+			stampare_riquadro_informazioni_partita(voci_menu_x + 3, voci_menu_y + i + 1 + n_partite * 3, percorso_file);
 			n_partite = n_partite + 1;
 		} else {
 			impostare_coordinate_cursore(voci_menu_x, voci_menu_y + i + n_partite * 3);
@@ -301,6 +308,6 @@ void stampare_interfaccia_carica_partita() {
 	impostare_coordinate_cursore(voci_menu_x, voci_menu_y + i + n_partite * 3);
 	printf("%d. Indietro", (i + 1));
 	free(partite_salvate);
-	free(path_file);
+	free(percorso_file);
 	return;
 }

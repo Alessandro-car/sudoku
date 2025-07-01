@@ -15,7 +15,7 @@ bool_t controllare_caratteri_stringa(stringa str, char* caratteri_da_controllare
 
 	esito = VERO;
 	i = 0;
-	while (i < calcolare_lunghezza_stringa(caratteri_da_controllare) && esito != FALSO) {
+	while (i < calcolare_lunghezza_array_caratteri(caratteri_da_controllare) && esito != FALSO) {
 		j = 0;
 		while (j < stringa_leggere_dimensione(str) && esito != FALSO) {
 			if (stringa_leggere_carattere(str, j) == *(caratteri_da_controllare + i) ||
@@ -44,14 +44,14 @@ char* concatenare_due_stringhe(char* str1, char* str2) {
 	int j;					//Indice di str2
 	char* stringa_finale;	//Array di caratteri finale
 	//La lunghezza di stringa_finale è data dalla lunghezza di str1 + la lunghezza di str2 + 1 per il null byte
-	stringa_finale = calloc(calcolare_lunghezza_stringa(str1) + calcolare_lunghezza_stringa(str2) + 1, sizeof(char));
+	stringa_finale = calloc(calcolare_lunghezza_array_caratteri(str1) + calcolare_lunghezza_array_caratteri(str2) + 1, sizeof(char));
 	i = 0;
-	while (i < calcolare_lunghezza_stringa(str1)) {
+	while (i < calcolare_lunghezza_array_caratteri(str1)) {
 		stringa_finale[i] = str1[i];
 		i = i + 1;
 	}
 	j = 0;
-	while (j < calcolare_lunghezza_stringa(str2)) {
+	while (j < calcolare_lunghezza_array_caratteri(str2)) {
 		stringa_finale[i + j] = str2[j];
 		j = j + 1;
 	}
@@ -223,7 +223,7 @@ int convertire_lettera_in_numero(char lettera) {
  *	Dato di ritorno:
  *		-dim: dimensione dell'array di caratteri
  */
-int calcolare_lunghezza_stringa(char* str) {
+int calcolare_lunghezza_array_caratteri(char* str) {
 	int dim; 			//Indice della stringa e rispettiva dimensione
 	dim = 0;
 	while (str[dim] != '\0') {
@@ -298,6 +298,7 @@ void abilitare_num_lock(int stato) {
 		keybd_event(VK_NUMLOCK, 0, 0, 0);
 		keybd_event(VK_NUMLOCK, 0, KEYEVENTF_KEYUP, 0);
 	}
+	return;
 }
 
 /*	Funzione: disegnare_riquadro_interfaccia()
@@ -430,7 +431,7 @@ void stampare_banner_errore(int x, int y, int dim, char* messaggio_errore) {
 	printf("+");
 
 	stampare_centrato_colorato(COLORE_ANSI_ROSSO, messaggio_errore, dim, y);
-
+	return;
 }
 
 /*	Funzione: stampare_carattere_colorato()
@@ -454,9 +455,10 @@ void stampare_carattere_colorato(char* colore, char c) {
  */
 void stampare_centrato_colorato(char* colore, char* stringa, int dim_riquadro, int y) {
 	int n_spazi;			//Colonna, determinata con un calcolo, dove iniziare a stampre il messaggio
-	n_spazi = (dim_riquadro - calcolare_lunghezza_stringa(stringa)) / 2 + 1;
+	n_spazi = (dim_riquadro - calcolare_lunghezza_array_caratteri(stringa)) / 2 + 1;
 	impostare_coordinate_cursore(n_spazi, y);
 	printf("%s%s%s", colore, stringa, COLORE_ANSI_RESET); //Dopo aver stampato l'array di caratteri colorato, bisogna resettare il colore con codici ANSI.
+	return;
 }
 
 /*	Funzione: stampare_colorato()

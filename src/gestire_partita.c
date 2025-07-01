@@ -200,4 +200,5 @@ void stampare_schermata_di_gioco(partita partita_corrente) {
 	disegnare_riquadro_interfaccia();
 	stampare_griglia(partita_leggere_griglia(partita_corrente));
 	stampare_informazioni_utente(partita_corrente);
+	return;
 }

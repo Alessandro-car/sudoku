@@ -59,7 +59,7 @@ void iniziare_partita(stringa* partite_salvate) {
 			impostare_coordinate_cursore(56, 12);
 			printf(": ");
 			mostrare_cursore();
-			prendere_input_stringa_limitato(&nome_partita, DIM_MAX_STRINGA - calcolare_lunghezza_stringa(ESTENSIONE_FILE), 58, 12);
+			prendere_input_stringa_limitato(&nome_partita, DIM_MAX_STRINGA - calcolare_lunghezza_array_caratteri(ESTENSIONE_FILE), 58, 12);
 			//Controlliamo se il nome inserito contiene caratteri non ammessi oppure ha una dimensione pari a 0, cioè costituito dal solo carattere \n.
 			if (controllare_caratteri_stringa(nome_partita, CARATTERI_NOME_FILE_NON_AMMESSI) == FALSO) {
 				nome_impostato = FALSO;
@@ -81,7 +81,7 @@ void iniziare_partita(stringa* partite_salvate) {
 			partite_salvate = giocare_partita(partita_da_giocare);
 			uscito = VERO; //Se l'utente finisce di giocare deve tornare al menu principale
 		}
-	} while(comando_utente != '5' && !uscito);
+	} while(comando_utente != '5' && uscito != VERO);
 	return;
 }
 

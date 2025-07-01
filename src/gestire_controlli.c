@@ -77,7 +77,7 @@ bool_t controllare_regione(griglia griglia, int riga, int colonna, int numero_da
 bool_t controllare_riga(griglia griglia, int riga, int numero_da_inserire) {
 	bool_t corretto;
 	int j;				//Indice della colonna della griglia
-	int valore_cella;  //Il valore della griglia nella riga 'riga' e colonna 'j'
+	int valore_cella;   //Il valore della griglia nella riga 'riga' e colonna 'j'
 
 	corretto = VERO;
 	j = 0;
@@ -126,7 +126,8 @@ bool_t validare_input_utente(int riga, int colonna, char valore, griglia griglia
 
 	if (validare_riga_input(riga, dim_griglia) == VERO &&
 		validare_colonna_input(colonna, dim_griglia) == VERO &&
-		validare_valore_input(valore, dim_griglia) == VERO) {
+		validare_valore_input(valore, dim_griglia) == VERO
+	) {
 		validato = VERO;
 	}
 
@@ -209,7 +210,7 @@ bool_t verificare_numero_da_inserire(griglia griglia, int numero_da_inserire, in
 		controllare_riga(griglia, riga, numero_da_inserire) == VERO   &&
 		controllare_colonna(griglia, colonna, numero_da_inserire) == VERO &&
 		controllare_regione(griglia, riga, colonna, numero_da_inserire) == VERO
-		) {
+	) {
 		corretto = VERO;
 	}
 	return corretto;
