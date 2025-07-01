@@ -24,7 +24,6 @@ stringa* giocare_partita(partita partita_corrente) {
 	valore_modificabile = VERO;
 	input_corretto = VERO;
 	do {
-
 		stampare_schermata_di_gioco(partita_corrente);
 		//Se si prova a modificare un valore non modificabile viene stampato un banner di errore
 		//Se si inserisce un input non corretto viene stampato un banner di errore
@@ -149,11 +148,11 @@ void stampare_informazioni_utente(partita partita_corrente) {
 	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 2, 14);
 	printf("Cancellazione valore:");
 	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 4, 15);
-	printf("1. I: Input");
+	printf("-I: Input");
 	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 4, 16);
-	printf("2. Inserire coordinate");
+	printf("-Inserire coordinate");
 	impostare_coordinate_cursore(SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 4, 17);
-	printf("3. 0 al valore");
+	printf("-0 al valore");
 
 
 	//Separiamo l'area riservata ai comandi dall'area riservata alla informazioni della partita

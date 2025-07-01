@@ -3,6 +3,7 @@
 
 #include <conio.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <windows.h>
 
 #include "costanti.h"
@@ -27,7 +28,7 @@ int calcolare_lunghezza_stringa(char* str);
 int leggere_carattere();
 
 void abilitare_ANSI();
-void abilitare_numpad();
+void abilitare_num_lock(int stato);
 void disegnare_riquadro_interfaccia();
 void impostare_coordinate_cursore(int x, int y);
 void mostrare_cursore();

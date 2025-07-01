@@ -1,7 +1,6 @@
 #ifndef COSTANTI_H_
 #define COSTANTI_H_
 
-#define ANSI_ABILITA_NUMPAD "\x1b[?1h"
 #define COLORE_ANSI_BIANCO "\x1b[37m"
 #define COLORE_ANSI_BLU "\x1b[34m"
 #define COLORE_ANSI_CIANO "\x1b[36m"

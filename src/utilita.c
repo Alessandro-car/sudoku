@@ -271,17 +271,23 @@ void abilitare_ANSI() {
     if (hOut == INVALID_HANDLE_VALUE) return;
     if (!GetConsoleMode(hOut, &dwMode)) return;
     dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+    dwMode |= ENABLE_PROCESSED_INPUT;
     SetConsoleMode(hOut, dwMode);
     return;
 }
 
-/*	Funzione: abilitare_numpad()
- * 	Descrizione: Questa funzione permette di abilitare, tramite codici ANSI, il tastierino numerico
+/*	Funzione: abilitare_num_lock()
+ * 	Descrizione: Questa funzione permette di abilitare il tastierino numerico.
+ * 	Questa funzione serve in quanto, se disattivato, da problemi nell'input.
  */
-void abilitare_numpad() {
-	printf(ANSI_ABILITA_NUMPAD);
-	fflush(stdout);
-	return;
+void abilitare_num_lock(int stato) {
+	int stato_corrente;
+	stato_corrente = GetKeyState(VK_NUMLOCK) & 1;
+
+	if (stato_corrente != stato) {
+		keybd_event(VK_NUMLOCK, 0, 0, 0);
+		keybd_event(VK_NUMLOCK, 0, KEYEVENTF_KEYUP, 0);
+	}
 }
 
 /*	Funzione: disegnare_riquadro_interfaccia()

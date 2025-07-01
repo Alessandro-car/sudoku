@@ -16,7 +16,7 @@ int main(void) {
 	stringa* partite_salvate;
 	partite_salvate = creare_directory(CARTELLA_SALVATAGGI);
 	abilitare_ANSI();
-	abilitare_numpad();
+	abilitare_num_lock(1);
 	menu_principale(partite_salvate);
 	return 0;
 }
