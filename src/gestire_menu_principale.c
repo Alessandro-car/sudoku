@@ -27,7 +27,10 @@ void iniziare_partita(stringa* partite_salvate) {
 	bool_t nome_impostato;					//Indica se il nome della partita è stato impostato o meno
 	bool_t nome_vuoto;						//Indica se è stato inserito un nome di partita vuoto
 	bool_t nome_errato;						//Indica se è stato inserito un nome di partita con caratteri non ammessi
+	bool_t file_presente;
 
+	int n_files = calcolare_n_file_salvati(CARTELLA_SALVATAGGI);
+	file_presente = FALSO;
 	nome_errato = FALSO;
 	nome_impostato = FALSO;
 	nome_vuoto = FALSO;
@@ -43,11 +46,14 @@ void iniziare_partita(stringa* partite_salvate) {
 			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, LARGHEZZA_FINESTRA, ERRORE_NOME_FILE_VUOTO);
 		} else if (nome_impostato == FALSO && nome_errato == VERO) {
 			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, LARGHEZZA_FINESTRA, ERRORE_NOME_FILE_ERRATO);
+		} else if (nome_impostato == FALSO && file_presente == VERO) {
+			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, LARGHEZZA_FINESTRA, ERRORE_NOME_FILE_PRESENTE);
 		} else if (nome_impostato == FALSO) {
 			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, LARGHEZZA_FINESTRA, ERRORE_NOME_FILE);
 		}
 		nome_errato = FALSO;
 		nome_vuoto = FALSO;
+		file_presente = FALSO;
 		comando_utente = nascondere_input_utente();
 		if(comando_utente == '1') {
 			difficolta_scelta = selezionare_difficolta(difficolta_scelta);
@@ -71,6 +77,17 @@ void iniziare_partita(stringa* partite_salvate) {
 				nome_impostato = VERO;
 			}
 
+		}
+
+		if (nome_impostato == VERO) {
+			int i = 0;
+			while (i < n_files) {
+				if (controllare_stringhe_uguali(nome_partita, *(partite_salvate + i)) == VERO) {
+					file_presente = VERO;
+					nome_impostato = FALSO;
+				}
+				i = i + 1;
+			}
 		}
 		//Se il nome della partita è stato impostato, vengono inizializzate le impostazioni con dimensione e difficoltà scelte.
 		//Viene inizializzata la griglia secondo le impostazioni scelte e viene inizializzata la partita secondo le impostazioni, la griglia e il nome scelto.

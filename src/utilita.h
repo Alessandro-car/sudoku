@@ -14,6 +14,7 @@
 #define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
 
 bool_t controllare_caratteri_stringa(stringa str, char* caratteri_da_controllare);
+bool_t controllare_stringhe_uguali(stringa str1, stringa str2);
 
 char* concatenare_due_stringhe(char* str1, char* str2);
 char convertire_minuscolo_maiuscolo(char lettera);

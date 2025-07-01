@@ -31,6 +31,35 @@ bool_t controllare_caratteri_stringa(stringa str, char* caratteri_da_controllare
 	return esito;
 }
 
+/*	Funzione: controllare_stringhe_uguali()
+ * 	Descrizione: Questa funzione controlla se due stringhe sono uguali.
+ * 	Se la loro dimensione è diversa allora possiamo già dire che sono uguali e i caratteri minuscoli o maiuscoli li consideriamo uguali
+ * 	Parametri:
+ * 		-str1, prima stringa da controllare
+ * 		-str2, seconda stringa da controllare
+ * 	Dato di ritorno:
+ *		-esito, booleano che indica se le due stringhe sono uguali
+ */
+bool_t controllare_stringhe_uguali(stringa str1, stringa str2) {
+	bool_t esito;
+	int i;
+	esito = FALSO;
+	if (stringa_leggere_dimensione(str1) != stringa_leggere_dimensione(str2)) {
+		esito = VERO;
+	}
+	if (stringa_leggere_dimensione(str1) == stringa_leggere_dimensione(str2)) {
+		i = 0;
+		while (i < stringa_leggere_dimensione(str1) && esito != VERO) {
+			if (convertire_minuscolo_maiuscolo(stringa_leggere_carattere(str1, i)) != convertire_minuscolo_maiuscolo(stringa_leggere_carattere(str2, i))) {
+				esito = VERO;
+			}
+
+			i = i + 1;
+		}
+	}
+	return esito;
+}
+
 /*	Funzione: concatenare_due_stringhe()
  * 	Descrizione: Questa funzione concatena due array di caratteri passati in input
  * 	Parametri:
