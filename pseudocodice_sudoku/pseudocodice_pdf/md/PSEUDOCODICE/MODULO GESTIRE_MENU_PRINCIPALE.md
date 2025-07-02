@@ -100,7 +100,7 @@ RIPETI
 			impostazioni_gioco = impostare_paramentri_di_gioco(impostazioni_gioco, difficolta_scelta, dim_griglia_scelta)
 			griglia_sudoku = inizializzare_griglia(griglia_sudoku, impostazioni_gioco)
 			partita_da_giocare = inizializzare_partita(impostazioni_gioco, griglia_sudoku, nome_partita, partita_da_giocare)
-			partite_salvate = scrivere_elemento(partite_salvate, giocare_partita(partita_da_giocare), nuova_partita)
+			partite_salvate = scrivere_elemento(partite_salvate, giocare_partita(partita_da_giocare, nuova_partita))
 			uscito = VERO
 	FINE
 	FINCHE(comando_utente <> '5' AND uscito <> VERO)
@@ -126,14 +126,14 @@ RIPETI
 	comando_utente = nascondere_input_utente()
 	SE(comando_utente = '1')
 		ALLORA 
-			iniziare_partita(partite_salvate, nuova_partita)
+			partite_salvate = iniziare_partita(partite_salvate, nuova_partita)
 			nuova_partita = VERO
 	FINE
 	SE(comando_utente = '2')
 		ALLORA caricato = caricare_partita(partita_caricata)
 		SE(caricato = VERO)
 			ALLORA 
-				partite_salvate = scrivere_elemento(partite_salvate, giocare_partita(partita_caricata), nuova_partita)	
+				partite_salvate = scrivere_elemento(partite_salvate, giocare_partita(partita_caricata, nuova_partita))	
 				nuova_partita = VERO;
 		FINE
 	FINE

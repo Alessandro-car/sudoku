@@ -40,7 +40,7 @@ RIPETI
 	
 	SE(comando_utente = 'S')
 		ALLORA	
-			partite_salvate = scrivere_elemento(partite_salvate, partita_corrente, nuova_partita)
+			partite_salvate = scrivere_elemento(partite_salvate, partita_corrente)
 			nuova_partita = FALSO
 	FINE
 	
@@ -67,7 +67,7 @@ RIPETI
 			SE(valore_modificabile = VERO AND input_corretto = VERO)
 				ALLORA 
 					griglia_gioco = aggiornare_griglia(griglia_gioco, convertire_lettera_in_numero(valore), convertire_lettera_in_numero(riga), convertire_lettera_in_numero(colonna))
-				partita_corrente = partita_scrivere_griglia(partita_corrente, griglia_gioco)
+					partita_corrente = partita_scrivere_griglia(partita_corrente, griglia_gioco)
 			FINE
 	FINE
 FINCHE(comando_utente <> TASTO_ESC)
