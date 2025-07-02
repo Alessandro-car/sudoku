@@ -8,6 +8,7 @@
  * 	Per smettere di giocare l'utente dovrà premere ESC.
  * 	Parametri:
  * 		-partita_corrente: partita creata con le impostazioni selezionate dall'utente o caricata da un file.
+ * 		-prima_partita: booleano che indica se è la prima partita salvata
  *	Dato di ritorno:
  *		-partite_salvate: array di stringhe dei nomi delle partite salvate.
  */

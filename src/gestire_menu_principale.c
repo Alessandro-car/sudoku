@@ -12,6 +12,7 @@
  *  L'utente esce dall'interfaccia se preme '5' o se ha smesso di giocare la partita.
  * 	Parametri:
  * 		-partite_salvate: array di stringhe dei nomi delle partite salvate
+ * 		-prima_partita: booleano che indica se è la prima partita iniziata
  *	Dato di ritorno:
  *		-partite_salvate: array di stringhe dei nomi delle partite salvate aggiornato con l'eventuale nome della nuova partita avviata
  */
@@ -113,6 +114,7 @@ void iniziare_partita(stringa* partite_salvate, bool_t prima_partita) {
  * 	Nel menu principale, l'utente può scegliere se iniziare una nuova partita, oppure caricarne una già esistente.
  * 	Parametri:
  * 		-partite_salvate: array di stringhe dei nomi delle partite salvate.
+ * 		-prima_scelta: booleano che indica se è la prima partita iniziata
  *	Dato di ritorno:
  *		-partite_salvate: array di stringhe dei nomi delle partite salvate aggiornato.
  */

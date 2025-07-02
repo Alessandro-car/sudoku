@@ -129,6 +129,7 @@ int calcolare_n_file_salvati(char* nome_directory) {
  * 	in base al nome del file dato alla partita.
  * 	Parametri:
  * 		-partita_da_salvare: partita corrente da salvare su un file
+ * 		-prima_partita:	booleano che indica se è la prima partita iniziata
  *	Dato di ritorno:
  *		-partite_salvate: array di stringhe dei nomi delle partite salvate
  */
@@ -254,10 +255,7 @@ void stampare_riquadro_informazioni_partita(int x, int y, char* file_path) {
 }
 
 /*	Funzione: gestire_avviso_salvataggio()
- * 	Descrizione: Questa funzione stampa le informazioni di una partita, utili all'utente durante il caricamento di una partita.
- * 	Parametri:
- * 		-x, y: coordinate nelle quali iniziare a stampare le informazioni della partita
- * 		-file_path: path del file nel quale è salvata la partita
+ * 	Descrizione: Questa funzione gestisce l'avviso del salvataggio che si chiude se l'utente preme INVIO.
  */
 void gestire_avviso_salvataggio() {
 	int comando_utente;
@@ -267,6 +265,10 @@ void gestire_avviso_salvataggio() {
 	} while (comando_utente != TASTO_INVIO);
 }
 
+
+/*	Funzione: stampare_avviso_salvataggio()
+ * 	Descrizione: Questa funzione stampa l'avviso al momento del salvataggio.
+ */
 void stampare_avviso_salvataggio() {
 	char* avviso_da_stampare;		//Prima parte dell'avviso da stampare
 	char* avviso_da_stampare2;		//Seconda parte dell'avviso da stampare
@@ -295,6 +297,7 @@ void stampare_avviso_salvataggio() {
 		}
 		i = i + 1;
 	}
+	//Stampo il riquadro dell'avviso
 	i = inizio_pos_x;
 	while (i < inizio_pos_x + dim_riquadro_x) {
 		j = inizio_pos_y;
@@ -320,7 +323,7 @@ void stampare_avviso_salvataggio() {
 	stampare_carattere_colorato(COLORE_ANSI_ROSSO, '+');
 	impostare_coordinate_cursore(inizio_pos_x + dim_riquadro_x - 1, inizio_pos_y + dim_riquadro_y - 1);
 	stampare_carattere_colorato(COLORE_ANSI_ROSSO, '+');
-
+	//Stampo i messaggi dell'avviso
 	stampare_centrato_colorato(COLORE_ANSI_ROSSO, "AVVISO!", inizio_pos_x * 2 + dim_riquadro_x, (inizio_pos_y + dim_riquadro_y) / 2);
 	stampare_centrato_colorato(COLORE_ANSI_BIANCO, avviso_da_stampare, inizio_pos_x * 2 + dim_riquadro_x, (inizio_pos_y + dim_riquadro_y) / 2 + 1);
 	stampare_centrato_colorato(COLORE_ANSI_BIANCO, avviso_da_stampare2, inizio_pos_x * 2 + dim_riquadro_x, (inizio_pos_y + dim_riquadro_y) / 2 + 2);
