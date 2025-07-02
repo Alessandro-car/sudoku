@@ -268,14 +268,14 @@ void gestire_avviso_salvataggio() {
 }
 
 void stampare_avviso_salvataggio() {
-	char* avviso_da_stampare;	//Prima parte dell'avviso da stampare
-	char* avviso_da_stampare2;
-	int inizio_pos_x;
-	int inizio_pos_y;
-	int dim_riquadro_x;
-	int dim_riquadro_y;
-	int i; 						//Indice delle colonne del cursore
-	int j;						//Indice delle righe del cursore
+	char* avviso_da_stampare;		//Prima parte dell'avviso da stampare
+	char* avviso_da_stampare2;		//Seconda parte dell'avviso da stampare
+	int inizio_pos_x;				//Inizio colonna dove stampare l'avviso
+	int inizio_pos_y;				//Inizio riga dove stampare l'avviso
+	int dim_riquadro_x;				//Larghezza dell'avviso da stampare
+	int dim_riquadro_y;				//Lunghezza dell'avviso da stampare
+	int i; 							//Indice delle colonne del cursore
+	int j;							//Indice delle righe del cursore
 
 
 	avviso_da_stampare = "La selezione di uno slot pieno";
@@ -284,9 +284,9 @@ void stampare_avviso_salvataggio() {
 	inizio_pos_y = (LUNGHEZZA_FINESTRA - LUNGHEZZA_FINESTRA / 2) / 2 + 1;
 	dim_riquadro_x = LARGHEZZA_FINESTRA / 2;
 	dim_riquadro_y = LUNGHEZZA_FINESTRA / 2;
-
+	//Pulisco la parte sottostante l'avviso da stampare
 	i = inizio_pos_x;
-	while (i < inizio_pos_x + dim_riquadro_x) {
+	while (i < inizio_pos_x + dim_riquadro_x ) {
 		j = inizio_pos_y;
 		while (j < inizio_pos_y + dim_riquadro_y) {
 			impostare_coordinate_cursore(i, j);

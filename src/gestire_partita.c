@@ -40,6 +40,7 @@ stringa* giocare_partita(partita partita_corrente, bool_t prima_partita) {
 
 		if (comando_utente == 'S') {
 			partite_salvate = salvare_partita(partita_corrente, prima_partita);
+			prima_partita = FALSO;
 		}
 
 		if (comando_utente == 'I') {
