@@ -4,6 +4,7 @@ All'interno del seguente modulo sono presenti in totale 2 funzioni, ovvero: iniz
 ### FUNZIONE  iniziare_partita
 **INPUT**:
 - partite_salvate, insieme delle partite salvate, file_binario
+- nuova_partita, indica se la nuova partita è iniziata con VERO, booleano
 
 **OUTPUT**:
 - partite_salvate, insieme delle partite salvate aggiornato, array di file_binario
@@ -99,7 +100,7 @@ RIPETI
 			impostazioni_gioco = impostare_paramentri_di_gioco(impostazioni_gioco, difficolta_scelta, dim_griglia_scelta)
 			griglia_sudoku = inizializzare_griglia(griglia_sudoku, impostazioni_gioco)
 			partita_da_giocare = inizializzare_partita(impostazioni_gioco, griglia_sudoku, nome_partita, partita_da_giocare)
-			partite_salvate = scrivere_elemento(partite_salvate, giocare_partita(partita_da_giocare))
+			partite_salvate = scrivere_elemento(partite_salvate, giocare_partita(partita_da_giocare), nuova_partita)
 			uscito = VERO
 	FINE
 	FINCHE(comando_utente <> '5' AND uscito <> VERO)
@@ -108,6 +109,7 @@ RIPETI
 ### FUNZIONE  menu_principale
 **INPUT**:
 - partite_salvate, insieme delle partite salvate, array di file_binario
+- nuova_partita, indica se la nuova partita è iniziata con VERO, booleano
 
 **OUTPUT**:
 - partite_salvate, insieme delle partite salvate aggiornato, array di file_binario
@@ -123,12 +125,16 @@ RIPETI
 	stampare_a_schermo(stampare_interfaccia_menu_principale())	
 	comando_utente = nascondere_input_utente()
 	SE(comando_utente = '1')
-		ALLORA iniziare_partita(partite_salvate)
+		ALLORA 
+			iniziare_partita(partite_salvate, nuova_partita)
+			nuova_partita = VERO
 	FINE
 	SE(comando_utente = '2')
 		ALLORA caricato = caricare_partita(partita_caricata)
 		SE(caricato = VERO)
-			ALLORA partite_salvate = scrivere_elemento(partite_salvate, giocare_partita(partita_caricata))	
+			ALLORA 
+				partite_salvate = scrivere_elemento(partite_salvate, giocare_partita(partita_caricata), nuova_partita)	
+				nuova_partita = VERO;
 		FINE
 	FINE
 FINCHE(comando_utente <> '3')

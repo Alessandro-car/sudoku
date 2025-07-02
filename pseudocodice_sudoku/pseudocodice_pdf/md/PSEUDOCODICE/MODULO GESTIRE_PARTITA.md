@@ -4,6 +4,7 @@ all'interno del seguente modulo è presente in totale una funzione, ovvero: gioc
 ### FUNZIONE  giocare_partita
 **INPUT**:
 - partita_corrente, partita attualmente in gioco, partita
+- nuova_partita, indica se la nuova partita è iniziata con VERO, booleano
 
 **OUTPUT**:
 - partite_salvate, insieme di tutte le partite salvate, array di file_binario
@@ -38,7 +39,9 @@ RIPETI
 	comando_utente = convertire_minuscolo_maiuscolo(comando_utente)
 	
 	SE(comando_utente = 'S')
-		ALLORA	partite_salvate = scrivere_elemento(partite_salvate, partita_corrente)
+		ALLORA	
+			partite_salvate = scrivere_elemento(partite_salvate, partita_corrente, nuova_partita)
+			nuova_partita = FALSO
 	FINE
 	
 	SE(comando_utente = 'I')

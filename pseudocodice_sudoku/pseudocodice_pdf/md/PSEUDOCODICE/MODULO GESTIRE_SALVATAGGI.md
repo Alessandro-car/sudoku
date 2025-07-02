@@ -57,6 +57,7 @@ FINCHE(comando_utente <> '6' AND (slot < 1 OR slot > n_file_salvati))
 ### FUNZIONE  salvare_partita
 **INPUT**:
 - partite_salvate, insieme delle partite salvate, array di file_binario
+- nuova_partita, indica se la nuova partita è iniziata con VERO, booleano
 
 **OUTPUT**:
 - partite_salvate, insieme delle partite salvate aggiornato, array di file_binario
@@ -85,6 +86,10 @@ percorso_file = concatenare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_ar
 percorso_file = concatenare_due_stringhe(percorso_file, ESTENSIONE_FILE)
 salvato = FALSO
 errore_salvataggio = FALSO
+
+SE(nuova_partita <> FALSO)
+	ALLORA gestire_avviso_salvataggio()
+FINE
 
 RIPETI
 	stampare_a_schermo(stampare_interfaccia_carica_partita())
