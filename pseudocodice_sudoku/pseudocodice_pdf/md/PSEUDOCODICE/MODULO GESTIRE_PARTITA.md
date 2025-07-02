@@ -23,12 +23,12 @@ valore_modificabile = VERO
 input_corretto = VERO
 
 RIPETI
-	stampare_schermata_di_gioco(partita_corrente)
+	stampare_a_schermo(stampare_schermata_di_gioco(partita_corrente))
 	SE(valore_modificabile = FALSO)
-		ALLORA stampare_banner_errore(ERRORE_VALORE_NON_MODIFICABILE)
+		ALLORA stampare_a_schermo(stampare_banner_errore(ERRORE_VALORE_NON_MODIFICABILE))
 		ALTRIMENTI 
 			 SE(input_corretto = FALSO)
-				ALLORA stampare_banner_errore(ERRORE_INPUT_ERRATI)
+				ALLORA stampare_a_schermo(stampare_banner_errore(ERRORE_INPUT_ERRATI))
 			FINE
 	FINE
 	

@@ -16,27 +16,27 @@ caricare_partita; salvare_partita
 - comando_utente, variabile che assumerà il valore impostato dall'utente, carattere
 - percorso_file, rappresenta l'intero percorso del file, array di caratteri
 - slot, slot di salvataggio, numero naturale > 0
-- selezionato_slot_vuoto, indica se lo slot selezionato è vuoto con VERO, booleano
+- slot_non_esistente, indica se lo slot selezionato è vuoto con VERO, booleano
 
 **PSEUDOCODICE**:
 ```C
-selezionato_slot_vuoto = FALSO
+slot_non_esistente = FALSO
 caricato = FALSO
 partite_salvate = creare_directory(CARTELLA_SALVATAGGI)
 n_file_salvati = calcolare_n_file_salvati(CARTELLA_SALVATAGGI)
 
 RIPETI
 	stampare_a_schermo(stampare_interfaccia_carica_partita())
-	SE(slot_non_esistente= VERO)
+	SE(slot_non_esistente = VERO)
 		ALLORA	
-			stampare_banner_errore(ERRORE_CARICAMENTO)
+			stampare_a_schermo(stampare_banner_errore(ERRORE_CARICAMENTO))
 			slot_non_esistente = FALSO
 	FINE
 	
 	comando_utente = nascondere_input_utente()
-	n_file_salvati = convertire_lettera_in_numero(comando_utente)
+	slot  = convertire_lettera_in_numero(comando_utente)
 	
-	SE(n_file_salvati >= 1 AND <= n_file_salvati)
+	SE(slot  >= 1 AND <= slot )
 		ALLORA 
 			percorso_file = concatenerare_due_stringhe(CARTELLA_SALVATAGGI, stringa_leggere_array(partite_salvate[slot - 1]))
 		SE(leggere_elemento(file_partita))
@@ -87,10 +87,10 @@ salvato = FALSO
 errore_salvataggio = FALSO
 
 RIPETI
-	stampare_a_schermo(stampare_interfaccia_carica_partita())	
+	stampare_a_schermo(stampare_interfaccia_carica_partita())
 	SE(errore_salvataggio = VERO)
 		ALLORA 
-			stampare_banner_errore(ERRORE_SALVATAGGIO)
+			stampare_a_schermo(stampare_banner_errore(ERRORE_SALVATAGGIO))
 			errore_salvataggio = FALSO
 	FINE
 	

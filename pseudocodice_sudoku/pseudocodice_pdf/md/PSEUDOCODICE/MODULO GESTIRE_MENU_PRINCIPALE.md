@@ -9,22 +9,26 @@ All'interno del seguente modulo sono presenti in totale 2 funzioni, ovvero: iniz
 - partite_salvate, insieme delle partite salvate aggiornato, array di file_binario
 
 **DATI DI LAVORO**:
-- uscito, indica se l'utente è uscito correttamente con VERO, booleano
 - comando_utente, variabile che assumerà il valore impostato dall'utente, carattere
 - difficolta_scelta, difficolta scelta dall'utente, numero naturale $\in$ \[0,2]
 - dim_griglia_scelta, dimensione scelta della griglia, numero naturale > 0 <= DIM_GRIGLIA_GRANDE
-- nome_partita, nome della partita scelto dall'utente, stringa
-- nome_con_estensione, nome scelto con aggiunta dell'estensione utilizzato per i controlli, array di caratteri
+- n_file, numero di file salvati, numero naturale
 - griglia_sudoku, griglia della partita, griglia
 - impostazioni_gioco, impostazioni del gioco, impostazioni
-- nome_impostato, indica se il nome è stato impostato correttamente con VERO, booleano
 - partita_da_giocare, partita che verrà iniziata, partita
+- nome_con_estensione, nome scelto con aggiunta dell'estensione utilizzato per i controlli, array di caratteri
+- nome_partita, nome della partita scelto dall'utente, stringa
+- tmp, stringa temporanea, stringa
+- nome_impostato, indica se il nome è stato impostato correttamente con VERO, booleano
+- file_presente, Indica se è presente un file con lo stesso nome, booleano
+- uscito, indica se l'utente è uscito correttamente con VERO, booleano
 - nome_vuoto, indica se il nome inserito è vuoto con VERO, booleano
 - nome_errato, indica se il nome inserito è errato con VERO, booleano
-- tmp, stringa temporanea, stringa
 
 **PSEUDOCODICE**:
 ```C
+n_file = calcolare_n_file_salvati(CARTELLA_SALVATAGGI)
+file_presente = FALSO
 nome_errato = FALSO
 nome_impostato = FALSO
 nome_vuoto = FALSO
@@ -50,6 +54,7 @@ RIPETI
 	
 	nome_errato = FALSO
 	nome_vuoto = FALSO
+	file_presente = FALSO
 	comando_utente = nascondere_input_utente()
 	SE(comando_utente = '1')
 		ALLORA difficolta_scelta = selezionare_difficolta(difficolta_scelta)
