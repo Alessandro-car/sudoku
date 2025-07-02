@@ -13,8 +13,8 @@
 #include "tipi_di_dato/stringa.h"
 #include "utilita.h"
 
-void iniziare_partita();
-void menu_principale();
+void iniziare_partita(stringa* partite_salvate, bool_t prima_partita);
+void menu_principale(stringa* partite_salvate, bool_t prima_partita);
 void stampare_interfaccia_menu_principale();
 
 #endif

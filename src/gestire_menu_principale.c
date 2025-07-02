@@ -15,7 +15,7 @@
  *	Dato di ritorno:
  *		-partite_salvate: array di stringhe dei nomi delle partite salvate aggiornato con l'eventuale nome della nuova partita avviata
  */
-void iniziare_partita(stringa* partite_salvate) {
+void iniziare_partita(stringa* partite_salvate, bool_t prima_partita) {
 	bool_t uscito;							//Indica se l'utente ha smesso di giocare la partita
 	char comando_utente;
 	char* nome_con_estensione; 				//Nome del file inserito dall'utente con l'estensione
@@ -101,7 +101,7 @@ void iniziare_partita(stringa* partite_salvate) {
 			impostare_parametri_di_gioco(&impostazioni_gioco, difficolta_scelta, dim_griglia_scelta);
 			inizializzare_griglia(&griglia_sudoku, impostazioni_gioco);
 			inizializzare_partita(impostazioni_gioco, griglia_sudoku, nome_partita, &partita_da_giocare);
-			partite_salvate = giocare_partita(partita_da_giocare);
+			partite_salvate = giocare_partita(partita_da_giocare, prima_partita);
 			uscito = VERO; //Se l'utente finisce di giocare deve tornare al menu principale
 		}
 	} while(comando_utente != '5' && uscito != VERO);
@@ -116,7 +116,7 @@ void iniziare_partita(stringa* partite_salvate) {
  *	Dato di ritorno:
  *		-partite_salvate: array di stringhe dei nomi delle partite salvate aggiornato.
  */
-void menu_principale(stringa* partite_salvate) {
+void menu_principale(stringa* partite_salvate, bool_t prima_partita) {
 	char comando_utente;
 	partita partita_caricata;	//Partita da caricare
 	bool_t caricato;			//Indica se la partita è stata caricata correttamente
@@ -124,12 +124,14 @@ void menu_principale(stringa* partite_salvate) {
 		stampare_interfaccia_menu_principale();
 		comando_utente = nascondere_input_utente();
 		if (comando_utente == '1') {
-			iniziare_partita(partite_salvate);
+			iniziare_partita(partite_salvate, prima_partita);
+			prima_partita = FALSO;
 		}
 		if (comando_utente == '2') {
 			caricato = caricare_partita(&partita_caricata);
 			if (caricato == VERO) {
-				partite_salvate = giocare_partita(partita_caricata);
+				partite_salvate = giocare_partita(partita_caricata, prima_partita);
+				prima_partita = FALSO;
 			}
 		}
 	} while(comando_utente != '3');

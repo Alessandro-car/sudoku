@@ -11,7 +11,7 @@
  *	Dato di ritorno:
  *		-partite_salvate: array di stringhe dei nomi delle partite salvate.
  */
-stringa* giocare_partita(partita partita_corrente) {
+stringa* giocare_partita(partita partita_corrente, bool_t prima_partita) {
 	stringa* partite_salvate;			//Array di stringhe dei nomi delle partite salvate
 	griglia griglia_gioco;				//Griglia di gioco della partita corrente
 	char comando_utente;
@@ -28,10 +28,10 @@ stringa* giocare_partita(partita partita_corrente) {
 		//Se si prova a modificare un valore non modificabile viene stampato un banner di errore
 		//Se si inserisce un input non corretto viene stampato un banner di errore
 		if (valore_modificabile == FALSO) {
-			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 1, ERRORE_VALORE_NON_MODIFICABILE);
+			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X, ERRORE_VALORE_NON_MODIFICABILE);
 		}
 		else if (input_corretto == FALSO) {
-			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X + 1, ERRORE_INPUT_ERRATI);
+			stampare_banner_errore(BANNER_ERRORE_POS_X, BANNER_ERRORE_POS_Y, SPAZIO_RISERVATO_GRIGLIA_INTERFACCIA_X, ERRORE_INPUT_ERRATI);
 		}
 		valore_modificabile = VERO;
 		input_corretto = VERO;
@@ -39,7 +39,7 @@ stringa* giocare_partita(partita partita_corrente) {
 		comando_utente = convertire_minuscolo_maiuscolo(comando_utente);
 
 		if (comando_utente == 'S') {
-			partite_salvate = salvare_partita(partita_corrente);
+			partite_salvate = salvare_partita(partita_corrente, prima_partita);
 		}
 
 		if (comando_utente == 'I') {

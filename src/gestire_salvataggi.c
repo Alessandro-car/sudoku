@@ -132,7 +132,7 @@ int calcolare_n_file_salvati(char* nome_directory) {
  *	Dato di ritorno:
  *		-partite_salvate: array di stringhe dei nomi delle partite salvate
  */
-stringa* salvare_partita(partita partita_da_salvare) {
+stringa* salvare_partita(partita partita_da_salvare, bool_t prima_partita) {
 	bool_t errore_salvataggio; 				//Indica se si è verificato un errore nel salvataggio della partita
 	bool_t salvato;							//Indica se la partita è stata salvata o meno
 	FILE* file_salvataggio;					//File sul quale salvare la partita
@@ -157,6 +157,9 @@ stringa* salvare_partita(partita partita_da_salvare) {
 	percorso_file = concatenare_due_stringhe(percorso_file, ESTENSIONE_FILE);
 	errore_salvataggio = FALSO;
 	salvato = FALSO;
+	if (prima_partita != FALSO) {
+		gestire_avviso_salvataggio();
+	}
 	do {
 		stampare_interfaccia_carica_partita(FALSO);
 		if (errore_salvataggio == VERO) {
@@ -247,6 +250,81 @@ void stampare_riquadro_informazioni_partita(int x, int y, char* file_path) {
 	}
 	fclose(file_partita);
 	free(mess_difficolta);
+	return;
+}
+
+/*	Funzione: gestire_avviso_salvataggio()
+ * 	Descrizione: Questa funzione stampa le informazioni di una partita, utili all'utente durante il caricamento di una partita.
+ * 	Parametri:
+ * 		-x, y: coordinate nelle quali iniziare a stampare le informazioni della partita
+ * 		-file_path: path del file nel quale è salvata la partita
+ */
+void gestire_avviso_salvataggio() {
+	int comando_utente;
+	do {
+			stampare_avviso_salvataggio();
+		comando_utente = nascondere_input_utente();
+	} while (comando_utente != TASTO_INVIO);
+}
+
+void stampare_avviso_salvataggio() {
+	char* avviso_da_stampare;	//Prima parte dell'avviso da stampare
+	char* avviso_da_stampare2;
+	int inizio_pos_x;
+	int inizio_pos_y;
+	int dim_riquadro_x;
+	int dim_riquadro_y;
+	int i; 						//Indice delle colonne del cursore
+	int j;						//Indice delle righe del cursore
+
+
+	avviso_da_stampare = "La selezione di uno slot pieno";
+	avviso_da_stampare2 = "comporta la sua eliminazione";
+ 	inizio_pos_x = (LARGHEZZA_FINESTRA - LARGHEZZA_FINESTRA / 2) / 2 + 1;
+	inizio_pos_y = (LUNGHEZZA_FINESTRA - LUNGHEZZA_FINESTRA / 2) / 2 + 1;
+	dim_riquadro_x = LARGHEZZA_FINESTRA / 2;
+	dim_riquadro_y = LUNGHEZZA_FINESTRA / 2;
+
+	i = inizio_pos_x;
+	while (i < inizio_pos_x + dim_riquadro_x) {
+		j = inizio_pos_y;
+		while (j < inizio_pos_y + dim_riquadro_y) {
+			impostare_coordinate_cursore(i, j);
+			printf(" ");
+			j = j + 1;
+		}
+		i = i + 1;
+	}
+	i = inizio_pos_x;
+	while (i < inizio_pos_x + dim_riquadro_x) {
+		j = inizio_pos_y;
+		while (j < inizio_pos_y + dim_riquadro_y) {
+			if (j == inizio_pos_y || j == inizio_pos_y + dim_riquadro_y - 1) {
+				impostare_coordinate_cursore(i, j);
+				stampare_carattere_colorato(COLORE_ANSI_ROSSO, '-');
+			} else {
+				if (i == inizio_pos_x || i == inizio_pos_x + dim_riquadro_x - 1) {
+					impostare_coordinate_cursore(i, j);
+					stampare_carattere_colorato(COLORE_ANSI_ROSSO, '|');
+				}
+			}
+			j = j + 1;
+		}
+		i = i + 1;
+	}
+	impostare_coordinate_cursore(inizio_pos_x, inizio_pos_y);
+	stampare_carattere_colorato(COLORE_ANSI_ROSSO, '+');
+	impostare_coordinate_cursore(inizio_pos_x, inizio_pos_y + dim_riquadro_y - 1);
+	stampare_carattere_colorato(COLORE_ANSI_ROSSO, '+');
+	impostare_coordinate_cursore(inizio_pos_x + dim_riquadro_x - 1, inizio_pos_y);
+	stampare_carattere_colorato(COLORE_ANSI_ROSSO, '+');
+	impostare_coordinate_cursore(inizio_pos_x + dim_riquadro_x - 1, inizio_pos_y + dim_riquadro_y - 1);
+	stampare_carattere_colorato(COLORE_ANSI_ROSSO, '+');
+
+	stampare_centrato_colorato(COLORE_ANSI_ROSSO, "AVVISO!", inizio_pos_x * 2 + dim_riquadro_x, (inizio_pos_y + dim_riquadro_y) / 2);
+	stampare_centrato_colorato(COLORE_ANSI_BIANCO, avviso_da_stampare, inizio_pos_x * 2 + dim_riquadro_x, (inizio_pos_y + dim_riquadro_y) / 2 + 1);
+	stampare_centrato_colorato(COLORE_ANSI_BIANCO, avviso_da_stampare2, inizio_pos_x * 2 + dim_riquadro_x, (inizio_pos_y + dim_riquadro_y) / 2 + 2);
+	stampare_centrato_colorato(COLORE_ANSI_BIANCO, "Premere Invio per continuare...", inizio_pos_x * 2 + dim_riquadro_x, (inizio_pos_y + dim_riquadro_y) / 2 + 4);
 	return;
 }
 

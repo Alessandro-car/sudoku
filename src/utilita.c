@@ -336,14 +336,14 @@ void disegnare_riquadro_interfaccia() {
 	int i; 				//Indice delle colonne del cursore
 	int j;				//Indice delle righe del cursore
 	i = 0;
-	while (i < LARGHEZZA_FINESTRA) {
+	while (i <= LARGHEZZA_FINESTRA) {
 		j = 0;
 		while (j <= LUNGHEZZA_FINESTRA) {
 			if ((j == 0 || j == LUNGHEZZA_FINESTRA)) {
 				impostare_coordinate_cursore(i, j);
 				printf("-");
 			} else {
-				if ((i == 0 || i == LARGHEZZA_FINESTRA - 1)) {
+				if ((i == 0 || i == LARGHEZZA_FINESTRA)) {
 					impostare_coordinate_cursore(i, j);
 					printf("|");
 				}
@@ -356,9 +356,9 @@ void disegnare_riquadro_interfaccia() {
 	printf("+");
 	impostare_coordinate_cursore(0, LUNGHEZZA_FINESTRA);
 	printf("+");
-	impostare_coordinate_cursore(LARGHEZZA_FINESTRA - 1, 0);
+	impostare_coordinate_cursore(LARGHEZZA_FINESTRA, 0);
 	printf("+");
-	impostare_coordinate_cursore(LARGHEZZA_FINESTRA - 1, LUNGHEZZA_FINESTRA);
+	impostare_coordinate_cursore(LARGHEZZA_FINESTRA, LUNGHEZZA_FINESTRA);
 	printf("+");
 	return;
 }
@@ -450,7 +450,7 @@ void stampare_banner_errore(int x, int y, int dim, char* messaggio_errore) {
 	i = 1;
 	impostare_coordinate_cursore(x, y - 1);
 	printf("+");
-	while (i < dim - 2) {
+	while (i < dim - 1) {
 		impostare_coordinate_cursore(x + i, y - 1);
 		printf("-");
 		i = i + 1;
