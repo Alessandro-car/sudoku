@@ -129,11 +129,11 @@ int calcolare_n_file_salvati(char* nome_directory) {
  * 	in base al nome del file dato alla partita.
  * 	Parametri:
  * 		-partita_da_salvare: partita corrente da salvare su un file
- * 		-prima_partita:	booleano che indica se è la prima partita iniziata
+ * 		-nuova_partita:	booleano che indica se è la prima partita iniziata
  *	Dato di ritorno:
  *		-partite_salvate: array di stringhe dei nomi delle partite salvate
  */
-stringa* salvare_partita(partita partita_da_salvare, bool_t prima_partita) {
+stringa* salvare_partita(partita partita_da_salvare, bool_t nuova_partita) {
 	bool_t errore_salvataggio; 				//Indica se si è verificato un errore nel salvataggio della partita
 	bool_t salvato;							//Indica se la partita è stata salvata o meno
 	FILE* file_salvataggio;					//File sul quale salvare la partita
@@ -158,7 +158,7 @@ stringa* salvare_partita(partita partita_da_salvare, bool_t prima_partita) {
 	percorso_file = concatenare_due_stringhe(percorso_file, ESTENSIONE_FILE);
 	errore_salvataggio = FALSO;
 	salvato = FALSO;
-	if (prima_partita != FALSO) {
+	if (nuova_partita != FALSO) {
 		gestire_avviso_salvataggio();
 	}
 	do {

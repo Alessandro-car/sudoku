@@ -8,11 +8,11 @@
  * 	Per smettere di giocare l'utente dovrà premere ESC.
  * 	Parametri:
  * 		-partita_corrente: partita creata con le impostazioni selezionate dall'utente o caricata da un file.
- * 		-prima_partita: booleano che indica se è la prima partita salvata
+ * 		-nuova_partita: booleano che indica se è la prima partita salvata
  *	Dato di ritorno:
  *		-partite_salvate: array di stringhe dei nomi delle partite salvate.
  */
-stringa* giocare_partita(partita partita_corrente, bool_t prima_partita) {
+stringa* giocare_partita(partita partita_corrente, bool_t nuova_partita) {
 	stringa* partite_salvate;			//Array di stringhe dei nomi delle partite salvate
 	griglia griglia_gioco;				//Griglia di gioco della partita corrente
 	char comando_utente;
@@ -40,8 +40,8 @@ stringa* giocare_partita(partita partita_corrente, bool_t prima_partita) {
 		comando_utente = convertire_minuscolo_maiuscolo(comando_utente);
 
 		if (comando_utente == 'S') {
-			partite_salvate = salvare_partita(partita_corrente, prima_partita);
-			prima_partita = FALSO;
+			partite_salvate = salvare_partita(partita_corrente, nuova_partita);
+			nuova_partita = FALSO;
 		}
 
 		if (comando_utente == 'I') {

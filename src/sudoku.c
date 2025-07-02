@@ -14,11 +14,11 @@
 
 int main(void) {
 	stringa* partite_salvate;
-	bool_t prima_partita;
-	prima_partita = VERO;
+	bool_t nuova_partita;
+	nuova_partita = VERO;
 	partite_salvate = creare_directory(CARTELLA_SALVATAGGI);
 	abilitare_ANSI();
 	abilitare_num_lock(1);
-	menu_principale(partite_salvate, prima_partita);
+	menu_principale(partite_salvate, nuova_partita);
 	return 0;
 }
